@@ -25,9 +25,9 @@
                     <label for="id_kelas" class="pb-2 fw-bold fs-5"><i class="bi bi-house-door-fill"></i> {{ __("Kelas") }}</label>
                     <select class="form-select py-2" name="id_kelas" id="id_kelas">
                         <option class="text-secondary" readonly="disabled" value="">Pilih Kelas</option>
-                        <option value="7">Kelas 7</option>
-                        <option value="8">Kelas 8</option>
-                        <option value="9">Kelas 9</option>
+                        <option value="7">Kelas 10</option>
+                        <option value="8">Kelas 11</option>
+                        <option value="9">Kelas 12</option>
                     </select>
                 </div>
 

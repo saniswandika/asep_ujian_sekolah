@@ -24,7 +24,7 @@
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="font-weight-bold text-primary">DataTable </h6>
-                 <p class="">Fitur pada bagian Category ini berfungsi untuk menambahkan Kategori Ujian yang dimana sesuai dengan mata Ujian SMP / SMA / SMK.</p>
+                 {{-- <p class="">Fitur pada bagian Category ini berfungsi untuk menambahkan Kategori Ujian yang dimana sesuai dengan mata Ujian SMP / SMA / SMK.</p> --}}
             </div>
 
              <div class="card-body">
@@ -45,20 +45,20 @@
                             <label for="id_kelas" class="pb-2 fw-bold fs-5"><i class="bi bi-shop-window"></i> {{ __("Kelas") }}</label>
                             <select class="form-select py-2" name="id_kelas" id="id_kelas">
                                 <option value="">Pilih Kelas</option>
-                                @if ($DisujianKelas->id_kelas == '7')
-                                    <option value="7" selected>7</option>
+                                @if ($DisujianKelas->id_kelas == '10')
+                                    <option value="10" selected>10</option>
                                 @else
-                                    <option value="7">7</option>
+                                    <option value="10">10</option>
                                 @endif
-                                @if ($DisujianKelas->id_kelas == '8')
-                                    <option value="8" selected>8</option>
+                                @if ($DisujianKelas->id_kelas == '11')
+                                    <option value="11" selected>11</option>
                                 @else
-                                    <option value="8">8</option>
+                                    <option value="11">11</option>
                                 @endif
-                                @if ($DisujianKelas->id_kelas == '9')
-                                    <option value="9" selected>9</option>
+                                @if ($DisujianKelas->id_kelas == '12')
+                                    <option value="12" selected>12</option>
                                 @else
-                                    <option value="9">9</option>
+                                    <option value="12">12</option>
                                 @endif
                             </select>
                         </div>

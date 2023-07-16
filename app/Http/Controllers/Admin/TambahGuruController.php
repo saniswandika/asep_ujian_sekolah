@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Post;
 use App\Models\User;
-use App\Models\Kelas;
 use App\Models\Sekolah;
+use App\Models\Kelas;
 use App\Imports\PostImport;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
