@@ -20,16 +20,18 @@
                         {{-- @endif --}}
                     </select>
                 </div>
-                    <div class="form-group m-3 ">
-                        <label for="id_category" class="fw-bold "><i class="bi bi-bookmarks-fill"></i> Category</label><br>
-                        <select class="form-control " data-style="btn-success" name="id_category" id="id_category">
-                            @forelse($categori as $id => $categories)
-                                <option value="{{ $id}}">{{ $categories}}</option>
-                                @empty
-                                    <option value="">No Category</option>
-                                @endempty
-                        </select>
-                    </div>
+                <div class="form-group m-3">
+                    <label for="id_category" class="fw-bold"><i class="bi bi-bookmarks-fill"></i> Category</label><br>
+                    <<select class="form-control" data-style="btn-success" name="id_category" id="id_category">
+                        @if (Auth::user()->category)
+                            <option value="{{ Auth::user()->category->id }}">{{ Auth::user()->category->name_category }}</option>
+                        @else
+                            <option value="">No Category</option>
+                        @endif
+                    </select>
+
+
+                </div>
                 <div class="m-3">
                     <label for="soal_ujian" class="pb-2 fw-bold"><i class="bi bi-book-fill "></i> Create Soal Ujian</label>
                     <textarea name="soal_ujian" id="my-editor" cols="5" rows="5" class="form-control" required >{{ old('soal_ujian') }}</textarea>

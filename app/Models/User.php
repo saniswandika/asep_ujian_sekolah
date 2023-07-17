@@ -85,4 +85,11 @@ class User extends Authenticatable
         return $this->belongsTo(Category::class, 'id_category');
     }
 
+    public function categories()
+{
+    return $this->belongsToMany(Category::class, 'posts', 'id_user', 'id_category');
+}
+
+
+
 }

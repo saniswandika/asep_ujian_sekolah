@@ -21,11 +21,12 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::where('id_sekolah_asal', Auth::user()->sekolah_asal)->with('category')->get();
-        $categori = Category::where('id_sekolah_asal', Auth::user()->sekolah_asal)->pluck('name_category', 'id')->all();
+        $user = Auth::user();
+        $posts = Post::where('id_sekolah_asal', $user->sekolah_asal)->with('category')->get();
+        $categories = $user->categories()->pluck('name_category', 'categories.id')->all();
         $sekolahs = Sekolah::pluck('name_sekolah', 'id')->all();
-        $postCount = Post::where('id_sekolah_asal', Auth::user()->sekolah_asal)->count();
-        return view('admin.posts.index', compact('posts','categori','sekolahs','postCount'));
+        $postCount = $user->posts()->count();
+        return view('admin.posts.index', compact('posts', 'categories', 'sekolahs', 'postCount'));
     }
 
     /**
@@ -36,8 +37,10 @@ class PostController extends Controller
     public function create()
     {
         $post = Post::all();
-        $categori = Category::pluck('name_category', 'id')->all();
-        return view('admin.posts.create', compact('categori','post'));
+        $user = Auth::user();
+    // $categories = $user->categories()->pluck('name_category', 'id')->all();
+    $category = $user->category;
+        return view('admin.posts.create', compact('category','post'));
     }
 
     /**
