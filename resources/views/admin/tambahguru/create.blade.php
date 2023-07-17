@@ -47,7 +47,20 @@
                         <option value="P">Perempuan</option>
                     </select>
                 </div>
-
+                <div class="form-group m-3">
+                    <label for="id_kelas" class="pb-2 fw-bold fs-5"><i class="bi bi-shop-window"></i> Guru Pengajar</label>
+                    <select class="form-select py-2" name="id_kelas" id="id_kelas">
+                        @forelse($kelas as $id => $kelases)
+                            <option class="
+                            @if($kelases >= '7-A' && $kelases <= '7-Z') bg-info text-white fw-bold
+                            @elseif($kelases >= '8-A' && $kelases <= '8-Z') bg-warning fw-bold
+                            @elseif($kelases >= '9-A' && $kelases <= '9-Z') bg-success text-white fw-bold @endif"
+                            value="{{ $id }}">{{ $kelases }}</option>
+                            @empty
+                                <option value="">No Data Kelas</option>
+                            @endforelse
+                    </select>
+                </div>
                 <div class="form-group m-3" >
                     <label for="sekolah_asal" class="pb-2  fs-5"><i class="bi bi-building"></i> Sekolah</label>
                     <select class="form-select form-select-lg  py-2" name="sekolah_asal" id="sekolah_asal">

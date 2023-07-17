@@ -79,6 +79,20 @@
                             @endif
                         </select>
                     </div>
+                    <div class="form-group m-3">
+
+                        <label for="id_kelas" class="pb-2 fw-bold  fs-5"><i class="bi bi-shop-window"></i> Kelas</label>
+                        <select class="form-select form-select-lg mb-3 m" name="id_kelas" id="id_kelas">
+                            <option disabled value="">Pilih Kelas ...</option>
+                            @foreach($kelas as $id => $kelases)
+                                <option class="
+                                @if($kelases >= '7-A' && $kelases <= '7-Z') bg-info text-white
+                                @elseif($kelases >= '8-A' && $kelases <= '8-Z') bg-warning
+                                @elseif($kelases >= '9-A' && $kelases <= '9-Z') bg-success text-white  @endif"
+                                value="{{ $id }}" {{ $guruAdmin->id_kelas == $id ? 'selected' : '' }}>{{ $kelases }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="form-group m-3" hidden>
                         <label for="sekolah_asal" class="pb-2 fw-bold fs-5"><i class="bi bi-building"></i> Sekolah</label>
                         <select class="form-select form-select-lg py-2" name="sekolah_asal" id="sekolah_asal">

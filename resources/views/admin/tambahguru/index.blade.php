@@ -86,6 +86,7 @@
                                 <th width="">No</th>
                                 <th width="">Status</th>
                                 <th width="">Nama</th>
+                                <th width="">Guru Kelas</th>
                                 <th width="">Gender</th>
                                 <th width="">Sekolah</th>
                                 <th class="text-center" width="">Action</th>
@@ -104,6 +105,14 @@
                             <td class="fw-bold">{{ $no++ }}</td>
                             <td class="fw-bold bg-primary text-white text-capitalize">{{ $guru->role ?? "" }}</td>
                             <td class="text-capitalize">{{ $guru->name ?? "" }}</td>
+                            @if($guru->kelas == false ?? 'Database Not Found!' )
+                            <td class="bg-danger h-auto">
+                                <a href="/guru-edit-{{ $guru->id ?? ""}}" class="btn btn-warning fw-bold w-auto"><i class="bi bi-pencil-square"></i> Klik Edit dan isikan data kelas!!</a>
+
+                            </td>
+                            @else
+                            <td>{{ $guru->kelas->name_kelas ?? "" }}</td>
+                            @endif
                             <td>{{ $guru->jk ?? "" }}</td>
                             <td>{{ $guru->sekolah->name_sekolah ?? "" }}</td>
                             <td class="text-center">

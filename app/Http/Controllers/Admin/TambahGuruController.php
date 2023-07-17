@@ -25,12 +25,13 @@ class TambahGuruController extends Controller
     public function index()
     {
         // $guruAdmins = User::all();
-        $guruAdmins = User::where('sekolah_asal', Auth::user()->sekolah_asal)->where('role', 'guru')->orderBy('id', 'desc')->get(); // Menampilkan data terbaru
+        $guruAdmins = User::with('kelas')->where('sekolah_asal', Auth::user()->sekolah_asal)->where('role', 'guru')->orderBy('id', 'desc')->get(); // Menampilkan data terbaru
         $sekolahs = Sekolah::pluck('name_sekolah', 'id')->all();
         // ->whereRole('admin') // menampilkan data  Admin saja
         // $guruAdminCount = User::where('role', 'guru', '=' )->count();
+        $kelas = Kelas::where('id_sekolah_asal', Auth::user()->sekolah_asal)->pluck('name_kelas', 'id')->all();
         $guruAdminCount = User::where('sekolah_asal', Auth::user()->sekolah_asal)->where('role', 'guru')->count();
-        return view('admin.tambahguru.index', compact('guruAdmins','sekolahs','guruAdminCount'));
+        return view('admin.tambahguru.index', compact('guruAdmins','sekolahs','guruAdminCount', 'kelas'));
 
     }
 
@@ -60,6 +61,7 @@ class TambahGuruController extends Controller
     public function store(Request $request, User $guruAdmin)
     {
         $this->validate($request, [
+            'id_kelas' => 'required',
             'role' => 'required',
             'no_induk' => 'required',
             'nisn' => 'required',
@@ -74,6 +76,7 @@ class TambahGuruController extends Controller
         $noInduk = $request->no_induk = $request->username;
 
         $guruAdmin = User::insert([
+            'id_kelas' => $request->id_kelas,
             'role' => $request->role,
             // 'no_induk' => $request->no_induk = $request->username,
             'no_induk' => $noInduk,
@@ -102,6 +105,8 @@ class TambahGuruController extends Controller
     public function show($id)
     {
         $guruAdmin = User::findOrFail($id);
+        $sekolahs = Sekolah::pluck('name_sekolah', 'id')->all();
+        $guruAdmins = User::with('kelas')->get();
         $guruAdminCount = User::where('role', 'guru')->count();
         return view('admin.tambahguru.show', compact('guruAdmin','guruAdminCount'));
     }
@@ -114,9 +119,11 @@ class TambahGuruController extends Controller
      */
     public function edit($id)
     {
-        $guruAdmin = User::where('sekolah_asal', Auth::user()->sekolah_asal)->findOrFail($id);
+        $guruAdmin = User::with('kelas')->where('sekolah_asal', Auth::user()->sekolah_asal)->findOrFail($id);
+        // $guruAdmin = User::with('kelas')->findOrFail($id);
         $sekolahs = Sekolah::pluck('name_sekolah', 'id')->all();
-        return view('admin.tambahguru.edit', compact('guruAdmin','sekolahs'));
+        $kelas = Kelas::where('id_sekolah_asal', Auth::user()->sekolah_asal)->pluck('name_kelas', 'id')->all();
+        return view('admin.tambahguru.edit', compact('guruAdmin','sekolahs','kelas'));
     }
 
     /**
@@ -130,6 +137,7 @@ class TambahGuruController extends Controller
     {
 
         DB::table('users')->where('id', $request->id)->update([
+            'id_kelas' => $request->id_kelas,
             'no_induk' => $request->no_induk = $request->username,
             'nisn' => $request->nisn,
             'jk' => $request->jk,
