@@ -93,6 +93,16 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="form-group m-3">
+                        <label for="id_category" class="pb-2 fw-bold mb-2 btn btn-info text-white"><i class="bi bi-bookmarks-fill"></i> {{ __('Category') }}</label>
+                        <select class="form-select" name="id_category" id="id_category">
+                            <option disabled="readonly">Pilih Category ...</option>
+                            @foreach ($categori as $id => $categories)
+                                                          {{-- Jika $id (Category) == $id (POST Category) maka 'Pilih' jika tidak Kosongkan --}}
+                                <option value="{{ $id }}" {{ $id == $guruAdmin->id_category ? 'selected' : '' }}>{{ $categories }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="form-group m-3" hidden>
                         <label for="sekolah_asal" class="pb-2 fw-bold fs-5"><i class="bi bi-building"></i> Sekolah</label>
                         <select class="form-select form-select-lg py-2" name="sekolah_asal" id="sekolah_asal">

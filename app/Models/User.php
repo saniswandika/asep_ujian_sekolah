@@ -8,6 +8,7 @@ use App\Models\Post;
 use App\Models\Kelas;
 use App\Models\Sekolah;
 use App\Models\UjianSekolah;
+use App\Models\Category;
 // use Laravel\Passport\HasApiTokens;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -77,6 +78,11 @@ class User extends Authenticatable
    public function sekolah()
     {
         return $this->belongsTo(Sekolah::class,'sekolah_asal');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'id_category');
     }
 
 }

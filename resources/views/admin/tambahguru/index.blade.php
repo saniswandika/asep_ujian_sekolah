@@ -87,6 +87,7 @@
                                 <th width="">Status</th>
                                 <th width="">Nama</th>
                                 <th width="">Guru Kelas</th>
+                                <th width="">Mata Pelajaran</th>
                                 <th width="">Gender</th>
                                 <th width="">Sekolah</th>
                                 <th class="text-center" width="">Action</th>
@@ -112,6 +113,13 @@
                             </td>
                             @else
                             <td>{{ $guru->kelas->name_kelas ?? "" }}</td>
+                            @endif
+                            @if($guru->category == false ?? 'Database Not Found!' )
+                                <td class="text-white bg-danger text-center fw-bold">
+                                    <a href="/guru-edit-{{ $guru->id }}" class="btn btn-warning text-white p-2 shadow-sm m-2 edit-confirm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"> <i class="bi bi-pencil-square"></i> Silahkan klik edit dan sesuaikan data Category</a>
+                                </td>
+                            @else
+                            <td class="">{{ $guru->category->name_category ?? "Silahkan klik edit dan sesuaikan data Category"}}</td>
                             @endif
                             <td>{{ $guru->jk ?? "" }}</td>
                             <td>{{ $guru->sekolah->name_sekolah ?? "" }}</td>
