@@ -35,9 +35,9 @@
                     @php
                     $no = 1;
                 @endphp
-                @foreach ($DisujianKelases as $DisujianKelas)
+                {{-- @foreach ($DisujianKelases as $DisujianKelas) --}}
                 {{-- && Auth::user()->kelas->name_kelas >= '7-A' && Auth::user()->kelas->name_kelas <= '7-Z' --}}
-                @if ($DisujianKelas->status == 1 && $DisujianKelas->id_kelas == '7')
+                {{-- @if ($DisujianKelas->status == 1 && $DisujianKelas->id_kelas == '7')
                     <tr>
                         <td class="text-center">{{ $no++ }}</td>
                         <td class="text-center">{{ $DisujianKelas->id_kelas }}</td>
@@ -68,7 +68,21 @@
                         </td>
                     </tr>
                 @endif
-                @endforeach
+                @endforeach --}}
+                @foreach ($DisujianKelases as $DisujianKelas)
+    {{-- @if ($DisujianKelas->status == 1) --}}
+    @if ($DisujianKelas->status == 1 && $DisujianKelas->kelas->name_kelas == Auth::user()->kelas->name_kelas)
+        <tr>
+            <td class="text-center">{{ $no++ }}</td>
+            <td class="text-center">{{ $DisujianKelas->kelas->name_kelas }}</td>
+            <td class="text-center">{{ $DisujianKelas->category->name_category }}</td>
+            <td class="text-center">{{ $DisujianKelas->categoryUjian->name_category_ujian }}</td>
+            <td class="text-center">
+                <a href="{{ url('/ujianSekolah-create-'.$DisujianKelas->id) }}" class="btn btn-primary btn-sm"><i class="bi bi-box-arrow-in-right"></i> Mulai Ujian</a>
+            </td>
+        </tr>
+    @endif
+@endforeach
                     </tbody>
                 </table>
             </div>

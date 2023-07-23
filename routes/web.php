@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use UniSharp\LaravelFilemanager\Lfm;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RaportController;
 use App\Http\Controllers\ProfileController;
 use Symfony\Component\HttpFoundation\Request;
 use App\Http\Controllers\Admin\PostController;
@@ -256,6 +257,14 @@ Route::group(['middleware' => ['auth','role:admin']], function(){
     });
 });
 
+Route::group(['middleware' => ['auth']], function () {
+    // Your existing routes ...
+
+    // Raport routes
+    Route::get('/raport', [RaportController::class, 'index'])->name('raport.index');
+    Route::get('/raport-show-{id}', [RaportController::class, 'show'])->name('raport.show');
+    // Add more routes for create, store, edit, update, delete, etc., as needed.
+});
 
 // Route UjianSoal
     Route::get('/ujianSekolah', [App\Http\Controllers\Admin\DistribusiUjianKelasController::class, 'indexDistribusiUjianKelas'])->name('ujianSekolah.indexDistribusiUjianKelas')->middleware('auth');

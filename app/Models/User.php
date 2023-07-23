@@ -18,7 +18,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Rappasoft\LaravelAuthenticationLog\Traits\AuthenticationLoggable;
 
 
-class User extends Authenticatable
+    class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, AuthenticationLoggable;
 
@@ -86,10 +86,13 @@ class User extends Authenticatable
     }
 
     public function categories()
-{
-    return $this->belongsToMany(Category::class, 'posts', 'id_user', 'id_category');
-}
+    {
+        return $this->belongsToMany(Category::class, 'posts', 'id_user', 'id_category');
+    }
 
-
+    public function dataUjian()
+    {
+        return $this->hasMany(DataUjian::class, 'id_user');
+    }
 
 }

@@ -66,6 +66,7 @@
                                 <th width="">No</th>
                                 <th>ID Sekolah</th>
                                 <th width="">Nama Sekolah</th>
+                                <th width="">Alamat Sekolah</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -76,7 +77,7 @@
                                 <td class="text-center fw-bold">{{ $no++ }}</td>
                                 <td>{{ $sekolah->id }}</td>
                                 <td>{{ $sekolah->name_sekolah }}</td>
-
+                                <td>{{ $sekolah->alamat_sekolah }}</td>
                             </tr>
                         </tbody>
                     </table>

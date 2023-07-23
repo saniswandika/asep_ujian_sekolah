@@ -17,6 +17,7 @@ class CreateSekolahsTable extends Migration
             $table->id();
             $table->string('id_secret')->nullable();
             $table->string('name_sekolah');
+            $table->string('alamat_sekolah')->nullable();
             $table->timestamps();
         });
     }

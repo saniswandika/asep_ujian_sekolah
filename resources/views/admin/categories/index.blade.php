@@ -74,10 +74,13 @@
                         <thead>
                             <tr>
                                 <th width="5%" class="text-center">
-                                    <input type="checkbox" class="p-5" id="master" />
+                                    <input type="checkbox" class="p-5"
+                                    {{-- id="master" --}}
+                                    />
                                 </th>
                                 <th width="5%">No</th>
                                 <th width="30%">Category Pelajaran</th>
+                                <th width="15%">KKM</th>
                                 <th width="30%">Sekolah</th>
                                 <th class="text-center w-25">Action</th>
                             </tr>
@@ -93,6 +96,7 @@
                             </td>
                             <td class="fw-bold">{{ $no++ }}</td>
                             <td>{{ $categori->name_category ?? "" }}</td>
+                            <td>{{ $categori->kkm ?? "" }}</td>
                             <td>{{ $categori->sekolah->name_sekolah ?? "" }}</td>
                             <td class="text-center">
                                 <a href="{{ url('/categories-pelajaran-show-'.$categori->id) }}" class="btn btn-info text-white p-2 shadow-sm m-2 show-confirm" data-bs-toggle="tooltip" data-bs-placement="top" title="Show"> <i class="bi bi-eye-fill"></i></a>
@@ -114,8 +118,5 @@
 
     {{-- Create Category --}}
     @include('admin.categories.create')
-
-
-
 
 @endsection

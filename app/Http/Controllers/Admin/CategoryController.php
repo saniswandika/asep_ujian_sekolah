@@ -50,11 +50,15 @@ class CategoryController extends Controller
         $this->validate($request, [
             'id_sekolah_asal' => 'required',
             'name_category' => 'required|unique:categories',
+            'kkm' => 'integer|nullable',
+            // 'capaian_kompetensi' => 'nullable',
         ]);
 
         $categori = Category::create([
             'id_sekolah_asal' => $request->id_sekolah_asal,
             'name_category' => $request->name_category,
+            'kkm' => $request->kkm,
+            // 'capaian_kompetensi' => $request->capaian_kompetensi,
         ]);
 
         if($categori){
@@ -103,12 +107,16 @@ class CategoryController extends Controller
         $this->validate($request, [
             'id_sekolah_asal' => 'required',
             'name_category' => 'required|unique:categories',
+            'kkm' => 'integer|nullable',
+            // 'capaian_kompetensi' => 'nullable',
         ]);
 
         $categori = Category::find($request->id);
         $categori = $categori->update([
             'id_sekolah_asal' => $request->id_sekolah_asal,
             'name_category' => $request->name_category,
+            'kkm' => $request->kkm,
+            // 'capaian_kompetensi' => $request->capaian_kompetensi,
         ]);
 
         if($categori){

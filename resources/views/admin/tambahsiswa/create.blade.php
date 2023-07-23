@@ -28,9 +28,9 @@
                     <select class="form-select py-2" name="id_kelas" id="id_kelas">
                         @forelse($kelas as $id => $kelases)
                             <option class="
-                            @if($kelases >= '7-A' && $kelases <= '7-Z') bg-info text-white fw-bold
-                            @elseif($kelases >= '8-A' && $kelases <= '8-Z') bg-warning fw-bold
-                            @elseif($kelases >= '9-A' && $kelases <= '9-Z') bg-success text-white fw-bold @endif"
+                            @if($kelases >= '10-A' && $kelases <= '10-Z') bg-info text-white fw-bold
+                            @elseif($kelases >= '11-A' && $kelases <= '11-Z') bg-warning fw-bold
+                            @elseif($kelases >= '12-A' && $kelases <= '12-Z') bg-success text-white fw-bold @endif"
                             value="{{ $id }}">{{ $kelases }}</option>
                             @empty
                                 <option value="">No Data Kelas</option>

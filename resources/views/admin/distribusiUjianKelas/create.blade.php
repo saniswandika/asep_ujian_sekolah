@@ -22,6 +22,20 @@
                 </div>
 
                 <div class="form-group m-3">
+                    <label for="id_kelas" class="pb-2 fw-bold fs-5"><i class="bi bi-shop-window"></i> Kelas</label>
+                    <select class="form-select py-2" name="id_kelas" id="id_kelas">
+                        @forelse($kelas as $id => $kelases)
+                            <option class="
+                            @if($kelases >= '10-A' && $kelases <= '10-Z') bg-info text-white fw-bold
+                            @elseif($kelases >= '11-A' && $kelases <= '11-Z') bg-warning fw-bold
+                            @elseif($kelases >= '12-A' && $kelases <= '12-Z') bg-success text-white fw-bold @endif"
+                            value="{{ $id }}">{{ $kelases }}</option>
+                            @empty
+                                <option value="">No Data Kelas</option>
+                            @endforelse
+                    </select>
+                </div>
+                {{-- <div class="form-group m-3">
                     <label for="id_kelas" class="pb-2 fw-bold fs-5"><i class="bi bi-house-door-fill"></i> {{ __("Kelas") }}</label>
                     <select class="form-select py-2" name="id_kelas" id="id_kelas">
                         <option class="text-secondary" readonly="disabled" value="">Pilih Kelas</option>
@@ -29,7 +43,7 @@
                         <option value="8">Kelas 11</option>
                         <option value="9">Kelas 12</option>
                     </select>
-                </div>
+                </div> --}}
 
                 <div class="form-group m-3">
                     <label for="id_category" class="pb-2 fw-bold fs-5"><i class="fas fa-clipboard-list"></i> {{ __("Category Pelajaran") }}</label>

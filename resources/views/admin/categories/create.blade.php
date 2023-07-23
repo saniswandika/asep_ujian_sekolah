@@ -24,6 +24,10 @@
                 <label for="name_category" class="pb-2 fw-bold"><i class="bi bi-bookmarks-fill"></i> {{ __('Category Pelajaran') }}</label>
                 <input type="text" class="form-control" placeholder="Name Category Pelajaran" name="name_category" value="{{ old('name_category') }}" required>
             </div>
+            <div class="m-3">
+                <label for="kkm" class="pb-2 fw-bold"><i class="bi bi-bookmarks"></i> KKM</label>
+                <input type="number" class="form-control" placeholder="KKM" name="kkm" value="{{ old('kkm') }}">
+            </div>
         </div>
         <div class="modal-footer">
             <button type="submit" class="btn btn-primary fs-5 shadow"><i class="bi bi-check-circle"></i> SIMPAN</button>

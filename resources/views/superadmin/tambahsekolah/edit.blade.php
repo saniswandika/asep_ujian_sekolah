@@ -70,6 +70,10 @@
                         <input type="text" class="form-control" placeholder="Name Sekolah" name="name_sekolah" value="{{ $sekolah->name_sekolah ?? "" }}" required>
                     </div>
                     <div class="m-3">
+                        <label for="alamat_sekolah" class="pb-2 fw-bold"><i class="bi bi-geo-alt-fill"></i> {{ __('Alamat Sekolah') }}</label>
+                        <input type="text" class="form-control" placeholder="Alamat Sekolah" name="alamat_sekolah" value="{{ $sekolah->alamat_sekolah ?? "" }}" required>
+                    </div>
+                    <div class="m-3">
                         <button type="submit" class="btn btn-primary fs-5 shadow mb-5"><i class="bi bi-check-circle"></i> SIMPAN</button><hr>
                         <button type="reset" class="btn btn-warning fs-5 fst-italic fw-bold shadow" style="float: right;"><i class="bi bi-info-circle-fill"></i> Kembalikan Data Awal</button>
                     </div>
