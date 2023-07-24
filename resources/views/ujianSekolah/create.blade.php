@@ -2,7 +2,7 @@
 @section('title' ,'Ujian Siswa')
 @section('content')
 
-@if ( $DisujianKelases->status == 1 && $DisujianKelases->id_kelas == '7' )
+@if ( $DisujianKelases->status == 1 && $DisujianKelases->id_kelas == '4' )
 
 <div class="container">
     <div class="row justify-content-center ">
@@ -130,7 +130,7 @@
     </div>
 </div>
 
-@elseif ('/ujianSekolah-create-'.$DisujianKelases->id && $DisujianKelases->status == 1 && $DisujianKelases->id_kelas == '8' )
+@elseif ('/ujianSekolah-create-'.$DisujianKelases->id && $DisujianKelases->status == 1 && $DisujianKelases->id_kelas == '5' )
 
 <div class="container">
     <div class="row justify-content-center">
@@ -228,7 +228,7 @@
     </div>
 </div>
 
-@elseif ('/ujianSekolah-create-'.$DisujianKelases->id && $DisujianKelases->status == 1 && $DisujianKelases->id_kelas == '9')
+@elseif ('/ujianSekolah-create-'.$DisujianKelases->id && $DisujianKelases->status == 1 && $DisujianKelases->id_kelas == '6')
 
 <div class="container">
     <div class="row justify-content-center">

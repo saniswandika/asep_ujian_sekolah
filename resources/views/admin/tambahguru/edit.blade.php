@@ -23,7 +23,7 @@
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="font-weight-bold text-primary">DataTable </h6>
-                <p class="">Fitur pada bagian Post ini berfungsi untuk mengedit Soal Ujian yang dimana sesuai dengan mata Ujian SMP / SMA / SMK.</p>
+                {{-- <p class="">Fitur pada bagian Post ini berfungsi untuk mengedit Soal Ujian yang dimana sesuai dengan mata Ujian SMP / SMA / SMK.</p> --}}
             </div>
             <!-- Card Content - Collapse -->
             <div class="collapse show" id="collapseCardExample">
@@ -77,6 +77,30 @@
                             <option value="P">Perempuan</option>
                             <option value="L">Laki-Laki</option>
                             @endif
+                        </select>
+                    </div>
+                    <div class="form-group m-3">
+
+                        <label for="id_kelas" class="pb-2 fw-bold  fs-5"><i class="bi bi-shop-window"></i> Kelas</label>
+                        <select class="form-select form-select-lg mb-3 m" name="id_kelas" id="id_kelas">
+                            <option disabled value="">Pilih Kelas ...</option>
+                            @foreach($kelas as $id => $kelases)
+                                <option class="
+                                @if($kelases >= '7-A' && $kelases <= '7-Z') bg-info text-white
+                                @elseif($kelases >= '8-A' && $kelases <= '8-Z') bg-warning
+                                @elseif($kelases >= '9-A' && $kelases <= '9-Z') bg-success text-white  @endif"
+                                value="{{ $id }}" {{ $guruAdmin->id_kelas == $id ? 'selected' : '' }}>{{ $kelases }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group m-3">
+                        <label for="id_category" class="pb-2 fw-bold mb-2 btn btn-info text-white"><i class="bi bi-bookmarks-fill"></i> {{ __('Category') }}</label>
+                        <select class="form-select" name="id_category" id="id_category">
+                            <option disabled="readonly">Pilih Category ...</option>
+                            @foreach ($categori as $id => $categories)
+                                                          {{-- Jika $id (Category) == $id (POST Category) maka 'Pilih' jika tidak Kosongkan --}}
+                                <option value="{{ $id }}" {{ $id == $guruAdmin->id_category ? 'selected' : '' }}>{{ $categories }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group m-3" hidden>

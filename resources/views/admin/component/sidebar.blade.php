@@ -5,7 +5,7 @@
             {{-- <i class="fas fa-laugh-wink"></i> --}}
             <i class="bi bi-building"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">{{ __("Ujian Online") }}</div>
+        <div class="sidebar-brand-text mx-3">{{ __("E-Raport") }}</div>
     </a>
 
     <!-- Divider -->
@@ -184,11 +184,24 @@
     @endif
 
     @if( Auth::user()->role == 'guru')
+    <!-- Nav Item - Distribusi Ujian -->
+    <li class="nav-item {{ Request::is('distribusiUjianKelas')? " active ":" " }} || {{ Request::is('distribusiUjianKelas-edit-*') ? " active ":" " }} || {{ Request::is('distribusiUjianKelas-show-*') ? " active ":" " }}">
+        <a class="nav-link " href="{{ url('/distribusiUjianKelas') }}">
+            <i class="bi bi-card-checklist"></i>
+            <span>{{ __('Distribusi Ujian Kelas') }}</span></a>
+    </li>
     <!-- Nav Item - Data Ujian -->
     <li class="nav-item {{ Request::is('dataUjian')? " active ":" " }} || {{ Request::is('dataUjian-edit-*') ? " active ":" " }} || {{ Request::is('dataUjian-show-*') ? " active ":" " }}">
         <a class="nav-link " href="{{ url('/dataUjian') }}">
             <i class="bi bi-journal-text"></i>
             <span>{{ __('Data Ujian') }}</span></a>
+    </li>
+    <!-- Nav Item - Raport -->
+    <li class="nav-item {{ Request::is('raport')? " active ":" " }}">
+        <a class="nav-link " href="{{ url('/raport') }}">
+            <i class="bi bi-file-earmark-text"></i>
+            <span>{{ __("Raport") }}</span>
+        </a>
     </li>
     @endif
 

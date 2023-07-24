@@ -44,10 +44,12 @@ class SekolahController extends Controller
     {
         $this->validate($request, [
             'name_sekolah' => 'required|string|max:255',
+            'alamat_sekolah' => 'required|string|max:255',
         ]);
 
         DB::table('sekolahs')->insert([
             'name_sekolah' => request('name_sekolah'),
+            'alamat_sekolah' => request('alamat_sekolah'),
         ]);
 
         return redirect()->route('sekolah.index')->with('success', 'Sekolah berhasil ditambahkan');
@@ -90,12 +92,14 @@ class SekolahController extends Controller
     {
         $this->validate($request, [
             'name_sekolah' => 'required|string|max:255',
+            'alamat_sekolah' => 'required|string|max:255',
         ]);
 
         DB::table('sekolahs')
             ->where('id', request('id'))
             ->update([
                 'name_sekolah' => request('name_sekolah'),
+                'alamat_sekolah' => request('alamat_sekolah'),
             ]);
 
         return redirect()->route('sekolah.index')->with('success', 'Sekolah berhasil diubah');

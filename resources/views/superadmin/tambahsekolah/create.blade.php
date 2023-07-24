@@ -17,6 +17,11 @@
                 <label for="name_category" class="pb-2 fw-bold"><i class="bi bi-bookmarks-fill"></i> {{ __('Nama Sekolah') }}</label>
                 <input type="text" class="form-control" placeholder="Name Sekolah" name="name_sekolah" value="{{ old('name_sekolah') }}" required>
             </div>
+
+            <div class="m-3">
+                <label for="alamat_sekolah" class="pb-2 fw-bold"><i class="bi bi-geo-alt-fill"></i> {{ __('Alamat Sekolah') }}</label>
+                <input type="text" class="form-control" placeholder="Alamat Sekolah" name="alamat_sekolah" value="{{ old('alamat_sekolah') }}" required>
+            </div>
         </div>
         <div class="modal-footer">
             <button type="submit" class="btn btn-primary fs-5 shadow"><i class="bi bi-check-circle"></i> SIMPAN</button>

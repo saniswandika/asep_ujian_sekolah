@@ -53,7 +53,7 @@
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="font-weight-bold text-primary">DataTable </h6>
-                <p class="">Fitur pada bagian Tambah Guru ini berfungsi untuk menambahkan Guru yang dimana sesuai dengan Data Sekolah SMP / SMA / SMK.</p>
+                {{-- <p class="">Fitur pada bagian Tambah Guru ini berfungsi untuk menambahkan Guru yang dimana sesuai dengan Data Sekolah SMP / SMA / SMK.</p> --}}
             </div>
             <div class="m-3">
                 <button type="button" class="btn btn-primary  m-1 p-3 shadow" data-bs-toggle="modal" data-bs-target="#createGuru">
@@ -86,6 +86,8 @@
                                 <th width="">No</th>
                                 <th width="">Status</th>
                                 <th width="">Nama</th>
+                                <th width="">Guru Kelas</th>
+                                <th width="">Mata Pelajaran</th>
                                 <th width="">Gender</th>
                                 <th width="">Sekolah</th>
                                 <th class="text-center" width="">Action</th>
@@ -104,6 +106,21 @@
                             <td class="fw-bold">{{ $no++ }}</td>
                             <td class="fw-bold bg-primary text-white text-capitalize">{{ $guru->role ?? "" }}</td>
                             <td class="text-capitalize">{{ $guru->name ?? "" }}</td>
+                            @if($guru->kelas == false ?? 'Database Not Found!' )
+                            <td class="bg-danger h-auto">
+                                <a href="/guru-edit-{{ $guru->id ?? ""}}" class="btn btn-warning fw-bold w-auto"><i class="bi bi-pencil-square"></i> Klik Edit dan isikan data kelas!!</a>
+
+                            </td>
+                            @else
+                            <td>{{ $guru->kelas->name_kelas ?? "" }}</td>
+                            @endif
+                            @if($guru->category == false ?? 'Database Not Found!' )
+                                <td class="text-white bg-danger text-center fw-bold">
+                                    <a href="/guru-edit-{{ $guru->id }}" class="btn btn-warning text-white p-2 shadow-sm m-2 edit-confirm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"> <i class="bi bi-pencil-square"></i> Silahkan klik edit dan sesuaikan data Category</a>
+                                </td>
+                            @else
+                            <td class="">{{ $guru->category->name_category ?? "Silahkan klik edit dan sesuaikan data Category"}}</td>
+                            @endif
                             <td>{{ $guru->jk ?? "" }}</td>
                             <td>{{ $guru->sekolah->name_sekolah ?? "" }}</td>
                             <td class="text-center">

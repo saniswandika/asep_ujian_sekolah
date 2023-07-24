@@ -19,7 +19,7 @@
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="font-weight-bold text-primary">DataTable </h6>
-                <p class="">Fitur pada bagian Tambah Siswa ini berfungsi untuk menambahkan Siswa yang dimana sesuai dengan Data Sekolah SMP / SMA / SMK.</p>
+                {{-- <p class="">Fitur pada bagian Tambah Siswa ini berfungsi untuk menambahkan Siswa yang dimana sesuai dengan Data Sekolah SMP / SMA / SMK.</p> --}}
             </div>
             <div class="card-body">
                 <div class="table-responsive ">
@@ -30,6 +30,8 @@
                                 <th width="">No</th>
                                 <th width="">Status</th>
                                 <th width="">Nama</th>
+                                <th width="">Mata Pelajaran</th>
+                                <th width="">Guru Kelas</th>
                                 <th width="">Gender</th>
                             </tr>
                         </thead>
@@ -43,6 +45,14 @@
                             <td>{{ $no++ }}</td>
                             <td class="text-capitalize">{{ $guruPerson->role }}</td>
                             <td class="text-capitalize">{{ $guruPerson->name }}</td>
+                            <td>
+                                @if(isset($guruPerson->id_category))
+                                    {{ $categori[$guruPerson->id_category] ?? '' }}
+                                @else
+                                    Silahkan klik edit dan sesuaikan data Category
+                                @endif
+                            </td>
+                            <td>{{ $kelas[$guruPerson->id_kelas] ?? '' }}</td>
                             <td>{{ $guruPerson->jk }}</td>
                             @endif
                             @endforeach

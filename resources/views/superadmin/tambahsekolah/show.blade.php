@@ -56,7 +56,7 @@
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="font-weight-bold text-primary">DataTable </h6>
-                <p class="">Fitur pada bagian Show ini berfungsi untuk menampilkan Identitas data diri yang dimana sesuai dengan data SMP / SMA / SMK .</p>
+                {{-- <p class="">Fitur pada bagian Show ini berfungsi untuk menampilkan Identitas data diri yang dimana sesuai dengan data SMP / SMA / SMK .</p> --}}
             </div>
             <div class="card-body">
                 <div class="table-responsive ">
@@ -66,6 +66,7 @@
                                 <th width="">No</th>
                                 <th>ID Sekolah</th>
                                 <th width="">Nama Sekolah</th>
+                                <th width="">Alamat Sekolah</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -76,7 +77,7 @@
                                 <td class="text-center fw-bold">{{ $no++ }}</td>
                                 <td>{{ $sekolah->id }}</td>
                                 <td>{{ $sekolah->name_sekolah }}</td>
-
+                                <td>{{ $sekolah->alamat_sekolah }}</td>
                             </tr>
                         </tbody>
                     </table>

@@ -55,7 +55,7 @@
       <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="font-weight-bold text-primary">DataTable </h6>
-             <p class="">Fitur pada bagian Sekolah ini berfungsi untuk menambahkan Kategori Ujian yang dimana sesuai dengan mata Ujian SMP / SMA / SMK.</p>
+             {{-- <p class="">Fitur pada bagian Sekolah ini berfungsi untuk menambahkan Kategori Ujian yang dimana sesuai dengan mata Ujian SMP / SMA / SMK.</p> --}}
         </div>
 
          <div class="card-body">
@@ -68,6 +68,10 @@
                     <div class="m-3">
                         <label for="name_sekolah" class="pb-2 fw-bold"><i class="bi bi-bookmarks-fill"></i> {{ __('Name Sekolah') }}</label>
                         <input type="text" class="form-control" placeholder="Name Sekolah" name="name_sekolah" value="{{ $sekolah->name_sekolah ?? "" }}" required>
+                    </div>
+                    <div class="m-3">
+                        <label for="alamat_sekolah" class="pb-2 fw-bold"><i class="bi bi-geo-alt-fill"></i> {{ __('Alamat Sekolah') }}</label>
+                        <input type="text" class="form-control" placeholder="Alamat Sekolah" name="alamat_sekolah" value="{{ $sekolah->alamat_sekolah ?? "" }}" required>
                     </div>
                     <div class="m-3">
                         <button type="submit" class="btn btn-primary fs-5 shadow mb-5"><i class="bi bi-check-circle"></i> SIMPAN</button><hr>

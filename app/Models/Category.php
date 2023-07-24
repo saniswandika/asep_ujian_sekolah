@@ -14,6 +14,8 @@ class Category extends Model
     protected $fillable = ([
         'id_sekolah_asal',
         'name_category',
+        'kkm',
+        // 'capaian_kompetensi',
     ]);
 
     public function post()

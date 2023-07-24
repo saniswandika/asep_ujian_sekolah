@@ -52,7 +52,7 @@
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="font-weight-bold text-primary">DataTable </h6>
-                <p class="">Fitur pada bagian Tambah Siswa ini berfungsi untuk menambahkan Siswa yang dimana sesuai dengan Data Sekolah SMP / SMA / SMK.</p>
+                {{-- <p class="">Fitur pada bagian Tambah Siswa ini berfungsi untuk menambahkan Siswa yang dimana sesuai dengan Data Sekolah SMP / SMA / SMK.</p> --}}
             </div>
             <div class="m-3">
                 <button type="button" class="btn btn-primary  m-1 p-3 shadow" data-bs-toggle="modal" data-bs-target="#createSekolah">
@@ -80,6 +80,7 @@
                                 </th>
                                 <th width="">ID Sekolah</th>
                                 <th width="">Sekolah</th>
+                                <th width="">Alamat Sekolah</th>
                                 <th class="text-center w-25">Action</th>
                             </tr>
                         </thead>
@@ -94,6 +95,7 @@
                             </td>
                             <td>{{ $sekolah->id_secret}}</td>
                             <td>{{ $sekolah->name_sekolah ?? ""}}</td>
+                            <td>{{ $sekolah->alamat_sekolah ?? "" }}</td>
                             <td class="text-center">
                                 <a href="/sekolah-show-{{ $sekolah->id }}" class="btn btn-info text-white p-2 shadow-sm m-2 show-confirm" data-bs-toggle="tooltip" data-bs-placement="top" title="Show"> <i class="bi bi-eye-fill"></i></a>
                                 <a href="/sekolah-edit-{{ $sekolah->id }}" class="btn btn-warning text-white p-2 shadow-sm m-2 edit-confirm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"> <i class="bi bi-pencil-square"></i></a>

@@ -9,7 +9,7 @@
 {{-- <div class="row"> --}}
     <div class="column side row ">
         <h3>Hello Again!</h3>
-        <p style="color: #555;">Selamat Datang di Aplikasi Website Ujian Online</p>
+        <p style="color: #555;">Selamat Datang di Aplikasi Website Ujian E-Raport</p>
         <br>
 
         @if ($errors->any())

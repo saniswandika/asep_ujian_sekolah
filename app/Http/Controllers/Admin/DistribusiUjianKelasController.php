@@ -21,13 +21,14 @@ class DistribusiUjianKelasController extends Controller
      */
     public function index()
     {
+        // $DisujianKelases = DistribusiUjianKelas::where('id_sekolah_asal', Auth::user()->sekolah_asal)->with('kelas')->with('category')->with('categoryUjian')->get();
         $DisujianKelases = DistribusiUjianKelas::where('id_sekolah_asal', Auth::user()->sekolah_asal)->with('kelas')->with('category')->with('categoryUjian')->get();
         $kelas = Kelas::where('id_sekolah_asal', Auth::user()->sekolah_asal)->pluck('name_kelas', 'id')->all();
         $sekolahs = Sekolah::pluck('name_sekolah', 'id')->all();
         $categori = Category::where('id_sekolah_asal', Auth::user()->sekolah_asal)->pluck('name_category', 'id')->all();
         $categoryUjians = CategoryUjian::where('id_sekolah_asal', Auth::user()->sekolah_asal)->pluck('name_category_ujian', 'id')->all();
         $DisujianKelasCount = DistribusiUjianKelas::where('id_sekolah_asal', Auth::user()->sekolah_asal)->count();
-
+        // dd($DisujianKelases);
         return view('admin.distribusiUjianKelas.index', compact('DisujianKelases','kelas','sekolahs','categori','categoryUjians','DisujianKelasCount'));
     }
 

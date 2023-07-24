@@ -167,7 +167,7 @@
                 </div>
                 <div class="card-body">
                     <p class="text-capitalize">Selamat Datang <b>{{ Auth::user()->name }}</b></p>
-                    <p class="mb-0">Aplikasi ini digunakan untuk pembelajaran dan penggunaan Ujian secara online. Selamat menikmati...</p>
+                    {{-- <p class="mb-0">Aplikasi ini digunakan untuk pembelajaran dan penggunaan Ujian secara online. Selamat menikmati...</p> --}}
                 </div>
             </div>
     {{-- <div class="chartsUser">

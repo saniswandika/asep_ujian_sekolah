@@ -8,6 +8,7 @@ use App\Models\Post;
 use App\Models\Kelas;
 use App\Models\Sekolah;
 use App\Models\UjianSekolah;
+use App\Models\Category;
 // use Laravel\Passport\HasApiTokens;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -17,7 +18,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Rappasoft\LaravelAuthenticationLog\Traits\AuthenticationLoggable;
 
 
-class User extends Authenticatable
+    class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, AuthenticationLoggable;
 
@@ -77,6 +78,21 @@ class User extends Authenticatable
    public function sekolah()
     {
         return $this->belongsTo(Sekolah::class,'sekolah_asal');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'id_category');
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'posts', 'id_user', 'id_category');
+    }
+
+    public function dataUjian()
+    {
+        return $this->hasMany(DataUjian::class, 'id_user');
     }
 
 }

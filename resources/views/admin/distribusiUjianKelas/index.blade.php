@@ -51,22 +51,28 @@
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="font-weight-bold text-primary">DataTable </h6>
-        <p class="">Fitur pada bagian Category ini berfungsi untuk menambahkan Kategori Ujian yang dimana sesuai dengan mata Ujian SMP / SMA / SMK.</p>
+        {{-- <p class="">Fitur pada bagian Category ini berfungsi untuk menambahkan Kategori Ujian yang dimana sesuai dengan mata Ujian SMP / SMA / SMK.</p> --}}
             </div>
             <div class="m-3">
+                @if( Auth::user()->role == 'admin')
                 <button type="button" class="btn btn-primary  m-1 p-3" data-bs-toggle="modal" data-bs-target="#createdistribusiUjianKelas">
                 <i class="bi bi-folder-plus fa-1x"></i>
                     Create Distribusi Ujian Kelas
                 </button>
+                @endif
 
+                @if( Auth::user()->role == 'admin')
                 <button type="button" class="btn btn-success  m-1 p-3" data-bs-toggle="modal" data-bs-target="#importCategoriesUjian">
                     <i class="bi bi-file-earmark-spreadsheet-fill"></i>  Import Excel
                 </button>
+                @endif
 
+                @if( Auth::user()->role == 'admin')
                 <button class="btn btn-danger  m-1 p-3 delete_all" data-url="{{ url('categories-ujianDeleteAll') }}">
                     <i class="bi bi-trash-fill"></i>
                     Delete All Selected
                 </button>
+                @endif
             </div>
             <div class="card-body">
                 <div class="table-responsive ">
@@ -82,7 +88,9 @@
                                 <th>Sekolah</th>
                                 <th>Jenis Ujian</th>
                                 <th class="text-center">Status</th>
+                                @if( Auth::user()->role == 'admin')
                                 <th class="text-center w-25">Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -95,7 +103,7 @@
                                 <input type="checkbox" class="sub_chk" data-id="{{ $DisujianKelas->id }}">
                             </td>
                             <td class="fw-bold">{{ $no++ }}</td>
-                            <td>{{ $DisujianKelas->id_kelas ?? "" }}</td>
+                            <td>{{ $DisujianKelas->kelas->name_kelas ?? "" }}</td>
                             <td>{{ $DisujianKelas->category->name_category ?? "" }}</td>
                             <td>{{ $DisujianKelas->sekolah->name_sekolah ?? "" }}</td>
                             <td>{{ $DisujianKelas->categoryUjian->name_category_ujian ?? "" }}</td>
@@ -119,11 +127,13 @@
                                     </div>
                                 </div>
                             </td>
+                            @if( Auth::user()->role == 'admin')
                             <td class="text-center" >
                                 <a href="/distribusiUjianKelas-show-{{ $DisujianKelas->id }}" class="btn btn-info text-white p-2 shadow-sm m-2 show-confirm" data-bs-toggle="tooltip" data-bs-placement="top" title="Show"> <i class="bi bi-eye-fill"></i></a>
                                 <a href="/distribusiUjianKelas-edit-{{ $DisujianKelas->id }}" class="btn btn-warning text-white p-2 shadow-sm m-2 edit-confirm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"> <i class="bi bi-pencil-square"></i></a>
                                 <a href="/distribusiUjianKelas/delete/{{ $DisujianKelas->id }}" class="btn btn-danger text-white p-2 shadow-sm m-2 delete-confirm" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"> <i class="bi bi-trash-fill"></i></a>
-                                </td>
+                            </td>
+                            @endif
                             </tr>
                             @endforeach
                             </tbody>
