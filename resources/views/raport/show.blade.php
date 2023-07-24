@@ -5,6 +5,11 @@
   <meta charset="utf-8" />
   <title>{{ $siswa->name }} ({{ $siswa->nisn }})</title>
   <link href="./assets/invoice_raport.css" rel="stylesheet">
+  <style>
+    table, th, td {
+      border: 1px solid black;
+    }
+    </style>
 </head>
 
 <body>
@@ -73,12 +78,12 @@
         <tr class="nilai">
           <td class="center">{{$no}}</td>
           <td>{{ $category->name_category }}</td>
-          <td class="center">{{ $category->kkm }}</td>
-          <td class="center">{{ $siswa->dataUjian->sum('total_nilai') }}</td>
-          <td>{{terbilang($siswa->dataUjian->sum('total_nilai'))}}</td>
-          <td>
+          {{-- <td class="center">{{ $category->kkm }}</td>
+          <td class="center">{{ $nilaiUjian->sum('total_nilai') }}</td> --}}
+        {{-- <td>{{ terbilang($nilaiUjian->sum('total_nilai')) }}</td> --}}
+          {{-- <td> --}}
             {{-- {!! nl2br($nilai_mapel_wajib->ktsp_deskripsi_nilai_siswa->deskripsi) !!} --}}
-          </td>
+          {{-- </td> --}}
         </tr>
         @endforeach
 
@@ -471,7 +476,7 @@
   </div> --}}
 
   {{-- function --}}
-  @php
+  {{-- @php
 function terbilang($angka) {
     $angka = abs($angka);
     $terbilang = array(
@@ -527,7 +532,7 @@ function terbilang($angka) {
     return ucfirst(trim($result));
 }
 
-@endphp
+@endphp --}}
 
 </body>
 
