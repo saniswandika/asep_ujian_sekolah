@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Materis;
+use Illuminate\Support\Facades\DB;
 
 class MateriController extends Controller
 {
@@ -80,7 +81,7 @@ class MateriController extends Controller
             'keterangan' => $request->keterangan,
         ]);
 
-        return redirect()->route('materi.upload')->with('success', 'Materi created successfully');
+        return redirect()->route('materis.index')->with('success', 'Materi created successfully');
 
     }
 
@@ -126,8 +127,7 @@ class MateriController extends Controller
      */
     public function destroy($id)
     {
-        DB::table("materis")->where('id',$id)->delete();
-        return redirect()->route('materis.index')
-                        ->with('success','Materi deleted successfully');
+        DB::table("materis")->where('id', $id)->delete();
+        return redirect()->route('materis.index')->with('success', 'Materi deleted successfully');
     }
 }
