@@ -7,10 +7,6 @@ use App\Models\Materis;
 
 class MateriController extends Controller
 {
-	public function upload(){
-        $materi = Materis::get();
-        return view('materi/index', ['materi' => $materi]); // Ganti 'upload' menjadi 'index'
-    }
 
     public function proses_upload(Request $request){
         $this->validate($request, [
@@ -41,7 +37,8 @@ class MateriController extends Controller
      */
     public function index()
     {
-        //
+        $materi = Materis::get();
+        return view('materi.index', ['materi' => $materi]);
     }
 
     /**
@@ -51,8 +48,14 @@ class MateriController extends Controller
      */
     public function create()
     {
-        //
+        return view('materi.create');
     }
+
+    public function upload()
+{
+    $materi = Materis::get();
+    return view('materi.index', ['materi' => $materi]);
+}
 
     /**
      * Store a newly created resource in storage.
@@ -62,7 +65,23 @@ class MateriController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'file' => 'required|file|mimes:jpeg,png,jpg,pdf,doc,docx,xls,xlsx,ppt,pptx|max:2048',
+            'keterangan' => 'required',
+        ]);
+
+        $file = $request->file('file');
+        $nama_file = time() . "_" . $file->getClientOriginalName();
+        $tujuan_upload = 'data_file';
+        $file->move($tujuan_upload, $nama_file);
+
+        Materis::create([
+            'file' => $nama_file,
+            'keterangan' => $request->keterangan,
+        ]);
+
+        return redirect()->route('materi.upload')->with('success', 'Materi created successfully');
+
     }
 
     /**

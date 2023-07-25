@@ -22,24 +22,15 @@
         <h6 class="font-weight-bold text-primary">DataTable </h6>
     </div>
     <div class="m-3">
-        <button type="button" class="btn btn-primary  m-1 p-3 shadow" data-bs-toggle="modal" data-bs-target="#createGuru">
-        <i class="bi bi-folder-plus fa-1x"></i>
+        <a href="{{ route('materi.create') }}" class="btn btn-primary m-1 p-3 shadow">
+            <i class="bi bi-folder-plus fa-1x"></i>
             Create Materi
-        </button>
-
-        <button type="button" class="btn btn-success  m-1 p-3 shadow" data-bs-toggle="modal" data-bs-target="#importGuru">
-            <i class="bi bi-file-earmark-spreadsheet-fill"></i>
-            Import Excel
-        </button>
+        </a>
 
         <button class="btn btn-danger  m-1 p-3 shadow delete_all" data-url="{{ url('/guruDeleteAll') }}">
             <i class="bi bi-trash-fill"></i>
             Delete All Selected
         </button>
-        {{-- <a href="{{ url('/guruPrint') }}" class="btn btn-info  m-1 p-3 shadow">
-            <i class="bi bi-printer-fill" style="color: white;"></i>
-            Print All Data
-        </a> --}}
     </div>
     <div class="card-body">
         <div class="table-responsive ">
