@@ -5,6 +5,8 @@ use App\Models\Sekolah;
 use App\Models\Category;
 use App\Models\TambahAdmin;
 use App\Models\CategoryUjian;
+use App\Models\Materis;
+use App\Http\Controllers\MateriController;
 use Illuminate\Support\Facades\Auth;
 use UniSharp\LaravelFilemanager\Lfm;
 use Illuminate\Support\Facades\Route;
@@ -259,7 +261,8 @@ Route::group(['middleware' => ['auth','role:admin']], function(){
 
 Route::group(['middleware' => ['auth']], function () {
     // Your existing routes ...
-
+    Route::get('/materi', [MateriController::class, 'upload']);
+    Route::post('/upload/proses', [MateriController::class, 'proses_upload']);
     // Raport routes
     Route::get('/raport', [RaportController::class, 'index'])->name('raport.index');
     Route::get('/raport-show-{id}', [RaportController::class, 'show'])->name('raport.show');
@@ -283,3 +286,5 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/home-guru', [App\Http\Controllers\HomeController::class, 'indexGuru'])->name('guru.dashboard');
     Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile.index');
+
+

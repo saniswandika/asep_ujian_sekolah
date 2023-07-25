@@ -58,7 +58,7 @@ use Rappasoft\LaravelAuthenticationLog\Traits\AuthenticationLoggable;
 
     public function posts()
     {
-        return $this->belongsTo(Post::class,'id_user','id_category');
+        return $this->belongsTo(Post::class,'id_user','id_category', 'id');
     }
 
     public function kelas()
