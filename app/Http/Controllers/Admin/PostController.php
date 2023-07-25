@@ -22,10 +22,16 @@ class PostController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $posts = Post::where('id_sekolah_asal', $user->sekolah_asal)->with('category')->get();
+
+        $posts = Post::where('id_sekolah_asal', $user->sekolah_asal)
+            ->where('id_user', $user->id)
+            ->with('category')
+            ->get();
+
         $categories = $user->categories()->pluck('name_category', 'categories.id')->all();
         $sekolahs = Sekolah::pluck('name_sekolah', 'id')->all();
         $postCount = $user->posts()->count();
+
         return view('admin.posts.index', compact('posts', 'categories', 'sekolahs', 'postCount'));
     }
 
