@@ -22,11 +22,12 @@
         <h6 class="font-weight-bold text-primary">DataTable </h6>
     </div>
     <div class="m-3">
-        <a href="{{ route('materi.create') }}" class="btn btn-primary m-1 p-3 shadow">
-            <i class="bi bi-folder-plus fa-1x"></i>
-            Create Materi
-        </a>
-
+        @if(Auth::user()->role == 'guru')
+            <a href="{{ route('materi.create') }}" class="btn btn-primary m-1 p-3 shadow">
+                <i class="bi bi-folder-plus fa-1x"></i>
+                Create Materi
+            </a>
+        @endif
         {{-- <button class="btn btn-danger  m-1 p-3 shadow delete_all" data-url="{{ url('/guruDeleteAll') }}">
             <i class="bi bi-trash-fill"></i>
             Delete All Selected
@@ -63,11 +64,13 @@
                         <a href="/guru-edit-{{ $guru->id }}" class="btn btn-warning text-white p-2 shadow-sm m-2 edit-confirm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"> <i class="bi bi-pencil-square"></i></a>
                         <a href="/guru/delete/{{ $guru->id }}" class="btn btn-danger text-white p-2 shadow-sm m-2 delete-confirm" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"> <i class="bi bi-trash-fill"></i></a> --}}
                         <a class="btn btn-info btn-sm" href="{{ url('/data_file/'.$g->file) }}">Download</a>
-                        <form action="{{ route('materi.destroy', $g->id) }}" method="POST" class="d-inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
+                        @if(Auth::user()->role == 'guru')
+                            <form action="{{ route('materi.destroy', $g->id) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        @endif
                         </td>
                     </tr>
                     {{-- @endif --}}
