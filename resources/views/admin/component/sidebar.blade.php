@@ -175,6 +175,13 @@
     @endif
 
     @if(Auth::user()->role == 'siswa')
+    <!-- Nav Item - Materi (Tampilan Data Materi) -->
+    <li class="nav-item {{ Request::is('materi')? " active ":" " }}">
+        <a class="nav-link " href="{{ url('/materi') }}">
+            <i class="bi bi-file-earmark-text"></i>
+            <span>{{ __("Data Materi") }}</span>
+        </a>
+    </li>
     <!-- Nav Item - Data Ujian -->
     <li class="nav-item {{ Request::is('dataUjian')? " active ":" " }} || {{ Request::is('dataUjian-edit-*') ? " active ":" " }} || {{ Request::is('dataUjian-show-*') ? " active ":" " }}">
         <a class="nav-link " href="{{ url('/dataUjian') }}">
