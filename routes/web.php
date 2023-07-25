@@ -261,8 +261,14 @@ Route::group(['middleware' => ['auth','role:admin']], function(){
 
 Route::group(['middleware' => ['auth']], function () {
     // Your existing routes ...
-    Route::get('/materi', [MateriController::class, 'upload']);
+    // Route::get('/materi', [MateriController::class, 'upload']);
     Route::post('/upload/proses', [MateriController::class, 'proses_upload']);
+    Route::get('/materi/upload', [MateriController::class, 'upload'])->name('materi.upload');
+    Route::get('/materi', [MateriController::class, 'index'])->name('materis.index');
+    Route::get('/materi/create', [MateriController::class, 'create'])->name('materi.create');
+    Route::post('/materi/store', [MateriController::class, 'store'])->name('materis.store');
+    Route::delete('/materi/{id}', [MateriController::class, 'destroy'])->name('materi.destroy');
+
     // Raport routes
     Route::get('/raport', [RaportController::class, 'index'])->name('raport.index');
     Route::get('/raport-show-{id}', [RaportController::class, 'show'])->name('raport.show');

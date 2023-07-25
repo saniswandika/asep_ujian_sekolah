@@ -22,36 +22,27 @@
         <h6 class="font-weight-bold text-primary">DataTable </h6>
     </div>
     <div class="m-3">
-        <button type="button" class="btn btn-primary  m-1 p-3 shadow" data-bs-toggle="modal" data-bs-target="#createGuru">
-        <i class="bi bi-folder-plus fa-1x"></i>
+        <a href="{{ route('materi.create') }}" class="btn btn-primary m-1 p-3 shadow">
+            <i class="bi bi-folder-plus fa-1x"></i>
             Create Materi
-        </button>
+        </a>
 
-        <button type="button" class="btn btn-success  m-1 p-3 shadow" data-bs-toggle="modal" data-bs-target="#importGuru">
-            <i class="bi bi-file-earmark-spreadsheet-fill"></i>
-            Import Excel
-        </button>
-
-        <button class="btn btn-danger  m-1 p-3 shadow delete_all" data-url="{{ url('/guruDeleteAll') }}">
+        {{-- <button class="btn btn-danger  m-1 p-3 shadow delete_all" data-url="{{ url('/guruDeleteAll') }}">
             <i class="bi bi-trash-fill"></i>
             Delete All Selected
-        </button>
-        <a href="{{ url('/guruPrint') }}" class="btn btn-info  m-1 p-3 shadow">
-            <i class="bi bi-printer-fill" style="color: white;"></i>
-            Print All Data
-        </a>
+        </button> --}}
     </div>
     <div class="card-body">
         <div class="table-responsive ">
             <table class="table table-bordered" id="example" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th width="5%" class="text-center">
+                        {{-- <th width="5%" class="text-center">
                             <input type="checkbox" class="p-5" id="master" />
-                        </th>
+                        </th> --}}
+                        <th width="1%">No</th>
                         <th width="1%">File</th>
                         <th>Keterangan</th>
-                        <th width="1%">OPSI</th>
                         <th class="text-center" width="">Action</th>
                     </tr>
                 </thead>
@@ -61,9 +52,9 @@
                 @endphp
                 @foreach($materi as $g)
                 <tr id="tr_{{ $g->id }}">
-                    <td class="text-center">
+                    {{-- <td class="text-center">
                         <input type="checkbox" class="sub_chk" data-id="{{$g->id }}">
-                    </td>
+                    </td> --}}
                     <td class="fw-bold">{{ $no++ }}</td>
                     <td class="fw-bold bg-primary text-white text-capitalize">{{ $g->file }}</td>
                     <td class="text-capitalize">{{$g->keterangan}}</td>
@@ -72,6 +63,11 @@
                         <a href="/guru-edit-{{ $guru->id }}" class="btn btn-warning text-white p-2 shadow-sm m-2 edit-confirm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"> <i class="bi bi-pencil-square"></i></a>
                         <a href="/guru/delete/{{ $guru->id }}" class="btn btn-danger text-white p-2 shadow-sm m-2 delete-confirm" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"> <i class="bi bi-trash-fill"></i></a> --}}
                         <a class="btn btn-info btn-sm" href="{{ url('/data_file/'.$g->file) }}">Download</a>
+                        <form action="{{ route('materi.destroy', $g->id) }}" method="POST" class="d-inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
                         </td>
                     </tr>
                     {{-- @endif --}}
