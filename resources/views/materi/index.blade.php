@@ -36,10 +36,10 @@
             <i class="bi bi-trash-fill"></i>
             Delete All Selected
         </button>
-        <a href="{{ url('/guruPrint') }}" class="btn btn-info  m-1 p-3 shadow">
+        {{-- <a href="{{ url('/guruPrint') }}" class="btn btn-info  m-1 p-3 shadow">
             <i class="bi bi-printer-fill" style="color: white;"></i>
             Print All Data
-        </a>
+        </a> --}}
     </div>
     <div class="card-body">
         <div class="table-responsive ">
@@ -49,9 +49,9 @@
                         <th width="5%" class="text-center">
                             <input type="checkbox" class="p-5" id="master" />
                         </th>
+                        <th width="1%">No</th>
                         <th width="1%">File</th>
                         <th>Keterangan</th>
-                        <th width="1%">OPSI</th>
                         <th class="text-center" width="">Action</th>
                     </tr>
                 </thead>
