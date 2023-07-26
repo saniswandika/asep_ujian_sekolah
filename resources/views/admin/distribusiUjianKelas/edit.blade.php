@@ -41,7 +41,7 @@
                             </select>
                         </div>
 
-                        <div class="form-group m-3">
+                        {{-- <div class="form-group m-3">
                             <label for="id_kelas" class="pb-2 fw-bold fs-5"><i class="bi bi-shop-window"></i> {{ __("Kelas") }}</label>
                             <select class="form-select py-2" name="id_kelas" id="id_kelas">
                                 <option value="">Pilih Kelas</option>
@@ -60,6 +60,20 @@
                                 @else
                                     <option value="12">12</option>
                                 @endif
+                            </select>
+                        </div> --}}
+
+                        <div class="form-group m-3">
+                            <label for="id_kelas" class="pb-2 fw-bold fs-5"><i class="bi bi-shop-window"></i> {{ __("Kelas") }}</label>
+                            <select class="form-select py-2" name="id_kelas" id="id_kelas">
+                                <option value="">Pilih Kelas</option>
+                                @foreach ($kelas as $id => $name)
+                                    @if ($DisujianKelas->id_kelas == $id)
+                                        <option value="{{ $id }}" selected>{{ $name }}</option>
+                                    @else
+                                        <option value="{{ $id }}">{{ $name }}</option>
+                                    @endif
+                                @endforeach
                             </select>
                         </div>
 
@@ -119,3 +133,49 @@
 
 
 @endsection
+
+@section('scripts')
+    @parent
+    <script>
+        // Fungsi untuk mengambil daftar kelas berdasarkan kategori
+        function getKelasByCategory(categoryId) {
+            $.ajax({
+                url: '/getKelasByCategory/' + categoryId,
+                type: 'GET',
+                success: function(data) {
+                    // Kosongkan pilihan kelas
+                    $('#id_kelas').empty();
+
+                    // Tambahkan pilihan kelas baru berdasarkan data yang diterima
+                    $.each(data, function(id, name) {
+                        $('#id_kelas').append($('<option>', {
+                            value: id,
+                            text: name
+                        }));
+                    });
+
+                    // Jika data DistribusiUjianKelas ada, tetapkan pilihan kelas terpilih berdasarkan nilai id_kelas
+                    @if(isset($DisujianKelas))
+                        $('#id_kelas').val({{ $DisujianKelas->id_kelas }});
+                    @endif
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    console.error('Error:', errorThrown);
+                }
+            });
+        }
+
+        // Saat halaman dimuat, panggil fungsi getKelasByCategory untuk mengisi pilihan kelas berdasarkan kategori yang dipilih
+        $(document).ready(function() {
+            const selectedCategory = $('#id_category').val();
+            getKelasByCategory(selectedCategory);
+        });
+
+        // Saat pilihan kategori berubah, panggil fungsi getKelasByCategory untuk memperbarui pilihan kelas
+        $('#id_category').on('change', function() {
+            const categoryId = $(this).val();
+            getKelasByCategory(categoryId);
+        });
+    </script>
+@endsection
+
