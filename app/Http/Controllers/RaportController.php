@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 // use App\Models\Raport;
 use App\Models\User; // Import model User
 use App\Models\DataUjian;
+use Illuminate\Support\Facades\Auth;
 
 class RaportController extends Controller
 {
@@ -15,11 +16,23 @@ class RaportController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $siswaUsers = User::where('role', 'siswa')->with('kelas')->get(); // Mengambil data siswa berdasarkan role_id
-        return view('raport.index', compact('siswaUsers'));
-        // dd($siswaUsers);
+{
+    $user = Auth::user();
+
+    // Check if the user has a kelas and then get the name_kelas
+    $name_kelas = $user->kelas->name_kelas ?? '';
+
+    // Fetch the data based on the name_kelas
+    $siswaUsers = User::where('role', 'siswa')
+                      ->whereHas('kelas', function ($query) use ($name_kelas) {
+                          $query->where('name_kelas', $name_kelas);
+                      })
+                      ->with('kelas')
+                      ->get();
+
+            return view('raport.index', compact('siswaUsers'));
     }
+
 
     /**
      * Show the form for creating a new resource.
