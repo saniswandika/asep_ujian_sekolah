@@ -147,7 +147,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>@yield('title') - E-Raport</title>
+    <title>@yield('title') - E-Learning</title>
     <link rel="icon" href="{{ asset('/img/logo-ujian.png') }}"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
