@@ -44,6 +44,7 @@
                         <th width="1%">No</th>
                         <th width="1%">File</th>
                         <th>Keterangan</th>
+                        <th>Kelas</th>
                         <th class="text-center" width="">Action</th>
                     </tr>
                 </thead>
@@ -59,6 +60,13 @@
                     <td class="fw-bold">{{ $no++ }}</td>
                     <td class="fw-bold bg-primary text-white text-capitalize">{{ $g->file }}</td>
                     <td class="text-capitalize">{{$g->keterangan}}</td>
+                    <td class="text-capitalize">
+                        @if ($g->kelas) <!-- Check if "kelas" relationship exists and is not null -->
+                            {{ $g->kelas->name_kelas }}
+                        @else
+                            N/A <!-- Display default value if "kelas" relationship is null or does not exist -->
+                        @endif
+                    </td>
                     <td class="text-center">
                         {{-- <a href="/guru-show-{{ $guru->id }}" class="btn btn-info text-white p-2 shadow-sm m-2 show-confirm" data-bs-toggle="tooltip" data-bs-placement="top" title="Show"> <i class="bi bi-eye-fill"></i></a>
                         <a href="/guru-edit-{{ $guru->id }}" class="btn btn-warning text-white p-2 shadow-sm m-2 edit-confirm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"> <i class="bi bi-pencil-square"></i></a>
