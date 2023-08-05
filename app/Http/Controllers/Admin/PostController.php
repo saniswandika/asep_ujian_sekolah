@@ -22,10 +22,16 @@ class PostController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $posts = Post::where('id_sekolah_asal', $user->sekolah_asal)->with('category')->get();
+
+        $posts = Post::where('id_sekolah_asal', $user->sekolah_asal)
+            ->where('id_user', $user->id)
+            ->with('category')
+            ->get();
+
         $categories = $user->categories()->pluck('name_category', 'categories.id')->all();
         $sekolahs = Sekolah::pluck('name_sekolah', 'id')->all();
         $postCount = $user->posts()->count();
+
         return view('admin.posts.index', compact('posts', 'categories', 'sekolahs', 'postCount'));
     }
 
@@ -63,7 +69,10 @@ class PostController extends Controller
             // 'correct' => 'required',
         ]);
 
+        $user = Auth::user();
+
         $post = Post::create([
+            'id_user' => $user->id,
             'id_sekolah_asal' => $request->id_sekolah_asal,
             'id_category' => $request->id_category,
             'soal_ujian' => $request->soal_ujian,
@@ -74,6 +83,8 @@ class PostController extends Controller
             'jawaban' => $request->jawaban,
             // 'correct' => $request->correct,
         ]);
+
+        $post->save();
 
         if($post){
             return redirect()->route('posts.index')->with('success', 'Created Post successfully!');

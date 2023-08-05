@@ -22,15 +22,21 @@ class DataUjianController extends Controller
      */
     public function indexDataUjian2()
     {
-        $dataUjian = DataUjian::where('id_sekolah_asal', Auth::user()->sekolah_asal)
+        $dataUjian = DataUjian::whereHas('category_pelajaran', function ($query) {
+            $query->where('name_category', '=', Auth::user()->category->name_category);
+        })
+        ->whereHas('kelas', function ($query) {
+            $query->where('name_kelas', '=', Auth::user()->kelas->name_kelas);
+        })
         ->with('category_ujian')
         ->with('category_pelajaran')
         ->with('kelas')
         ->with('user')
         ->get();
 
-        $dataUjianCount = DataUjian::where('id_sekolah_asal', Auth::user()->sekolah_asal)->count();
-        return view('guru.dataUjian.index', compact('dataUjian','dataUjianCount'));
+        $dataUjianCount = $dataUjian->count();
+
+        return view('guru.dataUjian.index', compact('dataUjian', 'dataUjianCount'));
     }
 
     /**

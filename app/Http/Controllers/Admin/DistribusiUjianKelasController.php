@@ -22,14 +22,49 @@ class DistribusiUjianKelasController extends Controller
     public function index()
     {
         // $DisujianKelases = DistribusiUjianKelas::where('id_sekolah_asal', Auth::user()->sekolah_asal)->with('kelas')->with('category')->with('categoryUjian')->get();
-        $DisujianKelases = DistribusiUjianKelas::where('id_sekolah_asal', Auth::user()->sekolah_asal)->with('kelas')->with('category')->with('categoryUjian')->get();
-        $kelas = Kelas::where('id_sekolah_asal', Auth::user()->sekolah_asal)->pluck('name_kelas', 'id')->all();
-        $sekolahs = Sekolah::pluck('name_sekolah', 'id')->all();
-        $categori = Category::where('id_sekolah_asal', Auth::user()->sekolah_asal)->pluck('name_category', 'id')->all();
-        $categoryUjians = CategoryUjian::where('id_sekolah_asal', Auth::user()->sekolah_asal)->pluck('name_category_ujian', 'id')->all();
-        $DisujianKelasCount = DistribusiUjianKelas::where('id_sekolah_asal', Auth::user()->sekolah_asal)->count();
+        // $DisujianKelases = DistribusiUjianKelas::where('id_sekolah_asal', Auth::user()->sekolah_asal)->with('kelas')->with('category')->with('categoryUjian')->get();
+        // $kelas = Kelas::where('id_sekolah_asal', Auth::user()->sekolah_asal)->pluck('name_kelas', 'id')->all();
+        // $sekolahs = Sekolah::pluck('name_sekolah', 'id')->all();
+        // $categori = Category::where('id_sekolah_asal', Auth::user()->sekolah_asal)->pluck('name_category', 'id')->all();
+        // $categoryUjians = CategoryUjian::where('id_sekolah_asal', Auth::user()->sekolah_asal)->pluck('name_category_ujian', 'id')->all();
+        // $DisujianKelasCount = DistribusiUjianKelas::where('id_sekolah_asal', Auth::user()->sekolah_asal)->count();
         // dd($DisujianKelases);
-        return view('admin.distribusiUjianKelas.index', compact('DisujianKelases','kelas','sekolahs','categori','categoryUjians','DisujianKelasCount'));
+        // return view('admin.distribusiUjianKelas.index', compact('DisujianKelases','kelas','sekolahs','categori','categoryUjians','DisujianKelasCount'));
+        $user = Auth::user();
+
+        // Periksa apakah pengguna adalah admin
+        if ($user->role === 'admin') {
+            // Jika pengguna adalah admin, ambil semua data distribusi ujian
+            $DisujianKelases = DistribusiUjianKelas::with('kelas')
+                ->with('category')
+                ->with('categoryUjian')
+                ->get();
+        } else {
+            // Jika pengguna bukan admin, lanjutkan dengan filter berdasarkan kelas dan kategori
+            $userCategory = $user->category;
+            $userKelas = $user->kelas;
+
+            // Pastikan category dan kelas pengguna telah di-set sebelumnya
+            if (!$userCategory || !$userKelas) {
+                return response()->json(['message' => 'Anda belum memiliki kelas atau category yang ditetapkan.']);
+            }
+
+            // Ambil data berdasarkan category dan kelas pengguna yang saat ini diautentikasi
+            $DisujianKelases = DistribusiUjianKelas::where('id_category', $userCategory->id)
+                ->where('id_kelas', $userKelas->id)
+                ->with('kelas')
+                ->with('category')
+                ->with('categoryUjian')
+                ->get();
+        }
+
+        // Ambil data tambahan berdasarkan category dan kelas pengguna yang saat ini diautentikasi atau sesuai dengan peran admin
+        $kelas = Kelas::pluck('name_kelas', 'id')->all();
+        $categori = Category::pluck('name_category', 'id')->all();
+        $categoryUjians = CategoryUjian::pluck('name_category_ujian', 'id')->all();
+        $DisujianKelasCount = DistribusiUjianKelas::count();
+
+        return view('admin.distribusiUjianKelas.index', compact('DisujianKelases', 'kelas', 'categori', 'categoryUjians', 'DisujianKelasCount'));
     }
 
     public function indexDistribusiUjianKelas()

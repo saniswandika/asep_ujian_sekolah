@@ -5,7 +5,7 @@
             {{-- <i class="fas fa-laugh-wink"></i> --}}
             <i class="bi bi-building"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">{{ __("E-Raport") }}</div>
+        <div class="sidebar-brand-text mx-3">{{ __("E-Learning") }}</div>
     </a>
 
     <!-- Divider -->

@@ -262,7 +262,7 @@ Route::group(['middleware' => ['auth','role:admin']], function(){
 Route::group(['middleware' => ['auth']], function () {
     // Your existing routes ...
     // Route::get('/materi', [MateriController::class, 'upload']);
-    Route::post('/upload/proses', [MateriController::class, 'proses_upload']);
+    // Route::post('/upload/proses', [MateriController::class, 'proses_upload']);
     Route::get('/materi/upload', [MateriController::class, 'upload'])->name('materi.upload');
     Route::get('/materi', [MateriController::class, 'index'])->name('materis.index');
     Route::get('/materi/create', [MateriController::class, 'create'])->name('materi.create');

@@ -36,10 +36,25 @@
         <textarea class="form-control" name="keterangan"></textarea>
     </div>
 
+    <div class="form-group">
+        <label for="id_kelas">Kelas:</label>
+        <input type="text" class="form-control" value="{{ $kelas->name_kelas }}" readonly>
+        <input type="hidden" name="id_kelas" value="{{ $kelas->id }}">
+    </div>
+
+    <div class="form-group">
+        <label for="id_category">Kategori:</label>
+        <select class="form-control" id="id_category" name="id_category">
+            @foreach($categories as $id => $name)
+                <option value="{{ $id }}">{{ $name }}</option>
+            @endforeach
+        </select>
+    </div>
 
     <input type="submit" value="Upload" class="btn btn-primary">
-        <a class="btn btn-primary" href="{{ route('materis.index') }}"> Back</a>
+    <a class="btn btn-primary" href="{{ route('materis.index') }}"> Back</a>
 </form>
+
 
 @endsection
 

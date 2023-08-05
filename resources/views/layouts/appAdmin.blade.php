@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {{-- <title>{{ config('app.Admin', 'Ujian Online') }}</title> --}}
-    <title>@yield('title') - E-Raport</title>
+    <title>@yield('title') - E-Learning</title>
     <link rel="icon" href="{{ asset('/img/logo-ujian.png') }}"/>
 
     @include('layouts.style_appAdmin.style.adminStyle')
