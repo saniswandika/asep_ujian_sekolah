@@ -182,6 +182,14 @@
             <span>{{ __("Data Materi") }}</span>
         </a>
     </li>
+    <!-- Nav Item - Tugas (Tampilan Data Tugas) -->
+    <li class="nav-item {{ Request::is('tugas*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ url('/tugas') }}">
+            <i class="bi bi-journal-bookmark"></i>
+            <span>{{ __("Data Tugas") }}</span>
+        </a>
+    </li>
+
     <!-- Nav Item - Data Ujian -->
     <li class="nav-item {{ Request::is('dataUjian')? " active ":" " }} || {{ Request::is('dataUjian-edit-*') ? " active ":" " }} || {{ Request::is('dataUjian-show-*') ? " active ":" " }}">
         <a class="nav-link " href="{{ url('/dataUjian') }}">
@@ -198,6 +206,14 @@
                 <span>{{ __("Data Materi") }}</span>
             </a>
         </li>
+        <!-- Nav Item - Tugas (Tampilan Data Tugas) -->
+        <li class="nav-item {{ Request::is('tugas*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ url('/tugas') }}">
+                <i class="bi bi-journal-bookmark"></i>
+                <span>{{ __("Data Tugas") }}</span>
+            </a>
+        </li>
+
     <!-- Nav Item - Distribusi Ujian -->
     <li class="nav-item {{ Request::is('distribusiUjianKelas')? " active ":" " }} || {{ Request::is('distribusiUjianKelas-edit-*') ? " active ":" " }} || {{ Request::is('distribusiUjianKelas-show-*') ? " active ":" " }}">
         <a class="nav-link " href="{{ url('/distribusiUjianKelas') }}">
