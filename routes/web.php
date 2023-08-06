@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\TambahAdmin;
 use App\Models\CategoryUjian;
 use App\Models\Materis;
+use App\Models\Tugas;
 use App\Http\Controllers\MateriController;
 use Illuminate\Support\Facades\Auth;
 use UniSharp\LaravelFilemanager\Lfm;
@@ -18,6 +19,7 @@ use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\KelasController;
 use App\Http\Controllers\UjianSekolahController;
+use App\Http\Controllers\TugasController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DataUjianController;
 use App\Http\Controllers\Admin\PostEssayController;
@@ -272,7 +274,15 @@ Route::group(['middleware' => ['auth']], function () {
     // Raport routes
     Route::get('/raport', [RaportController::class, 'index'])->name('raport.index');
     Route::get('/raport-show-{id}', [RaportController::class, 'show'])->name('raport.show');
-    // Add more routes for create, store, edit, update, delete, etc., as needed.
+
+    // Tugas routes
+    Route::get('/tugas', [TugasController::class, 'index'])->name('tugas.index');
+    Route::get('/tugas/create', [TugasController::class, 'create'])->name('tugas.create');
+    Route::post('/tugas/store', [TugasController::class, 'store'])->name('tugas.store');
+    Route::get('/tugas/edit/{id}', [TugasController::class, 'edit'])->name('tugas.edit');
+    Route::put('/tugas/update/{id}', [TugasController::class, 'update'])->name('tugas.update');
+    Route::delete('/tugas/{id}', [TugasController::class, 'destroy'])->name('tugas.destroy');
+
 });
 
 // Route UjianSoal
