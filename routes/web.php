@@ -274,6 +274,8 @@ Route::group(['middleware' => ['auth']], function () {
     // Raport routes
     Route::get('/raport', [RaportController::class, 'index'])->name('raport.index');
     Route::get('/raport-show-{id}', [RaportController::class, 'show'])->name('raport.show');
+    Route::get('/raport/{id}/edit', [RaportController::class, 'edit'])->name('raport.edit');
+    Route::put('/raport/{id}', [RaportController::class, 'update'])->name('raport.update');
 
     // Tugas routes
     Route::get('/tugas', [TugasController::class, 'index'])->name('tugas.index');

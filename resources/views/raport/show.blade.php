@@ -12,7 +12,7 @@
     </style>
 </head>
 
-<body>
+<body onload="window.print()">
 
   <!-- Page 1 Nilai -->
   <div class="invoice-box">
@@ -73,19 +73,22 @@
         </tr>
 
         <?php $no = 0; ?>
-        @foreach($siswa->categories as $category)
-        <?php $no++; ?>
-        <tr class="nilai">
-          <td class="center">{{$no}}</td>
-          <td>{{ $category->name_category }}</td>
-          {{-- <td class="center">{{ $category->kkm }}</td>
-          <td class="center">{{ $nilaiUjian->sum('total_nilai') }}</td> --}}
-        {{-- <td>{{ terbilang($nilaiUjian->sum('total_nilai')) }}</td> --}}
-          {{-- <td> --}}
-            {{-- {!! nl2br($nilai_mapel_wajib->ktsp_deskripsi_nilai_siswa->deskripsi) !!} --}}
-          {{-- </td> --}}
-        </tr>
-        @endforeach
+        @foreach($nilaiUjian as $dataUjian)
+    <?php $category = $dataUjian->category_pelajaran; ?> <!-- Use the correct relationship method -->
+    <?php $no++; ?>
+    <tr class="nilai">
+        <td class="center">{{ $no }}</td>
+        <td>{{ $category->name_category }}</td>
+        <td class="center">{{ $category->kkm }}</td>
+        <td class="center">{{ $dataUjian->total_nilai }}</td>
+        <td>{{ terbilang($dataUjian->total_nilai) }}</td>
+        <td>
+            {{ $dataUjian->deskripsi }}
+        </td>
+    </tr>
+@endforeach
+
+
 
         <!-- Nilai Mapel Pilihan  -->
         {{-- <tr class="nilai">
@@ -158,15 +161,15 @@
       </table>
     </div>
 
-    {{-- <div style="padding-left:60%; padding-top:1rem; font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;">
-      {{$anggota_kelas->kelas->tapel->ktsp_tgl_raport->tempat_penerbitan}}, {{$anggota_kelas->kelas->tapel->ktsp_tgl_raport->tanggal_pembagian->isoFormat('D MMMM Y')}}<br>
+    <div style="padding-left:60%; padding-top:1rem; font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;">
+      {{-- {{$anggota_kelas->kelas->tapel->ktsp_tgl_raport->tempat_penerbitan}}, {{$anggota_kelas->kelas->tapel->ktsp_tgl_raport->tanggal_pembagian->isoFormat('D MMMM Y')}}<br> --}}
       Wali Kelas, <br><br><br><br>
-      <b><u>{{$anggota_kelas->kelas->guru->nama_lengkap}}, {{$anggota_kelas->kelas->guru->gelar}}</u></b><br>
-      NIP. {{konversi_nip($anggota_kelas->kelas->guru->nip)}}
-    </div> --}}
-    {{-- <div class="footer">
-      <i>{{$anggota_kelas->kelas->nama_kelas}} | {{$anggota_kelas->siswa->nama_lengkap}} | {{$anggota_kelas->siswa->nis}}</i> <b style="float: right;"><i>Halaman 1</i></b>
-    </div> --}}
+      {{-- <b><u>{{$anggota_kelas->kelas->guru->nama_lengkap}}, {{$anggota_kelas->kelas->guru->gelar}}</u></b><br>
+      NIP. {{konversi_nip($anggota_kelas->kelas->guru->nip)}} --}}
+    </div>
+    <div class="footer">
+      <i>{{ $siswa->kelas->name_kelas }} | {{ $siswa->name }} | {{ $siswa->nis }}</i> <b style="float: right;"><i>Halaman 1</i></b>
+    </div>
   </div>
   <div class="page-break"></div>
 
@@ -476,7 +479,7 @@
   </div> --}}
 
   {{-- function --}}
-  {{-- @php
+  @php
 function terbilang($angka) {
     $angka = abs($angka);
     $terbilang = array(
@@ -532,8 +535,16 @@ function terbilang($angka) {
     return ucfirst(trim($result));
 }
 
-@endphp --}}
+@endphp
 
 </body>
 
 </html>
+<script>
+    $(document).ready(function(){
+        setTimeout(function() {
+            window.history.back();
+            location.reload();
+        }, 100);
+    });
+</script>

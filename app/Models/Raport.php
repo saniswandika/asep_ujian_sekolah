@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use App\Models\User;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,6 +13,7 @@ class Raport extends Model
     protected $fillable = [
         'id_user',
         'id_ujian_sekolah',
+        'deskripsi',
         // Add other attributes related to Raport if needed
     ];
 

@@ -37,7 +37,7 @@
                             <td>{{ $siswa->kelas->name_kelas ?? '' }}</td>
                             <td>{{ $siswa->sekolah->name_sekolah ?? '' }}</td>
                             <td class="text-center">
-                                <a href="{{ route('raport.show', $siswa->id) }}" class="btn btn-info text-white p-2 shadow-sm m-2 show-confirm" data-bs-toggle="tooltip" data-bs-placement="top" title="Show">
+                                <a href="{{ route('raport.show', $siswa->id) }}" class="btn btn-info text-white p-2 shadow-sm m-2 show-confirm" data-bs-toggle="tooltip" data-bs-placement="top" title="Show dan print">
                                     <i class="bi bi-eye-fill"></i>
                                 </a>
                             </td>
