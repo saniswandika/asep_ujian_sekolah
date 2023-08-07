@@ -9,6 +9,9 @@
     table, th, td {
       border: 1px solid black;
     }
+    .page-break {
+    page-break-after: always;
+}
     </style>
 </head>
 
