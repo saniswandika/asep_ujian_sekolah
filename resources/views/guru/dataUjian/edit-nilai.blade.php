@@ -90,7 +90,7 @@
                                     <input type="text" name="total_nilai" id="total_nilai" class="form-control" placeholder="Total Nilai" value="{{ $dataUjian->total_nilai }}" />
                                 </td>
                                 <td>
-                                    <input type="text" name="deskripsi" id="deskripsi" class="form-control" placeholder="Deskripsi" value="{{ $dataUjian->deskripsi }}" /> <!-- New input field for deskripsi -->
+                                    <input type="text" name="deskripsi" id="deskripsi" class="form-control" placeholder="Deskripsi" value="{{ $dataUjian->deskripsi }}" />
                                 </td>
                             </tr>
                         </tbody>
