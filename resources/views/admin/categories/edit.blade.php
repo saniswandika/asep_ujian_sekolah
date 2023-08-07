@@ -47,6 +47,14 @@
                             <label for="kkm" class="pb-2 fw-bold"><i class="bi bi-bookmarks"></i> KKM</label>
                             <input type="number" class="form-control" placeholder="KKM" name="kkm" value="{{ $categori->kkm }}">
                         </div>
+                        <div class="form-group m-3">
+                            <label for="status" class="pb-2 fw-bold"><i class="bi bi-check-circle"></i> {{ __('Status') }}</label>
+                            <select class="form-select form-select-lg py-2" name="status" id="status" required>
+                                <option value="wajib" {{ $categori->status == 'wajib' ? 'selected' : '' }}>Wajib</option>
+                                <option value="pilihan" {{ $categori->status == 'pilihan' ? 'selected' : '' }}>Pilihan</option>
+                                <option value="muatan lokal" {{ $categori->status == 'muatan lokal' ? 'selected' : '' }}>Muatan Lokal</option>
+                            </select>
+                        </div>
                         <div class="m-3">
                             <button type="submit" class="btn btn-primary fs-5 shadow mb-5"><i class="bi bi-check-circle"></i> SIMPAN</button><hr>
                             <button type="reset" class="btn btn-warning fs-5 fst-italic fw-bold shadow" style="float: right;"><i class="bi bi-info-circle-fill"></i> Kembalikan Data Awal</button>

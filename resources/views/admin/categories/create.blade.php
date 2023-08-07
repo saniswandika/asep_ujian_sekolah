@@ -28,6 +28,14 @@
                 <label for="kkm" class="pb-2 fw-bold"><i class="bi bi-bookmarks"></i> KKM</label>
                 <input type="number" class="form-control" placeholder="KKM" name="kkm" value="{{ old('kkm') }}">
             </div>
+            <div class="m-3">
+                <label for="status" class="pb-2 fw-bold"><i class="bi bi-check-circle"></i> {{ __('Status') }}</label>
+                <select class="form-select form-select-lg py-2" name="status" id="status" required>
+                    <option value="wajib">Wajib</option>
+                    <option value="pilihan">Pilihan</option>
+                    <option value="muatan lokal">Muatan Lokal</option>
+                </select>
+            </div>
         </div>
         <div class="modal-footer">
             <button type="submit" class="btn btn-primary fs-5 shadow"><i class="bi bi-check-circle"></i> SIMPAN</button>

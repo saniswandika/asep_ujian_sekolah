@@ -51,6 +51,7 @@ class CategoryController extends Controller
             'id_sekolah_asal' => 'required',
             'name_category' => 'required|unique:categories',
             'kkm' => 'integer|nullable',
+            'status' => 'required|in:wajib,pilihan,muatan lokal',
             // 'capaian_kompetensi' => 'nullable',
         ]);
 
@@ -58,6 +59,7 @@ class CategoryController extends Controller
             'id_sekolah_asal' => $request->id_sekolah_asal,
             'name_category' => $request->name_category,
             'kkm' => $request->kkm,
+            'status' => $request->status,
             // 'capaian_kompetensi' => $request->capaian_kompetensi,
         ]);
 
@@ -106,8 +108,9 @@ class CategoryController extends Controller
     {
         $this->validate($request, [
             'id_sekolah_asal' => 'required',
-            'name_category' => 'required|unique:categories',
+            'name_category' => 'required|unique:categories,name_category,' . $categori->id,
             'kkm' => 'integer|nullable',
+            'status' => 'required|in:wajib,pilihan,muatan lokal',
             // 'capaian_kompetensi' => 'nullable',
         ]);
 
@@ -116,6 +119,7 @@ class CategoryController extends Controller
             'id_sekolah_asal' => $request->id_sekolah_asal,
             'name_category' => $request->name_category,
             'kkm' => $request->kkm,
+            'status' => $request->status,
             // 'capaian_kompetensi' => $request->capaian_kompetensi,
         ]);
 
