@@ -174,7 +174,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container">
-        <a href="/"><img class="me-4" src="assets/images/logo-polindra.png" alt="" width="30" height="24"/></a>
+        <a href="/"><img class="me-4" src="assets/images/logo_sma.png" alt="" width="30" height="24"/></a>
         <button
           class="navbar-toggler"
           type="button"
@@ -218,14 +218,14 @@
               <a class="nav-link ">Contact</a>
             </li>
           </ul>
-            @auth
+            {{-- @auth
                 <a href="{{ url('/home') }}" class="btn btn-dark me-4 shadow">Home</a>
                 @else
                 <a href="{{ route('login') }}" class="btn btn-dark me-4">Log in</a>
                 @if (Route::has('register'))
-                {{-- <a href="{{ route('register') }}" class="btn btn-primary me-4">Register</a> --}}
+                <a href="{{ route('register') }}" class="btn btn-primary me-4">Register</a>
                 @endif
-            @endauth
+            @endauth --}}
           </form>
         </div>
       </div>
@@ -235,25 +235,38 @@
     <div class="container">
     <div class="row">
       <div class="column side">
-         <h2>ONLINE TEST <br>
-      BASED-MOBILE</h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing <br> elit. Enim, eveniet. Distinctio, reprehenderit. In, est consequatur, <br>
-         id, natus quasi eligendi rerum
+         <h2>NAQWALEARN<br></h2>
+      <p style="text-align: justify;">
+        Selamat datang di NaqwaLearn, platform inovatif yang membawa pembelajaran ke tingkat baru di SMA Boarding School Naqwa Alhasanah.<br> Dalam era digital yang semakin maju, NaqwaLearn hadir untuk memberikan pengalaman pembelajaran yang interaktif, inklusif, dan relevan bagi semua siswa kami.
       </p>
-      <a class="btn btn-dark" href="{{ url('/login') }}" style="box-shadow: 2px 4px 5px rgb(65, 65, 65); width: 20%;">Get Started <i class="fa-solid fa-arrow-right me-2" style="color: white;"></i></a>
+      @auth
+        <a class="btn btn-dark" href="{{ url('/home') }}" style="box-shadow: 2px 4px 5px rgb(65, 65, 65); width: 20%;">Home <i class="fa-solid fa-arrow-right me-2" style="color: white;"></i></a>
+          @else
+          <a class="btn btn-dark" href="{{ url('/login') }}" style="box-shadow: 2px 4px 5px rgb(65, 65, 65); width: 20%;">Log in <i class="fa-solid fa-arrow-right me-2" style="color: white;"></i></a>
+        
+          @if (Route::has('register'))
+          {{-- <a href="{{ route('register') }}" class="btn btn-primary me-4">Register</a> --}}
+          @endif
+      @endauth
+      {{-- <a class="btn btn-dark" href="{{ url('/login') }}" style="box-shadow: 2px 4px 5px rgb(65, 65, 65); width: 20%;">Get Started <i class="fa-solid fa-arrow-right me-2" style="color: white;"></i></a> --}}
       </div>
       <div class="column side">
   <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner" style="border-radius: 20px; box-shadow: 2px 4px 3px rgb(248, 234, 248);">
     <div class="carousel-item active" data-bs-interval="10000">
-      <img src="assets/images/1.webp" height="400" width="500" class="d-block w-100" alt="...">
+      <img src="assets/images/gambar5.jpg" height="400" width="500" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item" data-bs-interval="10000">
+      <img src="assets/images/gambar.jpg" height="400" width="500" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item" data-bs-interval="10000">
+      <img src="assets/images/gambar1.jpg" height="400" width="500" class="d-block w-100" alt="...">
     </div>
     <div class="carousel-item" data-bs-interval="2000">
-      <img src="assets/images/2.webp" height="400" width="500" class="d-block w-100" alt="...">
+      <img src="assets/images/gambar2.jpg" height="400" width="500" class="d-block w-100" alt="...">
     </div>
     <div class="carousel-item">
-      <img src="assets/images/3.webp" height="400" width="500" class="d-block w-100" alt="...">
+      <img src="assets/images/gambar4.jpg" height="400" width="500" class="d-block w-100" alt="...">
     </div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
@@ -271,41 +284,41 @@
        <h3 class="text-center">Special <span style="color: rgb(128, 173, 255);">Features</span></h3>
        <br>
        <br>
-      <div class="row">
-  <div class="col-sm-4">
-    <div class="card1">
-      <div class="card-body">
-        <img src="assets/images/study.png" height="45" width="50"  style="background-color: white; border-radius: 10px;" alt="">
-        <h5 class="card-title">Ringan</h5>
-        <p class="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Debitis, inventore perferendis iure dignissimos iusto aperiam rem voluptate asperiores beatae. Esse similique magnam dolores quod veniam iusto enim porro nulla quis.</p>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="card2">
-      <div class="card-body">
+      <div class="row mb-4">
+        <div class="col-sm-6">
+          <div class="card1">
+            <div class="card-body">
+              <img src="assets/images/study.png" height="45" width="50"  style="background-color: white; border-radius: 10px;" alt="">
+              <h5 class="card-title">E - Rapot</h5>
+              <p class="card-text">E-Rapot, singkatan dari "Evaluasi Raport," merujuk pada bentuk digitalisasi proses penilaian dan pelaporan hasil belajar siswa di sekolah. Ini adalah sebuah inovasi yang memanfaatkan teknologi informasi dan komunikasi untuk meningkatkan efisiensi, kecepatan, dan akurasi dalam mengelola serta menyampaikan informasi terkait prestasi akademis siswa kepada orang tua atau wali murid.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="card2">
+            <div class="card-body">
 
-        <img src="assets/images/fast-time.png" height="45" width="50"  style="background-color: white; border-radius: 10px;" alt="">
-        <h5 class="card-title">Cepat</h5>
-        <p class="card-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Totam at perferendis amet porro cum impedit quia, beatae fugiat laudantium tenetur nisi. Architecto ipsum esse officia quis voluptas, rerum distinctio dolorem?</p>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="card3">
-      <div class="card-body">
+              <img src="assets/images/fast-time.png" height="45" width="50"  style="background-color: white; border-radius: 10px;" alt="">
+              <h5 class="card-title">E-Learning</h5>
+              <p class="card-text">E-Learning, singkatan dari "Electronic Learning," merujuk pada bentuk pendidikan yang menggunakan teknologi digital dan internet sebagai media utama dalam proses pembelajaran. Ini adalah sebuah konsep yang merevolusi cara kita mendapatkan pengetahuan dan keterampilan, dengan memanfaatkan platform online, aplikasi, dan sumber daya digital.</p>
+            </div>
+          </div>
+        </div>
+        {{-- <div class="col-sm-4">
+          <div class="card3">
+            <div class="card-body">
 
-        <img src="assets/images/efficiency.png" height="45" width="50"  style="background-color: white; border-radius: 10px;" alt="">
-        <h5 class="card-title">Efisien</h5>
-        <p class="card-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit quo totam facere fugiat voluptas vel accusantium, dignissimos nesciunt. Consequuntur quas ex sint reiciendis doloremque quod nam quidem consectetur, facere iste!</p>
-      </div>
-    </div>
-    <br><br><br>
-  </div>
+              <img src="assets/images/efficiency.png" height="45" width="50"  style="background-color: white; border-radius: 10px;" alt="">
+              <h5 class="card-title">Efisien</h5>
+              <p class="card-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit quo totam facere fugiat voluptas vel accusantium, dignissimos nesciunt. Consequuntur quas ex sint reiciendis doloremque quod nam quidem consectetur, facere iste!</p>
+            </div>
+          </div>
+          <br><br><br>
+        </div> --}}
     </div>
     <hr>
     <div class="container-fluid">
-<div class="container">
+{{-- <div class="container">
   <footer class="py-5">
     <div class="row">
       <div class="col-2">
@@ -363,7 +376,7 @@
       </ul>
     </div>
   </footer>
-</div>
+</div> --}}
     </div>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
