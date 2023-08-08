@@ -120,6 +120,7 @@ class DataUjianController extends Controller
     {
         $dataUjian =  DB::table('data_ujians')->where('id', $request->id)->update([
             'total_nilai' => $request->total_nilai,
+            'deskripsi' => $request->deskripsi,
             'updated_at' => now(),
         ]);
 

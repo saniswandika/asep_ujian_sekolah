@@ -95,4 +95,8 @@ use Rappasoft\LaravelAuthenticationLog\Traits\AuthenticationLoggable;
         return $this->hasMany(DataUjian::class, 'id_user');
     }
 
+        public function raport()
+    {
+        return $this->hasOne(Raport::class, 'id_user');
+    }
 }

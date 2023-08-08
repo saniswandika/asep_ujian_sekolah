@@ -15,6 +15,7 @@ class Category extends Model
         'id_sekolah_asal',
         'name_category',
         'kkm',
+        'status',
         // 'capaian_kompetensi',
     ]);
 

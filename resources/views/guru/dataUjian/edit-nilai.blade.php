@@ -71,6 +71,7 @@
                                 <th>No</th>
                                 <th>Total Jawaban Benar Pilihan Ganda</th>
                                 <th>Total Nilai Keseluruhan Nilai</th>
+                                <th>Capaian Kompetensi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -87,6 +88,9 @@
                                 </td>
                                 <td>
                                     <input type="text" name="total_nilai" id="total_nilai" class="form-control" placeholder="Total Nilai" value="{{ $dataUjian->total_nilai }}" />
+                                </td>
+                                <td>
+                                    <input type="text" name="deskripsi" id="deskripsi" class="form-control" placeholder="Deskripsi" value="{{ $dataUjian->deskripsi }}" />
                                 </td>
                             </tr>
                         </tbody>
@@ -156,46 +160,44 @@
                                                     <div class="col-md-6 ">
                                                         <div class="form-group ">
                                                             <label for="id_category" class="fw-bold"> Jawaban Benar:</label>
-                                                                <div class="form-control bg-success text-white fw-bold">
+                                                            <div class="form-control bg-success text-white fw-bold">
+                                                                @if($ujianSekolahs->post)
                                                                     @if($ujianSekolahs->post->jawaban == 'A')
-                                                                    {{ __("A.") }} {{ $ujianSekolahs->post->pilihan_a }}
+                                                                        {{ __("A.") }} {{ $ujianSekolahs->post->pilihan_a }}
                                                                     @elseif($ujianSekolahs->post->jawaban == 'B')
-                                                                    {{ __("B.") }} {{ $ujianSekolahs->post->pilihan_b }}
+                                                                        {{ __("B.") }} {{ $ujianSekolahs->post->pilihan_b }}
                                                                     @elseif($ujianSekolahs->post->jawaban == 'C')
-                                                                    {{ __("C.") }} {{ $ujianSekolahs->post->pilihan_c }}
+                                                                        {{ __("C.") }} {{ $ujianSekolahs->post->pilihan_c }}
                                                                     @elseif($ujianSekolahs->post->jawaban == 'D')
-                                                                    {{ __("D.") }} {{ $ujianSekolahs->post->pilihan_d }}
+                                                                        {{ __("D.") }} {{ $ujianSekolahs->post->pilihan_d }}
                                                                     @endif
-                                                                </div>
+                                                                {{-- @else
+                                                                    {{ __("Not Found!") }} --}}
+                                                                @endif
+                                                            </div>
+
                                                         </div>
                                                     </div>
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="id_category" class="fw-bold"> Jawaban Siswa:</label>
-                                                        <div class="@if($ujianSekolahs->id_jawaban == $ujianSekolahs->post->jawaban) form-control bg-success text-white fw-bold @else form-control bg-danger text-white fw-bold @endif">
-                                                            @if($ujianSekolahs->id_jawaban == $ujianSekolahs->post->jawaban)
+                                                        <div class="@if($ujianSekolahs->post && $ujianSekolahs->id_jawaban == $ujianSekolahs->post->jawaban) form-control bg-success text-white fw-bold @else form-control bg-danger text-white fw-bold @endif">
+                                                            @if($ujianSekolahs->post && $ujianSekolahs->id_jawaban == $ujianSekolahs->post->jawaban)
                                                                 @if($ujianSekolahs->id_jawaban == 'A')
-                                                                {{ __("A.") }} {{ $ujianSekolahs->post->pilihan_a }}
+                                                                    {{ __("A.") }} {{ $ujianSekolahs->post->pilihan_a }}
                                                                 @elseif($ujianSekolahs->id_jawaban == 'B')
-                                                                {{ __("B.") }} {{ $ujianSekolahs->post->pilihan_b }}
+                                                                    {{ __("B.") }} {{ $ujianSekolahs->post->pilihan_b }}
                                                                 @elseif($ujianSekolahs->id_jawaban == 'C')
-                                                                {{ __("C.") }} {{ $ujianSekolahs->post->pilihan_c }}
+                                                                    {{ __("C.") }} {{ $ujianSekolahs->post->pilihan_c }}
                                                                 @elseif($ujianSekolahs->id_jawaban == 'D')
-                                                                {{ __("D.") }} {{ $ujianSekolahs->post->pilihan_d }}
+                                                                    {{ __("D.") }} {{ $ujianSekolahs->post->pilihan_d }}
                                                                 @endif
-                                                            @else
-                                                                @if($ujianSekolahs->id_jawaban == 'A')
-                                                                {{ __("A.") }} {{ $ujianSekolahs->post->pilihan_a }}
-                                                                @elseif($ujianSekolahs->id_jawaban == 'B')
-                                                                {{ __("B.") }} {{ $ujianSekolahs->post->pilihan_b }}
-                                                                @elseif($ujianSekolahs->id_jawaban == 'C')
-                                                                {{ __("C.") }} {{ $ujianSekolahs->post->pilihan_c }}
-                                                                @elseif($ujianSekolahs->id_jawaban == 'D')
-                                                                {{ __("D.") }} {{ $ujianSekolahs->post->pilihan_d }}
-                                                                @endif
+                                                            {{-- @else
+                                                                {{ __("Not Found!") }} --}}
                                                             @endif
                                                         </div>
+
 
                                                     </div>
                                                 </div>

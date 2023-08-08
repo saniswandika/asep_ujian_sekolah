@@ -61,6 +61,7 @@ class RaportController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function show($id)
     {
         // $siswa = User::findOrFail($id);
@@ -68,6 +69,7 @@ class RaportController extends Controller
         // return view('raport.show', compact('siswa'));
         $siswa = User::with('kelas', 'sekolah', 'dataUjian')->findOrFail($id);
         $nilaiUjian = DataUjian::where('id_user', $id)->get();
+        // dd($nilaiUjian);
         return view('raport.show', compact('siswa', 'nilaiUjian'));
     }
 
