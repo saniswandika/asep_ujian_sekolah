@@ -293,7 +293,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/ekskul', [EkskulController::class, 'store'])->name('ekskul.store');
     Route::get('/ekskul/{ekskul}/edit', [EkskulController::class, 'edit'])->name('ekskul.edit');
     Route::put('/ekskul/{ekskul}', [EkskulController::class, 'update'])->name('ekskul.update');
-    Route::delete('/ekskul/{ekskul}', [EkskulController::class, 'destroy'])->name('ekskul.destroy');
+    Route::delete('/ekskul/{id}', [EkskulController::class, 'destroy'])->name('ekskul.destroy');
 
 
 });

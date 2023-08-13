@@ -38,7 +38,8 @@ class EkskulController extends Controller
 
     public function edit(Ekskul $ekskul)
     {
-        return view('ekskul.edit', compact('ekskul'));
+        $users = User::all(); // Ambil semua data user
+    return view('ekskul.edit', compact('ekskul', 'users'));
     }
 
     public function update(Request $request, Ekskul $ekskul)
@@ -54,12 +55,12 @@ class EkskulController extends Controller
         return redirect()->route('ekskul.index')->with('success', 'Ekskul berhasil diperbarui.');
     }
 
-    public function destroy(Ekskul $ekskul)
-    {
-        DB::table("ekskuls")->where('id', $id)->delete();
+    public function destroy($id)
+{
+    $ekskul = Ekskul::findOrFail($id);
 
-        return redirect()->route('ekskul.index')->with('success', 'Ekskul berhasil dihapus.');
-    }
-
+    $ekskul->delete();
+    return redirect()->route('ekskul.index')->with('success', 'Ekskul berhasil dihapus.');
+}
 
 }

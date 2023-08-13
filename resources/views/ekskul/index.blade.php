@@ -92,7 +92,12 @@
                             <td class="fw-bold bg-primary text-white text-capitalize">{{ $ekskul->nama }}</td>
                             <td class="text-center">
                                 <a href="/ekskul/{{ $ekskul->id }}/edit" class="btn btn-warning text-white p-2 shadow-sm m-2 edit-confirm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"> <i class="bi bi-pencil-square"></i></a>
-                                <a href="/ekskul/delete/{{ $ekskul->id }}" class="btn btn-danger text-white p-2 shadow-sm m-2 delete-confirm" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"> <i class="bi bi-trash-fill"></i></a>
+                                <form action="{{ route('ekskul.destroy', $ekskul->id) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus ekskul ini?')">Delete</button>
+                                </form>
+
                             </td>
                         </tr>
                     @endforeach

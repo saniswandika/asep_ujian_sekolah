@@ -134,7 +134,7 @@
     @endif
 
 
-    @if(Auth::user()->role == 'admin' || Auth::user()->role == 'guru')
+    @if(Auth::user()->role == 'guru')
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item
