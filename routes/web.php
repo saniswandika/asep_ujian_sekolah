@@ -7,6 +7,7 @@ use App\Models\TambahAdmin;
 use App\Models\CategoryUjian;
 use App\Models\Materis;
 use App\Models\Tugas;
+use App\Models\Ekskul;
 use App\Http\Controllers\MateriController;
 use Illuminate\Support\Facades\Auth;
 use UniSharp\LaravelFilemanager\Lfm;
@@ -20,6 +21,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\KelasController;
 use App\Http\Controllers\UjianSekolahController;
 use App\Http\Controllers\TugasController;
+use App\Http\Controllers\EkskulController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DataUjianController;
 use App\Http\Controllers\Admin\PostEssayController;
@@ -284,6 +286,15 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/tugas/edit/{id}', [TugasController::class, 'edit'])->name('tugas.edit');
     Route::put('/tugas/update/{id}', [TugasController::class, 'update'])->name('tugas.update');
     Route::delete('/tugas/{id}', [TugasController::class, 'destroy'])->name('tugas.destroy');
+
+    // ekskul routes
+    Route::get('/ekskul', [EkskulController::class, 'index'])->name('ekskul.index');
+    Route::get('/ekskul/create', [EkskulController::class, 'create'])->name('ekskul.create');
+    Route::post('/ekskul', [EkskulController::class, 'store'])->name('ekskul.store');
+    Route::get('/ekskul/{ekskul}/edit', [EkskulController::class, 'edit'])->name('ekskul.edit');
+    Route::put('/ekskul/{ekskul}', [EkskulController::class, 'update'])->name('ekskul.update');
+    Route::delete('/ekskul/{ekskul}', [EkskulController::class, 'destroy'])->name('ekskul.destroy');
+
 
 });
 

@@ -62,12 +62,12 @@
           <td rowspan="2" style="width: 5%;">NO</td>
           <td rowspan="2" style="width: 35%;">Mata Pelajaran</td>
           <td rowspan="2" style="width: 10%;">KKM</td>
-          <td colspan="2">Nilai</td>
+          <td colspan="1" style="width: 10%;">Nilai</td>
           <td rowspan="2">Deskripsi</td>
         </tr>
-        <tr class="heading">
-          <td style="width: 10%;">Angka</td>
-          <td style="width: 25%;">Terbilang</td>
+        <tr>
+          {{-- <td style="width: 10%;"  >Angka</td> --}}
+          {{-- <td style="width: 25%;">Terbilang</td> --}}
         </tr>
 
         <!-- Nilai Mapel Wajib  -->
@@ -75,23 +75,35 @@
           <td colspan="6"><strong>Mapel Wajib </strong></td>
         </tr>
 
-        <?php $no = 0; ?>
+        <?php
+        $no = 0;
+        $kategoriTampil = array(); // Array untuk melacak kategori yang sudah ditampilkan
+        ?>
+
         @foreach($nilaiUjian as $dataUjian)
-            <?php $category = $dataUjian->category_pelajaran; ?>
-            <?php $no++; ?>
-            @if($category->status === 'wajib')
-            <tr class="nilai">
-                <td class="center">{{ $no }}</td>
-                <td>{{ $category->name_category }}</td>
-                <td class="center">{{ $category->kkm }}</td>
-                <td class="center">{{ $dataUjian->total_nilai }}</td>
-                <td>{{ terbilang($dataUjian->total_nilai) }}</td>
-                <td>
-                    {{ $dataUjian->deskripsi }}
-                </td>
-            </tr>
+            <?php
+            $kategori = $dataUjian->category_pelajaran;
+            $namaKategori = $kategori->name_category;
+            ?>
+
+            @if($kategori->status === 'wajib' && !in_array($namaKategori, $kategoriTampil))
+                <?php
+                $no++;
+                array_push($kategoriTampil, $namaKategori); // Tandai kategori sebagai sudah ditampilkan
+                ?>
+
+                <tr class="nilai">
+                    <td class="center">{{ $no }}</td>
+                    <td>{{ $namaKategori }}</td>
+                    <td class="center">{{ $kategori->kkm }}</td>
+                    <td class="center">{{ $dataUjian->total_nilai }}</td>
+                    <td>
+                        {{ $dataUjian->deskripsi }}
+                    </td>
+                </tr>
             @endif
         @endforeach
+
 
 
 
@@ -116,15 +128,22 @@
         {{-- @foreach($data_nilai_mapel_pilihan->sortBy('pembelajaran.mapel.ktsp_mapping_mapel.nomor_urut') as $nilai_mapel_pilihan) --}}
         <?php $no++; ?>
         @foreach($nilaiUjian as $dataUjian)
-            <?php $category = $dataUjian->category_pelajaran; ?>
-            <?php $no++; ?>
-            @if($category->status === 'pilihan')
+        <?php
+        $kategori = $dataUjian->category_pelajaran;
+        $namaKategori = $kategori->name_category;
+        ?>
+
+        @if($kategori->status === 'pilihan' && !in_array($namaKategori, $kategoriTampil))
+            <?php
+            $no = 1;
+            array_push($kategoriTampil, $namaKategori); // Tandai kategori sebagai sudah ditampilkan
+            ?>
             <tr class="nilai">
                 <td class="center">{{ $no }}</td>
-                <td>{{ $category->name_category }}</td>
-                <td class="center">{{ $category->kkm }}</td>
+                <td>{{ $namaKategori }}</td>
+                <td class="center">{{ $kategori->kkm }}</td>
                 <td class="center">{{ $dataUjian->total_nilai }}</td>
-                <td>{{ terbilang($dataUjian->total_nilai) }}</td>
+                {{-- <td>{{ terbilang($dataUjian->total_nilai) }}</td> --}}
                 <td>
                     {{ $dataUjian->deskripsi }}
                 </td>
@@ -228,7 +247,7 @@
       <table cellspacing="0">
 
         <!-- EkstraKulikuler  -->
-        {{-- <tr>
+        <tr>
           <td colspan="4" style="height: 25px;"><strong>B. EKSTRAKULIKULER</strong></td>
         </tr>
         <tr class="heading">
@@ -238,7 +257,7 @@
           <td>Keterangan</td>
         </tr>
 
-        @if(count($data_anggota_ekstrakulikuler) == 0)
+        @if(count($dataAnggotaEkskul) == 0)
         <tr class="nilai">
           <td class="center">1</td>
           <td></td>
@@ -255,26 +274,26 @@
             <span></span>
           </td>
         </tr>
-        @elseif(count($data_anggota_ekstrakulikuler) == 1)
+        @elseif(count($dataAnggotaEkskul) == 1)
         <?php $no = 0; ?>
-        @foreach($data_anggota_ekstrakulikuler as $nilai_ekstra)
+        @foreach($dataAnggotaEkskul as $nilai_ekstra)
         <?php $no++; ?>
         <tr class="nilai">
           <td class="center">{{$no}}</td>
-          <td>{{$nilai_ekstra->ekstrakulikuler->nama_ekstrakulikuler}}</td>
+          <td>{{$nilai_ekstra->nama}}</td>
           <td class="center">
-            @if($nilai_ekstra->nilai == 4)
+            @if($nilai_ekstra->predikat == 'A')
             Sangat Baik
-            @elseif($nilai_ekstra->nilai == 3)
+            @elseif($nilai_ekstra->predikat == 'B')
             Baik
-            @elseif($nilai_ekstra->nilai == 2)
+            @elseif($nilai_ekstra->predikat == 'C')
             Cukup
-            @elseif($nilai_ekstra->nilai == 1)
+            @elseif($nilai_ekstra->predikat == 'D')
             Kurang
             @endif
           </td>
           <td class="description">
-            <span>{!! nl2br($nilai_ekstra->deskripsi) !!}</span>
+            <span>{{$nilai_ekstra->keterangan}}</span>
           </td>
         </tr>
         @endforeach
@@ -288,28 +307,28 @@
         </tr>
         @else
         <?php $no = 0; ?>
-        @foreach($data_anggota_ekstrakulikuler as $nilai_ekstra)
+        @foreach($dataAnggotaEkskul as $nilai_ekstra)
         <?php $no++; ?>
         <tr class="nilai">
           <td class="center">{{$no}}</td>
-          <td>{{$nilai_ekstra->ekstrakulikuler->nama_ekstrakulikuler}}</td>
+          <td>{{$nilai_ekstra->nama}}</td>
           <td class="center">
-            @if($nilai_ekstra->nilai == 4)
+            @if($nilai_ekstra->predikat == 'A')
             Sangat Baik
-            @elseif($nilai_ekstra->nilai == 3)
+            @elseif($nilai_ekstra->predikat == 'B')
             Baik
-            @elseif($nilai_ekstra->nilai == 2)
+            @elseif($nilai_ekstra->predikat == 'C')
             Cukup
-            @elseif($nilai_ekstra->nilai == 1)
+            @elseif($nilai_ekstra->predikat == 'D')
             Kurang
             @endif
           </td>
           <td class="description">
-            <span>{!! nl2br($nilai_ekstra->deskripsi) !!}</span>
+            <span>{{$nilai_ekstra->keterangan}}</span>
           </td>
         </tr>
         @endforeach
-        @endif --}}
+        @endif
         <!-- End Ekstrakulikuler  -->
 
         <!-- Prestasi -->
