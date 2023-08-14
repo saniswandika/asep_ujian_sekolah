@@ -9,6 +9,7 @@ use App\Models\Kelas;
 use App\Models\Sekolah;
 use App\Models\UjianSekolah;
 use App\Models\Category;
+use App\Models\Semester;
 // use Laravel\Passport\HasApiTokens;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -98,5 +99,10 @@ use Rappasoft\LaravelAuthenticationLog\Traits\AuthenticationLoggable;
         public function raport()
     {
         return $this->hasOne(Raport::class, 'id_user');
+    }
+
+    public function semester()
+    {
+        return $this->belongsTo(Semester::class, 'id_semester');
     }
 }

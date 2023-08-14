@@ -30,14 +30,20 @@
         <tr>
           <td style="width: 19%;">Alamat</td>
           <td style="width: 52%;">: {{ $siswa->sekolah->alamat_sekolah }}</td>
-          {{-- <td style="width: 16%;">Semester</td>
-          <td style="width: 13%;">:
-            @if($anggota_kelas->kelas->tapel->semester == 1)
-            1 (Ganjil)
-            @else
-            2 (Genap)
-            @endif
-          </td> --}}
+          <td style="width: 16%;">Semester</td>
+            <td style="width: 13%;">:
+                @if($siswa->semester)
+                    {{ $siswa->semester->id }} {{-- Display the id_semester --}}
+                    @if($siswa->semester->id % 2 == 1)
+                        (Ganjil)
+                    @else
+                        (Genap)
+                    @endif
+                @else
+                    No Semester Data Available
+                @endif
+            </td>
+
         </tr>
         <tr>
           <td style="width: 19%;">Nama Peserta Didik</td>
@@ -221,14 +227,19 @@
         <tr>
           <td style="width: 19%;">Alamat</td>
           <td style="width: 52%;">: {{ $siswa->sekolah->alamat_sekolah }}</td>
-          {{-- <td style="width: 16%;">Semester</td>
-          <td style="width: 13%;">:
-            @if($anggota_kelas->kelas->tapel->semester == 1)
-            1 (Ganjil)
-            @else
-            2 (Genap)
-            @endif
-          </td> --}}
+          <td style="width: 16%;">Semester</td>
+            <td style="width: 13%;">:
+                @if($siswa->semester)
+                    {{ $siswa->semester->id }} {{-- Display the id_semester --}}
+                    @if($siswa->semester->id % 2 == 1)
+                        (Ganjil)
+                    @else
+                        (Genap)
+                    @endif
+                @else
+                    No Semester Data Available
+                @endif
+            </td>
         </tr>
         <tr>
           <td style="width: 19%;">Nama Peserta Didik</td>
@@ -452,29 +463,30 @@
         <!-- End Tanggapan ORANG TUA/WALI -->
 
         <!-- Keputusan -->
-        {{-- @if($anggota_kelas->kelas->tapel->semester == 2)
+        @if($siswa->semester)
         <tr>
-          <td colspan="4" style="height: 25px; padding-top: 5px"><strong>G. KEPUTUSAN</strong></td>
+            <td colspan="4" style="height: 25px; padding-top: 5px"><strong>G. KEPUTUSAN</strong></td>
         </tr>
         <tr class="sikap">
-          <td colspan="4" class="description" style="height: 45px;">
-            Berdasarkan hasil yang dicapai pada semester 1 dan 2, Peserta didik ditetapkan : <br>
-            @if(!is_null($anggota_kelas->kenaikan_kelas))
-            <b>
-              @if($anggota_kelas->kenaikan_kelas->keputusan == 1)
-              NAIK KE KELAS : {{$anggota_kelas->kenaikan_kelas->kelas_tujuan}}
-              @elseif($anggota_kelas->kenaikan_kelas->keputusan == 2)
-              TINGGAL DI KELAS : {{$anggota_kelas->kenaikan_kelas->kelas_tujuan}}
-              @elseif($anggota_kelas->kenaikan_kelas->keputusan == 3)
-              LULUS
-              @elseif($anggota_kelas->kenaikan_kelas->keputusan == 4)
-              TIDAK LULUS
-              @endif
-            </b>
-            @endif
-          </td>
+            <td colspan="4" class="description" style="height: 45px;">
+                Berdasarkan hasil yang dicapai pada semester {{ $siswa->semester->id }}, Peserta didik ditetapkan : <br>
+                {{-- @if(!is_null($anggota_kelas->kenaikan_kelas))
+                <b>
+                    @if($anggota_kelas->kenaikan_kelas->keputusan == 1)
+                    NAIK KE KELAS : {{$anggota_kelas->kenaikan_kelas->kelas_tujuan}}
+                    @elseif($anggota_kelas->kenaikan_kelas->keputusan == 2)
+                    TINGGAL DI KELAS : {{$anggota_kelas->kenaikan_kelas->kelas_tujuan}}
+                    @elseif($anggota_kelas->kenaikan_kelas->keputusan == 3)
+                    LULUS
+                    @elseif($anggota_kelas->kenaikan_kelas->keputusan == 4)
+                    TIDAK LULUS
+                    @endif
+                </b>
+                @endif --}}
+            </td>
         </tr>
-        @endif --}}
+        @endif
+
         <!-- End Keputusan -->
 
       </table>
