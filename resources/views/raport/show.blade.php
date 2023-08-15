@@ -71,15 +71,18 @@
           <td colspan="1" style="width: 10%;">Nilai</td>
           <td rowspan="2">Deskripsi</td>
         </tr>
+
         <tr>
           {{-- <td style="width: 10%;"  >Angka</td> --}}
           {{-- <td style="width: 25%;">Terbilang</td> --}}
+
         </tr>
 
         <!-- Nilai Mapel Wajib  -->
         <tr class="nilai">
           <td colspan="6"><strong>Mapel Wajib </strong></td>
         </tr>
+
 
         <?php
         $no = 0;
@@ -107,6 +110,7 @@
                         {{ $dataUjian->deskripsi }}
                     </td>
                 </tr>
+
             @endif
         @endforeach
 
@@ -150,6 +154,7 @@
                 <td class="center">{{ $kategori->kkm }}</td>
                 <td class="center">{{ $dataUjian->total_nilai }}</td>
                 {{-- <td>{{ terbilang($dataUjian->total_nilai) }}</td> --}}
+
                 <td>
                     {{ $dataUjian->deskripsi }}
                 </td>
@@ -227,6 +232,7 @@
         <tr>
           <td style="width: 19%;">Alamat</td>
           <td style="width: 52%;">: {{ $siswa->sekolah->alamat_sekolah }}</td>
+
           <td style="width: 16%;">Semester</td>
             <td style="width: 13%;">:
                 @if($siswa->semester)
@@ -240,6 +246,7 @@
                     No Semester Data Available
                 @endif
             </td>
+
         </tr>
         <tr>
           <td style="width: 19%;">Nama Peserta Didik</td>
@@ -258,7 +265,7 @@
       <table cellspacing="0">
 
         <!-- EkstraKulikuler  -->
-        <tr>
+        {{-- <tr>
           <td colspan="4" style="height: 25px;"><strong>B. EKSTRAKULIKULER</strong></td>
         </tr>
         <tr class="heading">
@@ -339,7 +346,7 @@
           </td>
         </tr>
         @endforeach
-        @endif
+        @endif --}}
         <!-- End Ekstrakulikuler  -->
 
         <!-- Prestasi -->
@@ -463,6 +470,7 @@
         <!-- End Tanggapan ORANG TUA/WALI -->
 
         <!-- Keputusan -->
+
         @if($siswa->semester)
         <tr>
             <td colspan="4" style="height: 25px; padding-top: 5px"><strong>G. KEPUTUSAN</strong></td>
@@ -486,6 +494,7 @@
             </td>
         </tr>
         @endif
+
 
         <!-- End Keputusan -->
 

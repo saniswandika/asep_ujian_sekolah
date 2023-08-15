@@ -105,4 +105,5 @@ use Rappasoft\LaravelAuthenticationLog\Traits\AuthenticationLoggable;
     {
         return $this->belongsTo(Semester::class, 'id_semester');
     }
+
 }

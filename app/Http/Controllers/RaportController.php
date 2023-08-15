@@ -71,6 +71,7 @@ class RaportController extends Controller
         $siswa = User::with('kelas', 'sekolah', 'dataUjian', 'semester')->findOrFail($id);
         $nilaiUjian = DataUjian::where('id_user', $id)->get();
         // dd($nilaiUjian);
+
         // return view('raport.show', compact('siswa', 'nilaiUjian'));
         $dataAnggotaEkskul = Ekskul::where('id_user', $id)->get();
         // dd($dataAnggotaEkskul);
