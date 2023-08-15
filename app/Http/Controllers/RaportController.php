@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 // use App\Models\Raport;
 use App\Models\User; // Import model User
 use App\Models\DataUjian;
+use App\Models\Ekskul;
 use Illuminate\Support\Facades\Auth;
 
 class RaportController extends Controller
@@ -67,10 +68,15 @@ class RaportController extends Controller
         // $siswa = User::findOrFail($id);
         // $siswa = User::with('kelas', 'sekolah', 'dataUjian')->findOrFail($id);
         // return view('raport.show', compact('siswa'));
-        $siswa = User::with('kelas', 'sekolah', 'dataUjian')->findOrFail($id);
+        $siswa = User::with('kelas', 'sekolah', 'dataUjian', 'semester')->findOrFail($id);
         $nilaiUjian = DataUjian::where('id_user', $id)->get();
         // dd($nilaiUjian);
-        return view('raport.show', compact('siswa', 'nilaiUjian'));
+
+        // return view('raport.show', compact('siswa', 'nilaiUjian'));
+        $dataAnggotaEkskul = Ekskul::where('id_user', $id)->get();
+        // dd($dataAnggotaEkskul);
+
+    return view('raport.show', compact('siswa', 'nilaiUjian', 'dataAnggotaEkskul'));
     }
 
     /**
