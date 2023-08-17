@@ -10,6 +10,7 @@ use App\Imports\PostImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Imports\siswaImport;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
@@ -174,7 +175,13 @@ class TambahSiswaController extends Controller
 
     public function importKelas(Request $request){
         //melakukan import file
-        Excel::import(new PostImport, request()->file('file'));
+        Excel::import(new siswaImport, request()->file('file'));
+        //jika berhasil kembali ke halaman sebelumnya
+        return back()->with('success', 'Import Post successfully!');
+    }
+    public function importSiswa(Request $request){
+        //melakukan import file
+        Excel::import(new siswaImport, request()->file('file'));
         //jika berhasil kembali ke halaman sebelumnya
         return back()->with('success', 'Import Post successfully!');
     }
