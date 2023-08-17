@@ -108,7 +108,7 @@ class CategoryController extends Controller
     {
         $this->validate($request, [
             'id_sekolah_asal' => 'required',
-            'name_category' => 'required|unique:categories,name_category,' . $categori->id,
+            'name_category' => 'required',
             'kkm' => 'integer|nullable',
             'status' => 'required|in:wajib,pilihan,muatan lokal',
             // 'capaian_kompetensi' => 'nullable',
