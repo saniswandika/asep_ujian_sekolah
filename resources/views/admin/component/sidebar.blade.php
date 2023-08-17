@@ -17,20 +17,20 @@
             <i class="bi bi-house-fill"></i>
             <span>{{ __("Dashboard") }}</span></a>
     </li>
-    @if(Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin')
+   @if(Auth::check() && (Auth::user()->role == 'Admin' || Auth::user()->role == 'superadmin'))
     <li class="nav-item {{ Request::is('log')? " active ":" " }}">
         <a class="nav-link " href="{{ url('/log') }}">
             <i class="bi bi-send-fill"></i>
             <span>{{ __("Log Message") }}</span></a>
-    </li>
+        </li>
     @endif
-    <li class="nav-item {{ Request::is('profile')? " active ":" " }}">
+        <li class="nav-item {{ Request::is('profile')? " active ":" " }}">
         <a class="nav-link " href="{{ url('/profile') }}">
             <i class="bi bi-person-workspace"></i>
             <span>{{ __("Profile") }}</span></a>
-    </li>
+        </li>
 
-    @if(Auth::user()->role == 'siswa')
+    @if(Auth::check() && Auth::user()->role == 'siswa')
     <!-- Divider -->
     <hr class="sidebar-divider">
 
@@ -47,7 +47,7 @@
     </li>
     @endif
 
-    @if(Auth::user()->role == 'superadmin')
+    @if( Auth::check() && Auth::user()->role == 'superadmin')
     <!-- Divider -->
     <hr class="sidebar-divider">
 
@@ -75,7 +75,7 @@
     </li>
     @endif
 
-    @if(Auth::User()->role == 'admin')
+    @if(Auth::check() && Auth::User()->role == 'admin')
     <!-- Divider -->
     <hr class="sidebar-divider">
     <!-- Heading -->
@@ -134,7 +134,7 @@
     @endif
 
 
-    @if(Auth::user()->role == 'guru')
+    @if( Auth::check() && Auth::user()->role == 'guru')
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item
@@ -157,7 +157,7 @@
     </li>
     @endif
 
-    @if(Auth::user()->role == 'admin')
+    @if(Auth::check() && Auth::user()->role == 'admin')
 
     <!-- Nav Item - Distribusi Ujian Kelas -->
     <li class="nav-item {{ Request::is('distribusiUjianKelas')? " active ":" " }} || {{ Request::is('distribusiUjianKelas-edit-*') ? " active ":" " }} || {{ Request::is('distribusiUjianKelas-show-*') ? " active ":" " }}">
@@ -182,7 +182,7 @@
 
     @endif
 
-    @if(Auth::user()->role == 'siswa')
+    @if(Auth::check() && Auth::user()->role == 'siswa')
     <!-- Nav Item - Materi (Tampilan Data Materi) -->
     <li class="nav-item {{ Request::is('materi')? " active ":" " }}">
         <a class="nav-link " href="{{ url('/materi') }}">
@@ -206,7 +206,7 @@
     </li> --}}
     @endif
 
-    @if( Auth::user()->role == 'guru')
+    @if(Auth::check() && Auth::user()->role == 'guru')
        <!-- Nav Item - Materi (Tampilan Data Materi) -->
        <li class="nav-item {{ Request::is('materi')? " active ":" " }}">
             <a class="nav-link " href="{{ url('/materi') }}">

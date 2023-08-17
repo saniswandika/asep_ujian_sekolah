@@ -101,7 +101,14 @@
                             <td class="text-center">
                                 <a href="{{ url('/categories-pelajaran-show-'.$categori->id) }}" class="btn btn-info text-white p-2 shadow-sm m-2 show-confirm" data-bs-toggle="tooltip" data-bs-placement="top" title="Show"> <i class="bi bi-eye-fill"></i></a>
                                 <a href="{{ url('/categories-pelajaran-edit-').$categori->id }}" class="btn btn-warning text-white p-2 shadow-sm m-2 edit-confirm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"> <i class="bi bi-pencil-square"></i></a>
-                                <a href="{{ url('/categories-pelajaran/delete/').$categori->id }}" class="btn btn-danger text-white p-2 shadow-sm m-2 delete-confirm" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"> <i class="bi bi-trash-fill"></i></a>
+                                <form method="POST" action="{{ route('delet2', ['id' => $categori->id]) }}" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger text-white p-2 shadow-sm m-2"
+                                            data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </button>
+                                </form>
                             </td>
                             </tr>
                             @endforeach

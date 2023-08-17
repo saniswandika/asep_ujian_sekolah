@@ -44,10 +44,10 @@ use App\Http\Middleware\Authenticate;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
-    \UniSharp\LaravelFilemanager\Lfm::routes();
+// Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+//     \UniSharp\LaravelFilemanager\Lfm::routes();
 
-});
+// });
 
 // Route::get('/log', function() {
 //     return view('admin.log');
@@ -122,7 +122,7 @@ Route::group(['middleware' => ['auth','role:admin']], function(){
         Route::delete('/postEssayDeleteAll', 'deleteAll')->name('post-essay.deleteAll');
         Route::get('/post-essay/delete/{id}', 'destroy')->name('post-essay.destroy');
 
-        Route::post('/importPostsEssay', 'importPostsEssay')->name('posts.importPosts');
+        Route::post('/importPostsEssay', 'importPostsEssay')->name('posts.importPostsEssay');
 
     });
 
@@ -172,11 +172,14 @@ Route::group(['middleware' => ['auth','role:admin']], function(){
         Route::post('/categories-pelajaran/update', 'update')->name('categories.update');
 
         Route::delete('/categories-pelajaranDeleteAll', 'deleteAll')->name('categories.deleteAll');
-        Route::get('/categories-pelajaran/delete/{id}', 'destroy')->name('categories.destroy');
 
-        Route::post('/importCategories', 'importCategories')->name('categories.importCategories');
+     
+        // Route::delete('/categories-pelajaran/delete/{id}', 'destroy')->name('categories.destroy');
+
+        Route::post('/importCategories', 'importCategories')->name('categories.destroy');
 
     });
+    Route::delete('/categories-pelajaran/delete-{id}', [CategoryController::class, 'destroy'])->name('delet2');
 
     Route::controller(KelasController::class)->group(function () {
         Route::get('/kelas', 'index')->name('kelas.index');
