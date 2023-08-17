@@ -62,7 +62,7 @@ class CategoryController extends Controller
             'status' => $request->status,
             // 'capaian_kompetensi' => $request->capaian_kompetensi,
         ]);
-
+        // dd($categori);
         if($categori){
             return redirect()->route('categories.index')->with('success', 'Created Category successfully!');
         } else {
@@ -108,7 +108,7 @@ class CategoryController extends Controller
     {
         $this->validate($request, [
             'id_sekolah_asal' => 'required',
-            'name_category' => 'required|unique:categories,name_category,' . $categori->id,
+            'name_category' => 'required',
             'kkm' => 'integer|nullable',
             'status' => 'required|in:wajib,pilihan,muatan lokal',
             // 'capaian_kompetensi' => 'nullable',
@@ -140,8 +140,13 @@ class CategoryController extends Controller
      */
     public function destroy($id, Request $request)
     {
-        DB::table('categories')->where('id', $id)->delete();
-        return redirect()->route('categories.index')->with('success', 'Delete Category successfully!');
+        // dd($id);
+        // DB::table('categories')->where('id', $id)->delete();
+        $category = Category::findOrFail($id);
+
+        // Perform the deletion
+        $category->delete();
+        return redirect()->back()->with('success', 'Delete Category successfully!');
     }
 
     public function deleteAll(Request $request)
