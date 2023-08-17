@@ -33,7 +33,10 @@ use Rappasoft\LaravelAuthenticationLog\Traits\AuthenticationLoggable;
     protected $fillable = [
         'name',
         'username',
-        // 'email',
+        'no_induk',
+        'jk',
+        'nisn',
+        'sekolah_asal',
         'password',
         'role',
     ];
