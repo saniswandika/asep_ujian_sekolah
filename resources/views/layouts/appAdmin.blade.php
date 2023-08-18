@@ -9,7 +9,7 @@
 
     {{-- <title>{{ config('app.Admin', 'Ujian Online') }}</title> --}}
     <title>@yield('title') - E-Learning</title>
-    <link rel="icon" href="{{ asset('/img/logo-ujian.png') }}"/>
+    <link rel="icon" href="{{ asset('/img/logo_sma.png') }}"/>
 
     @include('layouts.style_appAdmin.style.adminStyle')
     @yield('styles')

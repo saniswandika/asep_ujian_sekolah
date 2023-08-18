@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title') - Ujian Online</title>
-    <link rel="icon" href="{{ asset('/img/logo-ujian.png') }}"/>
+    <link rel="icon" href="{{ asset('/img/logo_sma.png') }}"/>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>

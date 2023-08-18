@@ -148,7 +148,7 @@
 <html lang="en">
   <head>
     <title>@yield('title') - E-Learning</title>
-    <link rel="icon" href="{{ asset('/img/logo-ujian.png') }}"/>
+    <link rel="icon" href="{{ asset('/img/logo_sma.png') }}"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
