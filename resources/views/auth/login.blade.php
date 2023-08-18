@@ -4,7 +4,7 @@
 <div class="container mb-2">
     <br>
     <div class="column side ">
-        <img src="assets/images/login.png"  height="50%" width="100%" alt="">
+        <img src="assets/images/logo_sma.png"  height="65%" width="100%" alt="">
         </div>
 {{-- <div class="row"> --}}
     <div class="column side row ">
