@@ -22,18 +22,26 @@ class DataUjianController extends Controller
      */
     public function indexDataUjian2()
     {
-        $dataUjian = DataUjian::whereHas('category_pelajaran', function ($query) {
-            $query->where('name_category', '=', Auth::user()->category->name_category);
-        })
-        ->whereHas('kelas', function ($query) {
-            $query->where('name_kelas', '=', Auth::user()->kelas->name_kelas);
-        })
-        ->with('category_ujian')
-        ->with('category_pelajaran')
-        ->with('kelas')
-        ->with('user')
-        ->get();
+        $user_classes = DB::table('user_classes')->where('user_id', Auth::user()->id)->get();
+        
+        foreach ($user_classes as $user) {
+            $classId = $user->class_id; // Access the class ID using the correct key
+            // dd($classId);
+            $dataUjian = DataUjian::whereHas('category_pelajaran', function ($query) use ($user) {
+                    $query->where('name_category', '=', Auth::user()->category->name_category);
+                })
+                ->whereHas('kelas', function ($query) use ($classId) {
+                    $query->where('id_kelas', $classId);
+                })
+                ->with('category_ujian')
+                ->with('category_pelajaran')
+                ->with('kelas')
+                ->with('user')
+                ->get();
 
+            // Do something with $dataUjian for this user's class...
+        }
+        // dd($dataUjian);
         $dataUjianCount = $dataUjian->count();
 
         return view('guru.dataUjian.index', compact('dataUjian', 'dataUjianCount'));

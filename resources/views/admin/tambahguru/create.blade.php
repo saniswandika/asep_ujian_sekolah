@@ -1,4 +1,5 @@
 <!-- Create Guru -->
+
 <div class="modal fade" id="createGuru" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
     <div class="modal-content">
@@ -48,18 +49,39 @@
                     </select>
                 </div>
                 <div class="form-group m-3">
-                    <label for="id_kelas" class="pb-2 fw-bold fs-5"><i class="bi bi-shop-window"></i> Guru Pengajar</label>
-                    <select class="form-select py-2" name="id_kelas" id="id_kelas">
-                        @forelse($kelas as $id => $kelases)
-                            <option class="
-                            @if($kelases >= '7-A' && $kelases <= '7-Z') bg-info text-white fw-bold
-                            @elseif($kelases >= '8-A' && $kelases <= '8-Z') bg-warning fw-bold
-                            @elseif($kelases >= '9-A' && $kelases <= '9-Z') bg-success text-white fw-bold @endif"
-                            value="{{ $id }}">{{ $kelases }}</option>
+                    <label for="id_kelas" class="pb-2 fw-bold fs-5"><i class="bi bi-shop-window"></i>Wali Kelas</label>
+                    <div class="form-group" style="width: 100%">
+                        {{-- <select class="form-select" name="id_kelas" id="id_kelas" multiple="multiple"> --}}
+                        <select class="form-control " data-style="btn-success" name="id_kelas" id="id_kelas">
+                            @forelse($kelas as $id => $kelases)
+                                <option class="
+                                @if($kelases >= '10-A' && $kelases <= '10-Z') bg-info text-white fw-bold
+                                @elseif($kelases >= '11-A' && $kelases <= '11-Z') bg-warning fw-bold
+                                @elseif($kelases >= '12-A' && $kelases <= '12-Z') bg-success text-white fw-bold 
+                                @endif"
+                                value="{{ $id }}">{{ $kelases }}</option>
                             @empty
                                 <option value="">No Data Kelas</option>
                             @endforelse
-                    </select>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group m-3">
+                    <label for="kelas_id" class="pb-2 fw-bold fs-5"><i class="bi bi-shop-window"></i> Guru Pengajar</label>
+                    <div class="form-group" style="width: 100%">
+                        <select class="form-control py-2 js-example-tags" name="kelas_id[]" id="kelas_id" multiple="multiple">
+                            @forelse($kelas as $id => $kelases)
+                                <option class="
+                                @if($kelases >= '10-A' && $kelases <= '10-Z') bg-info text-white fw-bold
+                                @elseif($kelases >= '11-A' && $kelases <= '11-Z') bg-warning fw-bold
+                                @elseif($kelases >= '12-A' && $kelases <= '12-Z') bg-success text-white fw-bold 
+                                @endif"
+                                value="{{ $id }}">{{ $kelases }}</option>
+                            @empty
+                                <option value="">No Data Kelas</option>
+                            @endforelse
+                        </select>
+                    </div>
                 </div>
                 <div class="form-group m-3 ">
                     <label for="id_category" class="fw-bold "><i class="bi bi-bookmarks-fill"></i> Category</label><br>
@@ -103,3 +125,5 @@
     </div>
     </div>
 </div>
+
+

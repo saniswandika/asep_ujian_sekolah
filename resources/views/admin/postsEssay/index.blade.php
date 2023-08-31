@@ -28,12 +28,12 @@
                             </div>
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
-                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $postEssayCount ?? ""}}</div>
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $postsEssays->count() ?? ""}}</div>
                                 </div>
                                 <div class="col">
                                     <div class="progress progress-sm mr-2">
                                         <div class="progress-bar bg-info" role="progressbar"
-                                            style="width: {{ $postEssayCount ?? ""}}% " aria-valuenow="50" aria-valuemin="0"
+                                            style="width: {{ $postsEssays->count() ?? ""}}% " aria-valuenow="50" aria-valuemin="0"
                                             aria-valuemax="100"></div>
                                     </div>
                                 </div>
@@ -79,9 +79,11 @@
                                         <input type="checkbox" class="p-5" id="master" />
                                     </th>
                                     <th class="">No</th>
-                                    <th class="" width="15%">Category</th>
-                                    <th class="" width="35%">Soal Ujian</th>
-                                    {{-- <th class="" width="15%">Sekolah</th> --}}
+                                    <th class="">Category</th>
+                                    <th class="">Soal Ujian</th>
+                                    <th class="text-center">Jawaban Benar</th>
+                                    <th class="text-center">Ujian</th>
+                                    <th class="text-center">kelas</th>
                                     <th class="text-center w-25">Action</th>
                                 </tr>
                             </thead>
@@ -91,20 +93,22 @@
                                 @endphp
 
                                 @foreach ($postsEssays as $postsEssay)
-                                <tr id="tr_{{ $postsEssay->id }}">
-                                     <td class="text-center">
-                                        <input type="checkbox" class="sub_chk" data-id="{{ $postsEssay->id }}">
-                                    </td>
-                                    <td class="text-start fw-bold">{{ $no++ }}</td>
-                                    <td>{{ $postsEssay->category_pelajaran->name_category }}</td>
-                                    <td>{!! $postsEssay->soal_ujian_essay !!}</td>
-                                    {{-- <td>{{ $postsEssay->sekolah->name_sekolah }}</td> --}}
-                                    <td class="text-center">
-                                        <a href="/post-essay-show-{{ $postsEssay->id }}" class="btn btn-info text-white p-2 shadow-sm m-2 show-confirm" data-bs-toggle="tooltip" data-bs-placement="top" title="Show"> <i class="bi bi-eye-fill"></i></a>
-                                        <a href="/post-essay-edit-{{ $postsEssay->id }}" class="btn btn-warning text-white p-2 shadow-sm m-2 edit-confirm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"> <i class="bi bi-pencil-square"></i></a>
-                                        <a href="/post-essay/delete/{{ $postsEssay->id }}" class="btn btn-danger text-white p-2 shadow-sm m-2 delete-confirm" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"> <i class="bi bi-trash-fill"></i></a>
-                                    </td>
-                                </tr>
+                                    <tr id="tr_{{ $postsEssay->id }}">
+                                        <td class="text-center">
+                                            <input type="checkbox" class="sub_chk" data-id="{{ $postsEssay->id }}">
+                                        </td>
+                                        <td class="text-start fw-bold">{{ $no++ }}</td>
+                                        <td>{{ $postsEssay->name_category }}</td>
+                                        <td>{!! $postsEssay->soal_ujian_essay !!}</td>
+                                        <td class="text-white text-center fw-bold fs-5 bg-success">{{ $postsEssay->jawaban_essay ?? ""}}</td>
+                                        <td>{{ $postsEssay->name_category_ujian }}</td>
+                                        <td>{{ $postsEssay->name_kelas }}</td>
+                                        <td class="text-center">
+                                            <a href="/post-essay-show-{{ $postsEssay->id }}" class="btn btn-info text-white p-2 shadow-sm m-2 show-confirm" data-bs-toggle="tooltip" data-bs-placement="top" title="Show"> <i class="bi bi-eye-fill"></i></a>
+                                            <a href="/post-essay-edit-{{ $postsEssay->id }}" class="btn btn-warning text-white p-2 shadow-sm m-2 edit-confirm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"> <i class="bi bi-pencil-square"></i></a>
+                                            <a href="/post-essay/delete/{{ $postsEssay->id }}" class="btn btn-danger text-white p-2 shadow-sm m-2 delete-confirm" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"> <i class="bi bi-trash-fill"></i></a>
+                                        </td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>

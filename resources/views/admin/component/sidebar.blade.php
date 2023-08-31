@@ -235,12 +235,15 @@
             <span>{{ __('Data Ujian') }}</span></a>
     </li>
     <!-- Nav Item - Raport -->
-    <li class="nav-item {{ Request::is('raport')? " active ":" " }}">
-        <a class="nav-link " href="{{ url('/raport') }}">
-            <i class="bi bi-file-earmark-text"></i>
-            <span>{{ __("Raport") }}</span>
-        </a>
-    </li>
+    @if (Auth::user()->kelas->id_wali != null)
+        <li class="nav-item {{ Request::is('raport')? " active ":" " }}">
+            <a class="nav-link " href="{{ url('/raport') }}">
+                <i class="bi bi-file-earmark-text"></i>
+                <span>{{ __("Raport") }}</span>
+            </a>
+        </li>
+    @endif
+    
     @endif
 
 

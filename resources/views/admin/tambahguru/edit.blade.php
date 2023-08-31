@@ -81,7 +81,7 @@
                     </div>
                     <div class="form-group m-3">
 
-                        <label for="id_kelas" class="pb-2 fw-bold  fs-5"><i class="bi bi-shop-window"></i> Kelas</label>
+                        <label for="id_kelas" class="pb-2 fw-bold  fs-5"><i class="bi bi-shop-window"></i>Wali Kelas</label>
                         <select class="form-select form-select-lg mb-3 m" name="id_kelas" id="id_kelas">
                             <option disabled value="">Pilih Kelas ...</option>
                             @foreach($kelas as $id => $kelases)
@@ -92,6 +92,27 @@
                                 value="{{ $id }}" {{ $guruAdmin->id_kelas == $id ? 'selected' : '' }}>{{ $kelases }}</option>
                             @endforeach
                         </select>
+                    </div>
+                    <div class="form-group m-3">
+                        <label for="kelas_id" class="pb-2 fw-bold fs-5"><i class="bi bi-shop-window"></i> Guru Pengajar</label>
+                        <div class="form-group" style="width: 100%">
+                            <select class="form-control py-2 js-example-tags" name="kelas_id[]" id="kelas_id" multiple="multiple">
+                                @foreach ($pengajar as $item)
+                                    <option class="" value="{{ $item->id }}" selected >{{ $item->name_kelas }}</option>
+                                @endforeach
+                                @forelse($kelas as $id => $kelases)
+                                    <option class="
+                                    @if($kelases >= '10-A' && $kelases <= '10-Z') bg-info text-white fw-bold
+                                    @elseif($kelases >= '11-A' && $kelases <= '11-Z') bg-warning fw-bold
+                                    @elseif($kelases >= '12-A' && $kelases <= '12-Z') bg-success text-white fw-bold 
+                                    @endif"
+                                    value="{{ $id }}">{{ $kelases }}</option>
+                                @empty
+                                    <option value="">No Data Kelas</option>
+                                @endforelse
+                             
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group m-3">
                         <label for="id_category" class="pb-2 fw-bold mb-2 btn btn-info text-white"><i class="bi bi-bookmarks-fill"></i> {{ __('Category') }}</label>

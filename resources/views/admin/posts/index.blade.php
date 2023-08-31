@@ -28,7 +28,7 @@
                             </div>
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
-                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $postCount }}</div>
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $posts->count() }}</div>
                                 </div>
                                 <div class="col">
                                     <div class="progress progress-sm mr-2">
@@ -79,10 +79,11 @@
                                         <input type="checkbox" class="p-5" id="master" />
                                     </th>
                                     <th class="">No</th>
-                                    <th class="" width="20%">Category</th>
-                                    <th class="" width="50%">Soal Ujian</th>
+                                    <th class="">Category</th>
+                                    <th class="">Soal Ujian</th>
                                     <th class="text-center">Jawaban Benar</th>
-                                    {{-- <th class="text-center">Sekolah</th> --}}
+                                    <th class="text-center">Ujian</th>
+                                    <th class="text-center">kelas</th>
                                     <th class="text-center w-25">Action</th>
                                 </tr>
                             </thead>
@@ -98,16 +99,18 @@
                                     </td>
                                     <td class="text-start fw-bold">{{ $no++ }}</td>
                                     {{-- <td class="@if($post->category == false ?? 'Database Not Found!' ) text-white bg-danger text-center fw-bold @endif">{{ $post->category->name_category ?? "Silahkan klik edit dan sesuaikan data Category"}}</td> --}}
-                                    @if($post->category == false ?? 'Database Not Found!' )
+                                    @if($post == null ?? 'Database Not Found!' )
                                         <td class="text-white bg-danger text-center fw-bold">
                                             <a href="/posts-edit-{{ $post->id }}" class="btn btn-warning text-white p-2 shadow-sm m-2 edit-confirm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"> <i class="bi bi-pencil-square"></i> Silahkan klik edit dan sesuaikan data Category</a>
                                         </td>
                                     @else
-                                    <td class="">{{ $post->category->name_category ?? "Silahkan klik edit dan sesuaikan data Category"}}</td>
+                                    <td class="">{{ $post->name_category ?? "Silahkan klik edit dan sesuaikan data Category"}}</td>
                                     @endif
                                     <td class="">{!! $post->soal_ujian ?? ""!!}</td>
                                     <td class="text-white text-center fw-bold fs-5 bg-success">{{ $post->jawaban ?? ""}}</td>
-                                    {{-- <td>{{ $post->sekolah->name_sekolah }}</td> --}}
+                                    <td class="">{{ $post->name_category_ujian ?? "Silahkan klik edit dan sesuaikan data Category"}}</td>
+                                    <td class="">{{ $post->name_kelas ?? "Silahkan klik edit dan sesuaikan data Category"}}</td>
+                                    
                                     <td class="text-center">
                                         <a href="/posts-show-{{ $post->id }}" class="btn btn-info text-white p-2 shadow-sm m-2 show-confirm" data-bs-toggle="tooltip" data-bs-placement="top" title="Show"> <i class="bi bi-eye-fill"></i></a>
                                         <a href="/posts-edit-{{ $post->id }}" class="btn btn-warning text-white p-2 shadow-sm m-2 edit-confirm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"> <i class="bi bi-pencil-square"></i></a>

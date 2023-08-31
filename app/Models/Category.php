@@ -23,6 +23,8 @@ class Category extends Model
     {
         return $this->hasMany(Post::class, 'id_category')->withDefault();
     }
+  
+    
 
     public function ujianSekolah()
     {

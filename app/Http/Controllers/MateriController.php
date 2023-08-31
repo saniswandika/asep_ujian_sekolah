@@ -49,10 +49,10 @@ class MateriController extends Controller
     {
         $id_kelas = Auth::user()->id_kelas;
 
-    // Fetch materials based on the user's id_kelas and id_category
-    $materi = Materis::where('id_kelas', $id_kelas)
-    ->with('kelas') // Eager load the 'kelas' relationship
-    ->get();
+        // Fetch materials based on the user's id_kelas and id_category
+        $materi = Materis::where('id_kelas', $id_kelas)
+        ->with('kelas') // Eager load the 'kelas' relationship
+        ->get();
                     // dd($materi);
     return view('materi.index', ['materi' => $materi]);
     }
@@ -63,46 +63,48 @@ class MateriController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-{
-    // Mengambil data kelas yang terkait dengan user
-    $kelas = Auth::user()->kelas;
-    // dd($kelas);
- // Mengambil data category yang terkait dengan user
- $categories = Auth::user()->categories->pluck('name_category', 'pivot_id_category');
-//  dd($categories);
-    // Mengambil data category yang terkait dengan user
-    // $categories = Auth::user()->categories;
-    // dd($categories);
-    return view('materi.create', compact('kelas', 'categories'));
-}
-
-
-    public function upload()
     {
-        $this->validate($request, [
-            'file' => 'required|file|mimes:jpeg,png,jpg,pdf,doc,docx,xls,xlsx,ppt,pptx|max:2048',
-            'keterangan' => 'required',
-            'id_kelas' => 'required', // Make sure id_kelas and id_category are required.
-            'id_category' => 'required',
-        ]);
+        // Mengambil data kelas yang terkait dengan user
+        $id = Auth::user()->id;
+        $kelas = DB::table('user_classes')
+        ->join('kelas', 'kelas.id', '=', 'user_classes.class_id')
+        ->where('user_classes.user_id', $id)->get();
+        // dd($kelas);
+        // Mengambil data category yang terkait dengan user
+        // $categories = Auth::user()->categories->pluck('name_category', 'pivot_id_category');
+        $categories = Category::all();
 
-        // menyimpan data file yang diupload ke variabel $file
-        $file = $request->file('file');
-
-        $nama_file = time() . "_" . $file->getClientOriginalName();
-
-        // isi dengan nama folder tempat kemana file diupload
-        $tujuan_upload = 'data_file';
-        $file->move($tujuan_upload, $nama_file);
-
-        Materis::create([
-            'file' => $nama_file,
-            'keterangan' => $request->keterangan,
-        ]);
-
-        // Redirect to the create view instead of index view
-        return redirect()->route('materi.create')->with('success', 'Materi created successfully');
+        // dd($categories);
+        return view('materi.create', compact('kelas', 'categories'));
     }
+
+
+    // public function upload()
+    // {
+    //     $this->validate($request, [
+    //         'file' => 'required|file|mimes:jpeg,png,jpg,pdf,doc,docx,xls,xlsx,ppt,pptx|max:2048',
+    //         'keterangan' => 'required',
+    //         'id_kelas' => 'required', // Make sure id_kelas and id_category are required.
+    //         'id_category' => 'required',
+    //     ]);
+
+    //     // menyimpan data file yang diupload ke variabel $file
+    //     $file = $request->file('file');
+
+    //     $nama_file = time() . "_" . $file->getClientOriginalName();
+
+    //     // isi dengan nama folder tempat kemana file diupload
+    //     $tujuan_upload = 'data_file';
+    //     $file->move($tujuan_upload, $nama_file);
+
+    //     Materis::create([
+    //         'file' => $nama_file,
+    //         'keterangan' => $request->keterangan,
+    //     ]);
+
+    //     // Redirect to the create view instead of index view
+    //     return redirect()->route('materi.create')->with('success', 'Materi created successfully');
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -116,21 +118,25 @@ class MateriController extends Controller
             'file' => 'required|file|mimes:jpeg,png,jpg,pdf,doc,docx,xls,xlsx,ppt,pptx|max:2048',
             'keterangan' => 'required',
         ]);
-
+        
         $file = $request->file('file');
         $nama_file = time() . "_" . $file->getClientOriginalName();
         $tujuan_upload = 'data_file';
         $file->move($tujuan_upload, $nama_file);
-
+        
         $id_user = Auth::id();
-
-        Materis::create([
-            'file' => $nama_file,
-            'keterangan' => $request->keterangan,
-            'id_kelas' => $request->input('id_kelas'), // Gunakan $request->input('nama_field') untuk mengambil nilai dari input field.
-        'id_category' => $request->input('id_category'),
-            'id_user' => $id_user, // Assign ID user yang sedang login
-        ]);
+        
+        $id_kelas_array = $request->input('id_kelas'); // Array ID kelas
+        
+        foreach ($id_kelas_array as $id_kelas) {
+            Materis::create([
+                'file' => $nama_file,
+                'keterangan' => $request->keterangan,
+                'id_kelas' => $id_kelas,
+                'id_category' => $request->input('id_category'),
+                'id_user' => $id_user,
+            ]);
+        }        
 
         return redirect()->route('materis.index')->with('success', 'Materi created successfully');
 
@@ -178,6 +184,7 @@ class MateriController extends Controller
      */
     public function destroy($id)
     {
+        $id_user = Auth::id();
         DB::table("materis")->where('id', $id)->delete();
         return redirect()->route('materis.index')->with('success', 'Materi deleted successfully');
     }

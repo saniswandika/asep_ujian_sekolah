@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.appadmin')
 
 @section('content')
 <div class="container">
@@ -37,10 +37,12 @@
                         </div>
                         <div class="form-group">
                             <label for="id_kelas">Kelas</label>
-                            <select class="form-control" name="id_kelas" required>
-                                @foreach ($kelas as $item)
-                                    <option value="{{ $item->id }}">{{ $item->name_kelas }}</option>
-                                @endforeach
+                            <select class="form-control js-example-tags" data-style="btn-success" name="id_kelas[]" id="id_kelas" multiple="multiple" @readonly(true)>
+                                @forelse($kelas as $pengajares)
+                                    <option value="{{ $pengajares->id }}" selected>{{ $pengajares->name_kelas }}</option>
+                                @empty
+                                    <option value="">No Data Kelas</option>
+                                @endforelse
                             </select>
                         </div>
                         <div class="form-group">
@@ -52,6 +54,9 @@
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary">Simpan</button>
+                        <a class="btn btn-primary {{ Request::is('home')? "active":"" }}" aria-current="page" href="{{ url('/tugas') }}">
+                            {{ config('Home', 'back') }}
+                        </a>
                     </form>
                 </div>
             </div>

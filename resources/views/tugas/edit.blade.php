@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.appAdmin')
 
 @section('content')
 <div class="container">
@@ -28,7 +28,7 @@
                         </div>
                         <div class="form-group">
                             <label for="id_kelas">Kelas</label>
-                            <select class="form-control" name="id_kelas" required>
+                            <select class="form-control js-example-tags" data-style="btn-success" name="id_kelas[]" id="id_kelas" multiple="multiple" @readonly(true)>
                                 @foreach ($kelas as $item)
                                     <option value="{{ $item->id }}" {{ $tugas->id_kelas == $item->id ? 'selected' : '' }}>{{ $item->name_kelas }}</option>
                                 @endforeach

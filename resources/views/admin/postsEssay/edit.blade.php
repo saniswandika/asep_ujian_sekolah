@@ -51,7 +51,7 @@
                 <div class="form-group m-3" hidden>
                     <label for="id_sekolah_asal" class="pb-2 fw-bold fs-5"><i class="bi bi-building"></i> Sekolah</label>
                     <select class="form-select form-select-lg py-2" name="id_sekolah_asal" id="id_sekolah_asal">
-                        <option value="{{ $postsEssay->id_sekolah_asal ?? ""}}">{{ $postsEssay->sekolah->name_sekolah ?? ""}}</option>
+                        <option value="{{ $postsEssay->id_sekolah_asal ?? ""}}">{{ $postsEssay->name_sekolah ?? ""}}</option>
                     </select>
                 </div>
                     <div class="form-group m-3">
@@ -60,9 +60,28 @@
                             <option disabled="readonly">Pilih Category ...</option>
                             @foreach ($categori as $id => $categories)
                                                           {{-- Jika $id (Category) == $id (POST Category) maka 'Pilih' jika tidak Kosongkan --}}
-                                <option value="{{ $id }}" {{ $id == $postsEssay->id_category ? 'selected' : '' }}>{{ $categories }}</option>
+                                <option value="{{ $categories->id }}" >{{ $categories->name_category }}</option>
                             @endforeach
                         </select>
+                    </div>
+                    <div class="form-group m-3">
+                        <label for="id_category_ujian" class="fw-bold"><i class="bi bi-bookmarks-fill"></i> Category ujian</label><br>
+                        <select class="form-control" data-style="btn-success" name="id_category_ujian" id="id_category_ujian">
+                            {{-- @foreach ($CategoryUjian as $categoryUjians) --}}
+                            <option value="{{ $postsEssay->id_category_ujian }}">{{ $postsEssay->name_category_ujian }}</option>
+                                {{-- @empty
+                                    <option value="">No Category</option> --}}
+                            {{-- @endforeach --}}
+                   
+                            @foreach ($CategoryUjian as $categoryUjians)
+                                    <option value="{{ $categoryUjians->id }}">{{ $categoryUjians->name_category_ujian }}</option>
+                                {{-- @empty
+                                    <option value="">No Category</option> --}}
+                            @endforeach
+                           
+                        </select>
+    
+    
                     </div>
 
                     <div class="form-group m-3">

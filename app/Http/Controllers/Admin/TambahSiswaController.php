@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Imports\siswaImport;
+use App\Models\Semester;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
@@ -27,9 +28,12 @@ class TambahSiswaController extends Controller
         $siswaAdmins = User::with('kelas')->where('role', 'siswa')->orderBy('id', 'desc')->get(); // Menampilkan data terbaru
         // ->whereRole('admin') // menampilkan data  Admin saja
         $sekolahs = Sekolah::pluck('name_sekolah', 'id')->all();
+        $semester = Semester::all();
+        // dd($semester);
+
         $kelas = Kelas::where('id_sekolah_asal', Auth::user()->sekolah_asal)->pluck('name_kelas', 'id')->all();
         $siswaAdminCount = User::where('sekolah_asal', Auth::user()->sekolah_asal)->where('role', 'siswa')->count();
-        return view('admin.tambahsiswa.index', compact('siswaAdmins','sekolahs','kelas','siswaAdminCount'));
+        return view('admin.tambahsiswa.index', compact('semester','siswaAdmins','sekolahs','kelas','siswaAdminCount'));
     }
 
     public function listSiswa()
@@ -63,6 +67,7 @@ class TambahSiswaController extends Controller
             'no_induk' => 'required',
             'nisn' => 'required',
             'jk' => 'required',
+            'id_semester' => 'required',
             // 'gambar' => 'nullable',
             'sekolah_asal' => 'required',
             'name' => 'required',

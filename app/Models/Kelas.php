@@ -43,5 +43,13 @@ class Kelas extends Model
     {
         return $this->belongsTo(Sekolah::class, 'id_sekolah_asal');
     }
+    public function guru_ngajar()
+    {
+        // return $this->belongsTo(guru_kela::class,'id_kelas');
+
+        // Wali kelas banyak dipakai oleh kelas
+        return $this->hasMany(guru_kela::class,'class_id');
+    }
+
 
 }

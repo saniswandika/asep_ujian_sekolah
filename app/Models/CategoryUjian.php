@@ -17,4 +17,8 @@ class CategoryUjian extends Model
     {
         return $this->belongsTo(Sekolah::class, 'id_sekolah_asal');
     }
+    public function post_ujian()
+    {
+        return $this->hasMany(Post::class, 'id')->withDefault();
+    }
 }

@@ -64,6 +64,21 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="form-group m-3">
+                        <label for="id_category_ujian" class="fw-bold"><i class="bi bi-bookmarks-fill"></i> Category ujian</label><br>
+                        <select class="form-control" data-style="btn-success" name="id_category_ujian" id="id_category_ujian">
+                            {{-- @foreach ($CategoryUjian as $categoryUjians) --}}
+                            <option value="{{ $post->category_ujian->id }}">{{ $post->category_ujian->name_category_ujian }}</option>
+                                {{-- @empty
+                                    <option value="">No Category</option> --}}
+                            {{-- @endforeach --}}
+                   
+                            
+                           
+                        </select>
+    
+    
+                    </div>
                     <div class="m-3">
                         <label for="soal_ujian" class="pb-2 fw-bold mb-2 btn btn-info text-white"><i class="bi bi-book-fill "></i> {{ __('Create Soal Ujian') }}</label>
                         <textarea name="soal_ujian" id="my-editor" cols="30" rows="10" class="form-control" required>{{ $post->soal_ujian }}</textarea>

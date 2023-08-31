@@ -59,18 +59,18 @@ class PostApiController extends Controller
             'pilihan_c' => 'required',
             'pilihan_d' => 'required',
             'jawaban' => 'required',
-            // 'correct' => 'required',
+            'id_category_ujian' => 'required'
         ]);
 
         $post = Post::create([
             'id_category' => $request->id_category,
+            'id_category_ujian' => $request->id_category_ujian,
             'soal_ujian' => $request->soal_ujian,
             'pilihan_a' => $request->pilihan_a,
             'pilihan_b' => $request->pilihan_b,
             'pilihan_c' => $request->pilihan_c,
             'pilihan_d' => $request->pilihan_d,
-            'jawaban' => $request->jawaban,
-            // 'correct' => $request->correct,
+            'id_category_ujian' => 'required'
         ]);
 
         return response()->json([

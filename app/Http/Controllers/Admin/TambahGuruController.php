@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\guru_kela;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
@@ -27,21 +28,42 @@ class TambahGuruController extends Controller
     {
         // $guruAdmins = User::all();
         $guruAdmins = User::with('kelas')->where('sekolah_asal', Auth::user()->sekolah_asal)->where('role', 'guru')->orderBy('id', 'desc')->get(); // Menampilkan data terbaru
+        
         $sekolahs = Sekolah::pluck('name_sekolah', 'id')->all();
-        // ->whereRole('admin') // menampilkan data  Admin saja
-        // $guruAdminCount = User::where('role', 'guru', '=' )->count();
         $kelas = Kelas::where('id_sekolah_asal', Auth::user()->sekolah_asal)->pluck('name_kelas', 'id')->all();
         $categori = Category::where('id_sekolah_asal', Auth::user()->sekolah_asal)->pluck('name_category', 'id')->all();
         $guruAdminCount = User::where('sekolah_asal', Auth::user()->sekolah_asal)->where('role', 'guru')->count();
-        return view('admin.tambahguru.index', compact('guruAdmins','sekolahs','guruAdminCount', 'kelas','categori'));
+        $guruMengajarKelas = DB::table('users')
+        ->join('user_classes', 'user_classes.user_id', '=', 'users.id')
+        ->join('kelas', 'kelas.id', '=', 'user_classes.class_id')
+        ->where('users.role', 'guru') // Hanya guru
+        ->orderBy('users.name')
+        ->select('users.id', 'users.name as guru_name', 'kelas.name_kelas')
+        ->get();
+    
+        // Mengelompokkan kelas berdasarkan guru
+        $kelasByGuru = [];
+        foreach ($guruMengajarKelas as $kelasData) {
+            $guruName = $kelasData->guru_name;
+            if (!isset($kelasByGuru[$guruName])) {
+                $kelasByGuru[$guruName] = [];
+            }
+            $kelasByGuru[$guruName][] = $kelasData->name_kelas;
+        }
+        return view('admin.tambahguru.index', compact('kelasByGuru','guruAdmins','sekolahs','guruAdminCount', 'kelas','categori'));
 
     }
 
     public function listGuru()
     {
-       $guruPersons = DB::select("CALL `getGuruData`()");
-       $kelas = Kelas::where('id_sekolah_asal', Auth::user()->sekolah_asal)->pluck('name_kelas', 'id')->all();
-    $categori = Category::where('id_sekolah_asal', Auth::user()->sekolah_asal)->pluck('name_category', 'id')->all();
+        $guruPersons = DB::table('users')
+        ->select('users.*') // Ganti dengan kolom yang sesuai
+        ->where('role', 'guru') // Filter berdasarkan role "guru"
+        ->get();
+    
+        $kelas = Kelas::where('id_sekolah_asal', Auth::user()->sekolah_asal)->pluck('name_kelas', 'id')->all();
+        $categori = Category::where('id_sekolah_asal', Auth::user()->sekolah_asal)->pluck('name_category', 'id')->all();
+    
         return view('admin.tambahguru.print', compact('guruPersons', 'kelas', 'categori'));
     }
 
@@ -65,6 +87,7 @@ class TambahGuruController extends Controller
      */
     public function store(Request $request, User $guruAdmin)
     {
+        // dd($request->get('kelas_id'));
         $this->validate($request, [
             'id_kelas' => 'required',
             'id_category' => 'required',
@@ -79,23 +102,30 @@ class TambahGuruController extends Controller
             'password' => 'required',
         ]);
 
-        $noInduk = $request->no_induk = $request->username;
+    
 
-        $guruAdmin = User::insert([
-            'id_kelas' => $request->id_kelas,
-            'id_category' => $request->id_category,
-            'role' => $request->role,
-            // 'no_induk' => $request->no_induk = $request->username,
-            'no_induk' => $noInduk,
-            'nisn' => $request->nisn,
-            'jk' => $request->jk,
-            'sekolah_asal' => $request->sekolah_asal,
-            'name' => $request->name,
-            'username' => $request->username,
-            'password' => Hash::make($request->password),
-            'created_at' => now(),
-        ]);
-
+        $guruAdmin = new User();
+        $guruAdmin->id_kelas = $request->get('id_kelas');
+        $guruAdmin->id_category = $request->get('id_category');
+        $guruAdmin->role = $request->get('role');
+        $guruAdmin->no_induk = $request->get('no_induk');
+        $guruAdmin->nisn = $request->get('nisn');
+        $guruAdmin->jk = $request->get('jk');
+        $guruAdmin->sekolah_asal = $request->get('sekolah_asal');
+        $guruAdmin->name = $request->get('name');
+        $guruAdmin->username = $request->get('username');
+        $guruAdmin->password = Hash::make($request->password);
+        // $guruAdmin->created_by = Auth::user()->id;
+        $guruAdmin->save();
+        $pengajar = $request->get('kelas_id');
+        // dd($pengajar);
+        foreach($pengajar as $p){
+            // dd($guruAdmin);
+            $guruKelas = guru_kela::insert([
+                'class_id' => $p,
+                'user_id' =>  $guruAdmin->id,
+            ]);
+        }
         if(!$guruAdmin){
             return redirect()->route('guru.index')->with('error', 'Failed to create Guru Admin!');
         } else {
@@ -132,7 +162,12 @@ class TambahGuruController extends Controller
         $sekolahs = Sekolah::pluck('name_sekolah', 'id')->all();
         $categori = Category::where('id_sekolah_asal', Auth::user()->sekolah_asal)->pluck('name_category', 'id')->all();
         $kelas = Kelas::where('id_sekolah_asal', Auth::user()->sekolah_asal)->pluck('name_kelas', 'id')->all();
-        return view('admin.tambahguru.edit', compact('guruAdmin','sekolahs','kelas','categori'));
+        // $pengajar = Kelas::where('name_kelas', 'id')->all();
+        $pengajar = DB::table('user_classes')
+        ->join('kelas', 'kelas.id', '=', 'user_classes.class_id')
+        ->where('user_classes.user_id', $id)->get();
+        // dd($pengajar);
+        return view('admin.tambahguru.edit', compact('guruAdmin','sekolahs','kelas','categori','pengajar'));
     }
 
     /**
@@ -144,7 +179,7 @@ class TambahGuruController extends Controller
      */
     public function update(Request $request, User $guruAdmin)
     {
-
+        // dd($request->get('kelas_id'));
         DB::table('users')->where('id', $request->id)->update([
             'id_kelas' => $request->id_kelas,
             'id_category' => $request->id_category,
@@ -157,6 +192,27 @@ class TambahGuruController extends Controller
             'password' => Hash::make($request->password),
             'updated_at' => now(),
         ]);
+        DB::table('user_classes')
+            ->where('user_id',$request->id)
+            ->where('class_id', '<>', $request->get('kelas_id')) // Hapus entri kelas yang hilang
+            ->delete();
+        $pengajar = $request->get('kelas_id');
+        // dd($pengajar);
+        foreach($pengajar as $p){
+            // dd($guruAdmin);
+            DB::table('user_classes')->updateOrInsert(
+                ['user_id' =>$request->id, 'class_id' => $p], // Update atau masukkan entri baru
+                // ['user_id' =>$request->id, 'class_id' => $request->get('kelas_id')]
+            );
+        }
+       
+        // DB::table('user_classes')
+        //     ->where('user_id', $request->id)
+        //     ->delete();
+        // DB::table('user_classes')->where('id', $request->id)->update([
+        //     // 'user_id' => $request->user_id,
+        //     'class_id' => $request->class_id,
+        // ]);
 
         return redirect()->route('guru.index')->with('success', 'Updated Guru successfully!');
     }
