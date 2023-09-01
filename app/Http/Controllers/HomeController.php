@@ -30,10 +30,12 @@ class HomeController extends Controller
      */
     public function index()
     {
+        
         $users = User::all();
         $posts = Post::all();
         $categories = Category::all();
         $kelases = Kelas::all();
+        $waliKelas = Kelas::where('id_wali',auth::user()->id)->first();
 
         $siswaCount = User::where('sekolah_asal', Auth::user()->sekolah_asal)->where('role', 'siswa')->count();
         $guruCount = User::where('sekolah_asal', Auth::user()->sekolah_asal)->where('role', 'guru')->count();
@@ -47,7 +49,7 @@ class HomeController extends Controller
                     ->groupBy(DB::raw("Month(created_at)"))
                     ->pluck('count');
 
-        return view('admin.dashboard', compact('users','usersChart','posts','categories','kelases','siswaCount','guruCount','categoriesCount', 'postsCount','kelasesCount'));
+        return view('admin.dashboard', compact('waliKelas','users','usersChart','posts','categories','kelases','siswaCount','guruCount','categoriesCount', 'postsCount','kelasesCount'));
         // return view('admin.dashboard');
     }
 

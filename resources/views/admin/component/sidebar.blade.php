@@ -18,11 +18,11 @@
             <span>{{ __("Dashboard") }}</span></a>
     </li>
    @if(Auth::check() && (Auth::user()->role == 'Admin' || Auth::user()->role == 'superadmin'))
-    <li class="nav-item {{ Request::is('log')? " active ":" " }}">
+    {{-- <li class="nav-item {{ Request::is('log')? " active ":" " }}">
         <a class="nav-link " href="{{ url('/log') }}">
             <i class="bi bi-send-fill"></i>
             <span>{{ __("Log Message") }}</span></a>
-        </li>
+        </li> --}}
     @endif
         <li class="nav-item {{ Request::is('profile')? " active ":" " }}">
         <a class="nav-link " href="{{ url('/profile') }}">
@@ -235,12 +235,15 @@
             <span>{{ __('Data Ujian') }}</span></a>
     </li>
     <!-- Nav Item - Raport -->
-    <li class="nav-item {{ Request::is('raport')? " active ":" " }}">
-        <a class="nav-link " href="{{ url('/raport') }}">
-            <i class="bi bi-file-earmark-text"></i>
-            <span>{{ __("Raport") }}</span>
-        </a>
-    </li>
+    @if (Auth::user()->kelas->id_wali != null)
+        <li class="nav-item {{ Request::is('raport')? " active ":" " }}">
+            <a class="nav-link " href="{{ url('/raport') }}">
+                <i class="bi bi-file-earmark-text"></i>
+                <span>{{ __("Raport") }}</span>
+            </a>
+        </li>
+    @endif
+    
     @endif
 
 

@@ -30,6 +30,27 @@
                                 @endempty
                         </select>
                     </div>
+                    <div class="form-group m-3">
+                        <label for="id_category_ujian" class="fw-bold"><i class="bi bi-bookmarks-fill"></i> Category ujian</label><br>
+                        <select class="form-control" data-style="btn-success" name="id_category_ujian" id="id_category_ujian">
+                            @foreach ($CategoryUjian as $categoryUjians)
+                                    <option value="{{ $categoryUjians->id }}">{{ $categoryUjians->name_category_ujian }}</option>
+                                {{-- @empty
+                                    <option value="">No Category</option> --}}
+                            @endforeach
+                           
+                        </select>
+                    </div>
+                       <div class="form-group m-3">
+                    <label for="id_category" class="fw-bold"><i class="bi bi-bookmarks-fill"></i> Kelas</label><br>
+                    <select class="form-control js-example-tags" data-style="btn-success" name="id_kelas[]" id="id_kelas" multiple="multiple" @readonly(true)>
+                        @forelse($kelas as $pengajares)
+                            <option value="{{ $pengajares->id }}" selected>{{ $pengajares->name_kelas }}</option>
+                        @empty
+                            <option value="">No Data Kelas</option>
+                        @endforelse
+                    </select>
+                </div>
                 <div class="m-3">
                     <label for="soal_ujian_essay" class="pb-2 fw-bold"><i class="bi bi-book-fill "></i> Create Soal Essay Ujian</label>
                     <textarea name="soal_ujian_essay" id="my-editor" cols="5" rows="5" placeholder="Isi Text Soal Essay Ujian..." class="form-control" required >{{ old('soal_ujian_essay') }}</textarea>

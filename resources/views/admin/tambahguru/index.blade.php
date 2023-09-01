@@ -61,10 +61,10 @@
                     Create Guru
                 </button>
 
-                <button type="button" class="btn btn-success  m-1 p-3 shadow" data-bs-toggle="modal" data-bs-target="#importGuru">
+                {{-- <button type="button" class="btn btn-success  m-1 p-3 shadow" data-bs-toggle="modal" data-bs-target="#importGuru">
                     <i class="bi bi-file-earmark-spreadsheet-fill"></i>
                     Import Excel
-                </button>
+                </button> --}}
 
                 <button class="btn btn-danger  m-1 p-3 shadow delete_all" data-url="{{ url('/guruDeleteAll') }}">
                     <i class="bi bi-trash-fill"></i>
@@ -86,7 +86,7 @@
                                 <th width="">No</th>
                                 <th width="">Status</th>
                                 <th width="">Nama</th>
-                                <th width="">Guru Kelas</th>
+                                <th width="">Mengajar kelas</th>
                                 <th width="">Mata Pelajaran</th>
                                 <th width="">Gender</th>
                                 <th width="">Sekolah</th>
@@ -112,7 +112,16 @@
 
                             </td>
                             @else
-                            <td>{{ $guru->kelas->name_kelas ?? "" }}</td>
+                            
+                            <td>
+                                @if ($guru->kelas == false)
+                                    <a href="/guru-edit-{{ $guru->id }}" class="btn btn-warning fw-bold w-auto"><i class="bi bi-pencil-square"></i> Klik Edit dan isikan data kelas!!</a>
+                                @else
+                                    @foreach ($kelasByGuru[$guru->name] as $kelasbyguru)
+                                        <span class="badge badge-secondary">{{ $kelasbyguru }}</span>
+                                    @endforeach
+                                @endif
+                            </td>
                             @endif
                             @if($guru->category == false ?? 'Database Not Found!' )
                                 <td class="text-white bg-danger text-center fw-bold">

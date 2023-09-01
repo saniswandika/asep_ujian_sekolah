@@ -37,6 +37,18 @@
                             @endforelse
                     </select>
                 </div>
+                <div class="form-group m-3" >
+                    <label for="id_semester" class="pb-2  fs-5"><i class="bi bi-building"></i> semester</label>
+                    <select class="form-select form-select-lg  py-2" name="id_semester" id="id_semester">
+                        {{-- <option class="" value="">Pilih Sekolah...</option> --}}
+                        @if(Auth::user()->role == 'admin' && Auth::user()->sekolah->name_sekolah)
+                        @foreach ($semester as $item)
+                            <option class="fw-bold" value="{{ $item->id }}">{{ $item->nama }}</option>
+                        
+                        @endforeach
+                        @endif
+                    </select>
+                </div>
                 <div class="m-3" hidden>
                     <label for="no_induk" class="pb-2 fw-bold fs-5"><i class="bi bi-card-text"></i> {{ __('NIS') }}</label>
                     <input type="text" class="form-control" placeholder="NIS" name="no_induk" value="null" required>

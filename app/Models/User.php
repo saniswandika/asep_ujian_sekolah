@@ -39,6 +39,8 @@ use Rappasoft\LaravelAuthenticationLog\Traits\AuthenticationLoggable;
         'sekolah_asal',
         'password',
         'role',
+        'nips',
+        'id_semester'
     ];
 
     /**
@@ -71,6 +73,13 @@ use Rappasoft\LaravelAuthenticationLog\Traits\AuthenticationLoggable;
 
         // Wali kelas banyak dipakai oleh kelas
         return $this->hasMany(Kelas::class,'id_wali');
+    }
+    public function guru_ngajar()
+    {
+        return $this->belongsTo(guru_kela::class,'user_id');
+
+        // Wali kelas banyak dipakai oleh kelas
+        return $this->hasMany(guru_kela::class,'user_id');
     }
 
     public function ujiansekolah()

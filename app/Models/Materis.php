@@ -16,6 +16,10 @@ class Materis extends Model
     {
         return $this->belongsTo(Kelas::class, 'id_kelas');
     }
+    public function ngajar_kelas()
+    {
+        return $this->belongsTo(guru_kela::class, 'class_id');
+    }
 }
 
 

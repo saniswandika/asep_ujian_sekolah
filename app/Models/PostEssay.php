@@ -9,7 +9,7 @@ class PostEssay extends Model
 {
     use HasFactory;
     protected $fillable = ([
-        'id_sekolah_asal','id_category','soal_ujian_essay','jawaban_essay'
+        'id_sekolah_asal','id_category','soal_ujian_essay','jawaban_essay','id_category_ujian','id_kelas','id_user'
     ]);
 
     public function category_pelajaran()

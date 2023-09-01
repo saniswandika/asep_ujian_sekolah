@@ -191,7 +191,7 @@
             <li class="nav-item me-4">
               <a class="nav-link active" aria-current="page" href="#">Home</a>
             </li>
-            <li class="nav-item me-4">
+            {{-- <li class="nav-item me-4">
               <a class="nav-link" href="#">Fitur</a>
             </li>
             <li class="nav-item dropdown me-4">
@@ -216,7 +216,7 @@
             </li>
             <li class="nav-item">
               <a class="nav-link ">Contact</a>
-            </li>
+            </li> --}}
           </ul>
             {{-- @auth
                 <a href="{{ url('/home') }}" class="btn btn-dark me-4 shadow">Home</a>

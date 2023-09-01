@@ -6,7 +6,7 @@
 
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
-<script src="jquery.min.js"></script>
+<script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
 
@@ -43,6 +43,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <!-- Page level custom scripts -->
 <script src="js/demo/chart-area-demo.js"></script>
@@ -80,6 +81,9 @@
 
 <script src="https://kit.fontawesome.com/fe6aa2d4ea.js" crossorigin="anonymous"></script>
 @yield('scripts')
+<script>
+    $(".js-example-tags").select2();
+</script>
 <script>
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {

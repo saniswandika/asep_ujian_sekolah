@@ -22,12 +22,35 @@
                 </div>
                 <div class="form-group m-3">
                     <label for="id_category" class="fw-bold"><i class="bi bi-bookmarks-fill"></i> Category</label><br>
-                    <<select class="form-control" data-style="btn-success" name="id_category" id="id_category">
+                    <select class="form-control" data-style="btn-success" name="id_category" id="id_category">
                         @if (Auth::user()->category)
                             <option value="{{ Auth::user()->category->id }}">{{ Auth::user()->category->name_category }}</option>
                         @else
                             <option value="">No Category</option>
                         @endif
+                    </select>
+
+
+                </div>
+                <div class="form-group m-3">
+                    <label for="id_category" class="fw-bold"><i class="bi bi-bookmarks-fill"></i> Kelas</label><br>
+                    <select class="form-control js-example-tags" data-style="btn-success" name="id_kelas[]" id="id_kelas" multiple="multiple" @readonly(true)>
+                        @forelse($kelas as $pengajares)
+                            <option value="{{ $pengajares->id }}" selected>{{ $pengajares->name_kelas }}</option>
+                        @empty
+                            <option value="">No Data Kelas</option>
+                        @endforelse
+                    </select>
+                </div>
+                <div class="form-group m-3">
+                    <label for="id_category_ujian" class="fw-bold"><i class="bi bi-bookmarks-fill"></i> Category ujian</label><br>
+                    <select class="form-control" data-style="btn-success" name="id_category_ujian" id="id_category_ujian">
+                        @foreach ($CategoryUjian as $categoryUjians)
+                                <option value="{{ $categoryUjians->id }}">{{ $categoryUjians->name_category_ujian }}</option>
+                            {{-- @empty
+                                <option value="">No Category</option> --}}
+                        @endforeach
+                       
                     </select>
 
 

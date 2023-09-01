@@ -38,15 +38,30 @@
 
     <div class="form-group">
         <label for="id_kelas">Kelas:</label>
-        <input type="text" class="form-control" value="{{ $kelas->name_kelas }}" readonly>
-        <input type="hidden" name="id_kelas" value="{{ $kelas->id }}">
+        {{-- @foreach ($pengajar as $item) --}}
+        <select class="form-control js-example-tags" data-style="btn-success" name="id_kelas[]" id="id_kelas" multiple="multiple" @readonly(true)>
+            @forelse($kelas as $pengajares)
+                <option value="{{ $pengajares->id }}" selected>{{ $pengajares->name_kelas }}</option>
+            @empty
+                <option value="">No Data Kelas</option>
+            @endforelse
+        </select>
+            {{-- <input type="text" class="form-control" value="
+            @foreach ($pengajar as $item)
+                {{ $item->name_kelas }},{{ $item->name_kelas }}
+            @endforeach" 
+            readonly>
+            <input type="hidden" name="id_kelas" value="
+            @foreach ($pengajar as $item)
+                {{ $item->name_kelas }},{{ $item->name_kelas }}
+            @endforeach"> --}}
     </div>
 
     <div class="form-group">
         <label for="id_category">Kategori:</label>
         <select class="form-control" id="id_category" name="id_category">
-            @foreach($categories as $id => $name)
-                <option value="{{ $id }}">{{ $name }}</option>
+            @foreach($categories as $name)
+                <option value="{{ $name->id }}">{{ $name->name_category }}</option>
             @endforeach
         </select>
     </div>

@@ -43,6 +43,10 @@ class DistribusiUjianKelasController extends Controller
             // Jika pengguna bukan admin, lanjutkan dengan filter berdasarkan kelas dan kategori
             $userCategory = $user->category;
             $userKelas = $user->kelas;
+            $userKelas = DB::table('user_classes')
+            ->join('kelas', 'kelas.id', '=', 'user_classes.class_id')
+            ->where('user_classes.user_id', $user->id)->get();
+            // dd($userCategory);
 
             // Pastikan category dan kelas pengguna telah di-set sebelumnya
             if (!$userCategory || !$userKelas) {
@@ -50,12 +54,16 @@ class DistribusiUjianKelasController extends Controller
             }
 
             // Ambil data berdasarkan category dan kelas pengguna yang saat ini diautentikasi
-            $DisujianKelases = DistribusiUjianKelas::where('id_category', $userCategory->id)
-                ->where('id_kelas', $userKelas->id)
-                ->with('kelas')
-                ->with('category')
-                ->with('categoryUjian')
-                ->get();
+            foreach ($userKelas as $key => $value) {
+                $DisujianKelases = DistribusiUjianKelas::where('id_category', $userCategory->id)
+                    ->where('id_kelas', $value->class_id)
+                    ->with('kelas')
+                    ->with('category')
+                    ->with('categoryUjian')
+                    ->get();
+            }
+          
+            // dd($DisujianKelases);
         }
 
         // Ambil data tambahan berdasarkan category dan kelas pengguna yang saat ini diautentikasi atau sesuai dengan peran admin
@@ -69,7 +77,9 @@ class DistribusiUjianKelasController extends Controller
 
     public function indexDistribusiUjianKelas()
     {
-        $DisujianKelases = DistribusiUjianKelas::where('id_sekolah_asal', Auth::user()->sekolah_asal)->with('category')->with('categoryUjian')->get();
+        
+        $DisujianKelases = DistribusiUjianKelas::where('id_sekolah_asal', Auth::user()->sekolah_asal)->where('id_kelas', Auth::user()->id_kelas)->with('category')->with('categoryUjian')->get();
+        // dd($DisujianKelases);    
         $categori = Category::where('id_sekolah_asal', Auth::user()->sekolah_asal)->pluck('name_category', 'id')->all();
         $categoryUjians = CategoryUjian::where('id_sekolah_asal', Auth::user()->sekolah_asal)->pluck('name_category_ujian', 'id')->all();
         $sekolahs = Sekolah::pluck('name_sekolah', 'id')->all();
@@ -84,6 +94,7 @@ class DistribusiUjianKelasController extends Controller
     public function create()
     {
         $DisujianKelas = DistribusiUjianKelas::where('id_sekolah_asal', Auth::user()->sekolah_asal)->with('kelas')->get();
+        // dd($DisujianKelas);
         $kelas = Kelas::where('id_sekolah_asal', Auth::user()->sekolah_asal)->pluck('name_kelas', 'id')->all();
         return view('admin.distribusiUjianKelas.create', compact('DisujianKelas','kelas'));
     }

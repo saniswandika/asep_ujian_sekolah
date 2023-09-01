@@ -9,6 +9,8 @@ use App\Imports\PostImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\CategoryUjian;
+use App\Models\Kelas;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -23,16 +25,40 @@ class PostController extends Controller
     {
         $user = Auth::user();
 
-        $posts = Post::where('id_sekolah_asal', $user->sekolah_asal)
-            ->where('id_user', $user->id)
-            ->with('category')
-            ->get();
-
+        // $posts = Post::where('id_sekolah_asal', $user->sekolah_asal)
+        //     ->where('id_user', $user->id)
+        //     ->with('category')
+        //     ->with('category_ujian')
+        //     ->get();
+        // foreach ($posts as $key => $post) {
+        //     $kelas = kelas::where('id',$post->id_kelas)->get();
+        // }
+        // dd($kelas);
+        
+        $posts = DB::table('posts')
+            ->join('categories', 'categories.id', '=', 'posts.id_category')
+            ->join('category_ujians', 'category_ujians.id', '=', 'posts.id_category_ujian')
+            ->join('kelas', 'kelas.id', '=', 'posts.id_kelas')
+            ->where('posts.id_sekolah_asal', Auth::user()->sekolah_asal)
+            ->where('posts.id_user', $user->id)
+            // ->where('categories.id', $user->id)
+            ->select('posts.*',
+                    'kelas.name_kelas',
+                    'categories.id as id_category',
+                    'categories.name_category as name_category',
+                    'category_ujians.id as id_category_ujian',
+                    'category_ujians.name_category_ujian')->get();
+        // dd($posts);
+        $user = Auth::user();
+        $CategoryUjian = CategoryUjian::all();
+       
         $categories = $user->categories()->pluck('name_category', 'categories.id')->all();
         $sekolahs = Sekolah::pluck('name_sekolah', 'id')->all();
         $postCount = $user->posts()->count();
-
-        return view('admin.posts.index', compact('posts', 'categories', 'sekolahs', 'postCount'));
+        $kelas = DB::table('user_classes')
+        ->join('kelas', 'kelas.id', '=', 'user_classes.class_id')
+        ->where('user_classes.user_id', $user->id)->get();
+        return view('admin.posts.index', compact('posts', 'categories', 'sekolahs', 'postCount','kelas','CategoryUjian'));
     }
 
     /**
@@ -44,9 +70,11 @@ class PostController extends Controller
     {
         $post = Post::all();
         $user = Auth::user();
+       
     // $categories = $user->categories()->pluck('name_category', 'id')->all();
-    $category = $user->category;
-        return view('admin.posts.create', compact('category','post'));
+        $category = $user->category;
+    
+        return view('admin.posts.create', compact('category','post','kelas'));
     }
 
     /**
@@ -57,6 +85,7 @@ class PostController extends Controller
      */
     public function store(Request $request, Post $post)
     {
+        // dd($request->all());
         $this->validate($request, [
             'id_sekolah_asal' => 'required',
             'id_category' => 'required',
@@ -66,23 +95,29 @@ class PostController extends Controller
             'pilihan_c' => 'required',
             'pilihan_d' => 'required',
             'jawaban' => 'required',
-            // 'correct' => 'required',
+            'id_category_ujian' => 'required',
+            'id_kelas' => 'required'
         ]);
-
+        
+        $user = Auth::user();
+        $id_kelas_array = $request->input('id_kelas'); // Array ID kelas
+        foreach ($id_kelas_array as $id_kelas) {
+            $post = Post::create([
+                'id_user' => $user->id,
+                'id_sekolah_asal' => $request->id_sekolah_asal,
+                'id_category' => $request->id_category,
+                'soal_ujian' => $request->soal_ujian,
+                'pilihan_a' => $request->pilihan_a,
+                'pilihan_b' => $request->pilihan_b,
+                'pilihan_c' => $request->pilihan_c,
+                'pilihan_d' => $request->pilihan_d,
+                'jawaban' => $request->jawaban,
+                'id_category_ujian' => $request->id_category_ujian,
+                'id_kelas' => $id_kelas,
+            ]);
+        }     
         $user = Auth::user();
 
-        $post = Post::create([
-            'id_user' => $user->id,
-            'id_sekolah_asal' => $request->id_sekolah_asal,
-            'id_category' => $request->id_category,
-            'soal_ujian' => $request->soal_ujian,
-            'pilihan_a' => $request->pilihan_a,
-            'pilihan_b' => $request->pilihan_b,
-            'pilihan_c' => $request->pilihan_c,
-            'pilihan_d' => $request->pilihan_d,
-            'jawaban' => $request->jawaban,
-            // 'correct' => $request->correct,
-        ]);
 
         $post->save();
 
@@ -115,7 +150,13 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $post = Post::where('id_sekolah_asal', Auth::user()->sekolah_asal)->with('category')->find($id);
+        // $post = Post::where('id_sekolah_asal', Auth::user()->sekolah_asal)->with('category')->find($id);
+        $post = Post::where('id_sekolah_asal', Auth::user()->sekolah_asal)
+        // ->where('id_user', $user->id)
+        ->with('category')
+        ->with('category_ujian')
+        ->find($id);
+        // dd($post);
         $categori = Category::where('id_sekolah_asal', Auth::user()->sekolah_asal)->pluck('name_category', 'id')->all();
         return view('admin.posts.edit', compact('post', 'categori'));
     }
@@ -138,7 +179,7 @@ class PostController extends Controller
             'pilihan_c' => 'required',
             'pilihan_d' => 'required',
             'jawaban' => 'required',
-            // 'correct' => 'required',
+            'id_category_ujian' => 'required'
         ]);
 
         $post = Post::find($request->id);
@@ -151,7 +192,7 @@ class PostController extends Controller
             'pilihan_c' => $request->pilihan_c,
             'pilihan_d' => $request->pilihan_d,
             'jawaban' => $request->jawaban,
-            // 'correct' => $request->correct,
+            'id_category_ujian' => $request->id_category_ujian
         ]);
 
         if($post){

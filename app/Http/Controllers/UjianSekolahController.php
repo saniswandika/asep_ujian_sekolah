@@ -59,9 +59,19 @@ class UjianSekolahController extends Controller
     public function create($id)
     {
         $DisujianKelases = DistribusiUjianKelas::with('kelas')->with('category')->with('categoryUjian')->find($id);
-        $ujianSekolah = UjianSekolah::with('kelas')->with('distribusiUjianKelas')->get();
-        $post = Post::get();
-        $postsEssay = PostEssay::get();
+        // dd($DisujianKelases);
+        $ujianSekolah = UjianSekolah::where('id',$id)->with('kelas')->with('distribusiUjianKelas') ->with('Post')->get();
+        $post = Post::where('id_category',$DisujianKelases->id_category)
+                ->where('id_category_ujian',$DisujianKelases->id_category_ujian)
+                ->where('id_kelas',$DisujianKelases->id_kelas)->get();
+        // dd($post);
+        $postsEssay = PostEssay::where('id_category',$DisujianKelases->id_category)
+                ->where('id_category_ujian',$DisujianKelases->id_category_ujian)
+                ->where('id_kelas',$DisujianKelases->id_kelas)->get();
+        
+        // $postsEssay = PostEssay::where('id_category',$DisujianKelases->id_category)->where('id_category_ujian',$DisujianKelases->id_category_ujian)->get();
+        // dd($postsEssay);
+        
         $categori = Category::pluck('name_category', 'id')->all();
         $ujianSekolahSum = UjianSekolah::where('id_user', Auth::user()->id)->sum('correct');
         $ujianSekolahCount = UjianSekolah::where('id_user', Auth::user()->id)->count();

@@ -7,16 +7,12 @@ use App\Models\Tugas;
 use App\Models\Kelas;
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class TugasController extends Controller
 {
     public function index()
     {
-        // $id_user = Auth::id();
-
-        // $tugas = Tugas::where('id_user', $id_user)->get();
-
-        // return view('tugas.index', ['tugas' => $tugas]);
         $user = Auth::user();
         $id_user = $user->id;
         $role = $user->role;
@@ -28,7 +24,7 @@ class TugasController extends Controller
         } else if ($role === 'guru') {
             $kelas = $user->kelas;
             $kategori = $user->category;
-            $tugas = Tugas::where('id_kelas', $kelas->id)->where('id_category', $kategori->id)->get();
+            $tugas = Tugas::where('id_category', $kategori->id)->where('tugas.id_user',$user->id)->get();
         } else {
             // Handle other roles if needed
             $tugas = collect(); // Return an empty collection for other roles
@@ -39,9 +35,16 @@ class TugasController extends Controller
 
     public function create()
     {
-        $kelas = Kelas::all();
-        $categories = Category::all();
+        // $kelas = Kelas::all();
+        $id = Auth::user()->id;
 
+        $categories = DB::table('users')
+        ->join('categories', 'users.id_category', '=', 'categories.id')
+        ->where('users.id', $id)
+        ->get();
+        $kelas = DB::table('user_classes')
+        ->join('kelas', 'kelas.id', '=', 'user_classes.class_id')
+        ->where('user_classes.user_id', $id)->get();
         return view('tugas.create', compact('kelas', 'categories'));
     }
 
@@ -60,7 +63,7 @@ class TugasController extends Controller
             'id_kelas' => 'required',
             'id_category' => 'required',
         ]);
-
+       
         // Dapatkan peran pengguna saat ini
         $role = $request->role;
         // Sesuaikan nama field file berdasarkan peran pengguna
@@ -83,15 +86,19 @@ class TugasController extends Controller
         $id_user = Auth::id();
 
         // dd($request->all(), $namaFile, $role);
-
-        Tugas::create([
-            'file_siswa' => $role === 'siswa' ? $namaFile : null,
-            'file_guru' => $role === 'guru' ? $namaFile : null,
-            'keterangan' => $request->keterangan,
-            'id_kelas' => $request->id_kelas,
-            'id_category' => $request->id_category,
-            'id_user' => $id_user, // Gunakan id_user yang didapatkan dari Auth
-        ]);
+        $id_user = Auth::id();
+        
+        $id_kelas_array = $request->input('id_kelas'); // Array ID kelas
+        foreach ($id_kelas_array as $id_kelas) { 
+            Tugas::create([
+                'file_siswa' => $role === 'siswa' ? $namaFile : null,
+                'file_guru' => $role === 'guru' ? $namaFile : null,
+                'keterangan' => $request->keterangan,
+                'id_kelas' => $id_kelas,
+                'id_category' => $request->id_category,
+                'id_user' => $id_user, // Gunakan id_user yang didapatkan dari Auth
+            ]);
+        } 
 
         return redirect()->route('tugas.index')->with('success', 'Tugas created successfully');
     }
@@ -100,61 +107,65 @@ class TugasController extends Controller
     public function edit($id)
     {
         $tugas = Tugas::findOrFail($id);
+        // dd($tugas);
         $kelas = Kelas::all();
         $categories = Category::all();
+        $user_id = auth::user()->id;
+        // $kelas = DB::table('user_classes')
+        // ->join('kelas', 'kelas.id', '=', 'user_classes.class_id')
+        // ->where('user_classes.user_id', $user_id)->get();
+        // dd($kelas);
+        // // Mengambil data category yang terkait dengan user
+        // // $categories = Auth::user()->categories->pluck('name_category', 'pivot_id_category');
+        // $categories = DB::table('users')
+        // ->join('categories', 'users.id_category', '=', 'categories.id')
+        // ->where('users.id', $user_id)
+        // ->get();
 
         return view('tugas.edit', compact('tugas', 'kelas', 'categories'));
     }
 
     public function update(Request $request, $id)
-{
-    $request->validate([
-        'file_siswa' => 'nullable|file|mimes:pdf,doc,docx',
-        'file_guru' => 'nullable|file|mimes:pdf,doc,docx',
-        'keterangan' => 'required',
-        'id_kelas' => 'required',
-        'id_category' => 'required',
-    ]);
-
-    $tugas = Tugas::findOrFail($id);
-
-    if ($request->hasFile('file_siswa')) {
-        $fileSiswa = $request->file('file_siswa');
-        $namaFileSiswa = time() . "_" . $fileSiswa->getClientOriginalName();
-        $tujuanUpload = 'data_file';
-        $fileSiswa->move($tujuanUpload, $namaFileSiswa);
-
-        // Create a new record for siswa if tugas_id is not provided (create new tugas)
-        if (!$request->filled('tugas_id')) {
-            Tugas::create([
-                'file_siswa' => $namaFileSiswa,
-                'keterangan' => $request->keterangan,
-                'id_kelas' => $request->id_kelas,
-                'id_category' => $request->id_category,
-                'id_user' => Auth::id(),
-            ]);
-            return redirect()->route('tugas.index')->with('success', 'Tugas created successfully');
+    {
+        $request->validate([
+            'file_siswa' => 'nullable|file|mimes:pdf,doc,docx',
+            'file_guru' => 'nullable|file|mimes:pdf,doc,docx',
+            'keterangan' => 'required',
+            'id_category' => 'required',
+        ]);
+    
+        $tugas = Tugas::findOrFail($id);
+    
+        if ($request->hasFile('file_siswa')) {
+            $fileSiswa = $request->file('file_siswa');
+            $namaFileSiswa = time() . "_" . $fileSiswa->getClientOriginalName();
+            $tujuanUpload = 'data_file';
+            $fileSiswa->move($tujuanUpload, $namaFileSiswa);
+            $tugas->file_siswa = $namaFileSiswa;
         }
-
-        // If tugas_id is provided, update the existing tugas
-        $tugas->file_siswa = $namaFileSiswa;
+    
+        if ($request->hasFile('file_guru')) {
+            $fileGuru = $request->file('file_guru');
+            $namaFileGuru = time() . "_" . $fileGuru->getClientOriginalName();
+            $tujuanUpload = 'data_file';
+            $fileGuru->move($tujuanUpload, $namaFileGuru);
+            $tugas->file_guru = $namaFileGuru;
+        }
+    
+        $tugas->keterangan = $request->keterangan;
+        $tugas->id_category = $request->id_category;
+        $tugas->save();
+    
+        // Handle multiple id_kelas values
+        $id_kelas_values = $request->id_kelas;
+        foreach ($id_kelas_values as $id_kelas_value) {
+            $tugas->id_kelas = $id_kelas_value;
+            $tugas->save();
+        }
+    
+        return redirect()->route('tugas.index')->with('success', 'Tugas updated successfully');
     }
-
-    if ($request->hasFile('file_guru')) {
-        $fileGuru = $request->file('file_guru');
-        $namaFileGuru = time() . "_" . $fileGuru->getClientOriginalName();
-        $tujuanUpload = 'data_file';
-        $fileGuru->move($tujuanUpload, $namaFileGuru);
-        $tugas->file_guru = $namaFileGuru;
-    }
-
-    $tugas->keterangan = $request->keterangan;
-    $tugas->id_kelas = $request->id_kelas;
-    $tugas->id_category = $request->id_category;
-    $tugas->save();
-
-    return redirect()->route('tugas.index')->with('success', 'Tugas updated successfully');
-}
+    
 
 
     public function destroy($id)

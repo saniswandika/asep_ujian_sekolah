@@ -105,7 +105,7 @@
                     <td class="center">{{ $no }}</td>
                     <td>{{ $namaKategori }}</td>
                     <td class="center">{{ $kategori->kkm }}</td>
-                    <td class="center">{{ $dataUjian->total_nilai }}</td>
+                    <td class="center"> {{ $rataRataNilai}}</td>
                     <td>
                         {{ $dataUjian->deskripsi }}
                     </td>
