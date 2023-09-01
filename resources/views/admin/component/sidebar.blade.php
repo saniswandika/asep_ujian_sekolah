@@ -18,11 +18,11 @@
             <span>{{ __("Dashboard") }}</span></a>
     </li>
    @if(Auth::check() && (Auth::user()->role == 'Admin' || Auth::user()->role == 'superadmin'))
-    <li class="nav-item {{ Request::is('log')? " active ":" " }}">
+    {{-- <li class="nav-item {{ Request::is('log')? " active ":" " }}">
         <a class="nav-link " href="{{ url('/log') }}">
             <i class="bi bi-send-fill"></i>
             <span>{{ __("Log Message") }}</span></a>
-        </li>
+        </li> --}}
     @endif
         <li class="nav-item {{ Request::is('profile')? " active ":" " }}">
         <a class="nav-link " href="{{ url('/profile') }}">
